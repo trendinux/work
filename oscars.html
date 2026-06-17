@@ -758,6 +758,48 @@
   .queue-row .status-note{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); display:none; }
   .queue-row.is-done .status-note{ display:inline; }
 
+  /* ============ PROCESS-DRIVEN CASE BODY ============ */
+  .case-brief{ font-size:16.5px; color:var(--ink); margin:0 0 var(--sp-6); max-width:64ch; }
+  .case-brief b{ font-weight:600; }
+  .case-process{ display:flex; flex-direction:column; }
+  .process-row{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:var(--sp-4);
+    padding:var(--sp-5) 0;
+    border-top:1px solid var(--line);
+  }
+  .case-process .process-row:first-child{ border-top:1px solid var(--line); }
+  .process-num{
+    font-family:var(--f-mono);
+    font-size:11px;
+    color:var(--bg);
+    background:var(--ink);
+    width:30px; height:30px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .process-copy h5{
+    font-family:var(--f-display);
+    font-size:15.5px;
+    margin:0 0 8px;
+    letter-spacing:.01em;
+  }
+  .process-copy p{ margin:0; font-size:14.5px; color:var(--ink-soft); max-width:62ch; }
+  .case-outcome{
+    margin-top:var(--sp-5);
+    padding-top:var(--sp-5);
+    border-top:1px solid var(--line);
+  }
+  .case-outcome .eyebrow{ margin-bottom:var(--sp-3); }
+  .case-outcome p{ margin:0; font-size:15px; color:var(--ink-soft); max-width:62ch; }
+
+  @media (max-width:640px){
+    .process-row{ grid-template-columns:1fr; }
+    .process-num{ margin-bottom:4px; }
+  }
+
   @media (max-width:980px){
     .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav{ padding-left:var(--sp-5); padding-right:var(--sp-5); margin-left:var(--sp-5); margin-right:var(--sp-5); }
     .proj-body{ grid-template-columns:1fr; }
@@ -811,8 +853,16 @@
   <div class="proj-body">
     <div class="proj-main">
       
-      <p>Oscars.org needed a full reorganization of its public-facing experience, specified separately for desktop, tablet, and mobile.</p>
-      <p>As part of a UX team at Trailer Park, I helped define brand guidelines, user flows, and fully annotated wireframes that communicated structure, form, and interaction across every breakpoint.</p>
+      <p class="case-brief">Oscars.org needed a full reorganization of its public-facing experience — specified separately for desktop, tablet, and mobile rather than designed once and stretched across breakpoints.</p>
+      <div class="case-process">
+      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>As part of a UX team at Trailer Park, I worked through the existing site's content and navigation to understand what visitors were actually trying to find — awards history, ceremony info, membership details — and where it was currently buried.</p></div></div>
+      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>We defined brand guidelines and user flows that would hold up across all three device classes, then mapped the information architecture each one needed.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I produced fully annotated wireframes that communicated structure, form, and interaction for desktop, tablet, and mobile independently, rather than assuming one layout would simply reflow.</p></div></div>
+      </div>
+      <div class="case-outcome">
+        <div class="eyebrow"><span class="num">OUTCOME</span></div>
+        <p>The redesign shipped as part of the broader Trailer Park engagement, with device-specific wireframes handed directly to engineering.</p>
+      </div>
       
     </div>
     <aside class="proj-meta">
