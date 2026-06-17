@@ -758,6 +758,48 @@
   .queue-row .status-note{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); display:none; }
   .queue-row.is-done .status-note{ display:inline; }
 
+  /* ============ PROCESS-DRIVEN CASE BODY ============ */
+  .case-brief{ font-size:16.5px; color:var(--ink); margin:0 0 var(--sp-6); max-width:64ch; }
+  .case-brief b{ font-weight:600; }
+  .case-process{ display:flex; flex-direction:column; }
+  .process-row{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:var(--sp-4);
+    padding:var(--sp-5) 0;
+    border-top:1px solid var(--line);
+  }
+  .case-process .process-row:first-child{ border-top:1px solid var(--line); }
+  .process-num{
+    font-family:var(--f-mono);
+    font-size:11px;
+    color:var(--bg);
+    background:var(--ink);
+    width:30px; height:30px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .process-copy h5{
+    font-family:var(--f-display);
+    font-size:15.5px;
+    margin:0 0 8px;
+    letter-spacing:.01em;
+  }
+  .process-copy p{ margin:0; font-size:14.5px; color:var(--ink-soft); max-width:62ch; }
+  .case-outcome{
+    margin-top:var(--sp-5);
+    padding-top:var(--sp-5);
+    border-top:1px solid var(--line);
+  }
+  .case-outcome .eyebrow{ margin-bottom:var(--sp-3); }
+  .case-outcome p{ margin:0; font-size:15px; color:var(--ink-soft); max-width:62ch; }
+
+  @media (max-width:640px){
+    .process-row{ grid-template-columns:1fr; }
+    .process-num{ margin-bottom:4px; }
+  }
+
   @media (max-width:980px){
     .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav{ padding-left:var(--sp-5); padding-right:var(--sp-5); margin-left:var(--sp-5); margin-right:var(--sp-5); }
     .proj-body{ grid-template-columns:1fr; }
@@ -814,8 +856,15 @@
   <div class="proj-body">
     <div class="proj-main">
       
-      <p>DispatchTrack needed its HubSpot CRM, website, and landing pages aligned into one cohesive system for logistics customers evaluating the platform.</p>
-      <p>I designed the CRM structure inside HubSpot alongside the web and landing page experience, so marketing and sales were working from the same visual system.</p>
+      <p class="case-brief">DispatchTrack's HubSpot CRM, website, and landing pages had grown into three slightly different visual systems — confusing for prospects moving from an ad, to a landing page, to a sales conversation.</p>
+      <div class="case-process">
+      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover &amp; define</h5><p>Reviewing the gap between the marketing site, the landing pages, and the CRM-facing materials in HubSpot made clear the fix wasn't new content, it was one shared visual system across all three.</p></div></div>
+      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Design</h5><p>I designed the CRM structure inside HubSpot alongside the web and landing page experience, so marketing and sales were finally working from the same components and visual language.</p></div></div>
+      </div>
+      <div class="case-outcome">
+        <div class="eyebrow"><span class="num">OUTCOME</span></div>
+        <p>Marketing and sales materials read as one consistent system rather than three disconnected efforts.</p>
+      </div>
       
     </div>
     <aside class="proj-meta">
