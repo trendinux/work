@@ -403,7 +403,7 @@
   }
   .case-card:hover{ border-color:var(--line-strong); transform:translateY(-3px); box-shadow:0 14px 30px -20px rgba(20,23,28,.35); }
   .thumb{
-    height:138px;
+    height:152px;
     position:relative;
     overflow:hidden;
   }
@@ -440,6 +440,23 @@
   .case-card .case-toggle{ color:var(--blue); margin-top:var(--sp-4); }
   .case-card .case-toggle::after{ content:'+ DETAILS'; }
   .case-card.is-open .case-toggle::after{ content:'– CLOSE'; }
+  .case-actions{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3); margin-top:var(--sp-4); }
+  .case-card .case-actions{ margin-top:var(--sp-4); }
+  .case-card .case-actions .case-toggle{ margin-top:0; }
+  .feature .case-actions .case-toggle{ margin-top:0; }
+  .case-link{
+    font-family:var(--f-mono);
+    font-size:12px;
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--line-strong);
+    padding-bottom:1px;
+    white-space:nowrap;
+    transition:color .18s var(--ease), border-color .18s var(--ease);
+  }
+  .case-link:hover{ color:var(--blue); border-color:var(--blue); }
+  .more-card .case-link{ font-size:11px; margin-top:6px; align-self:flex-start; }
+  .feature .case-link{ color:var(--amber); border-color:rgba(220,154,50,.4); }
   .metric{
     margin-top:var(--sp-3);
     font-family:var(--f-mono);
@@ -465,6 +482,41 @@
   .thumb--ux .box{ position:absolute; border:1.5px dashed var(--line-strong); border-radius:4px; }
   .thumb--ux .corner{ position:absolute; width:9px; height:9px; border-top:2px solid var(--ink-faint); border-left:2px solid var(--ink-faint); }
 
+  /* real design preview thumbnails — framed, calm, minimal */
+  .thumb--img{ padding:0; background:var(--panel); overflow:hidden; display:flex; flex-direction:column; }
+  .preview-chrome{
+    height:20px; flex:none;
+    display:flex; align-items:center; gap:5px;
+    padding:0 10px;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+  }
+  .preview-chrome span{ width:6px; height:6px; border-radius:50%; background:var(--line-strong); }
+  .preview-shot{
+    flex:1;
+    display:flex; align-items:center; justify-content:center;
+    padding:14px;
+    background:var(--bg);
+    overflow:hidden;
+  }
+  .preview-shot img{
+    max-width:100%; max-height:100%;
+    width:auto; height:auto;
+    object-fit:contain;
+    display:block;
+    border-radius:3px;
+    box-shadow:0 8px 18px -12px rgba(20,23,28,.3);
+    filter:saturate(.8) contrast(.95);
+    transition:transform .35s var(--ease);
+  }
+  .case-card:hover .preview-shot img{ transform:scale(1.025); }
+  .thumb-note{
+    position:absolute; bottom:8px; left:8px;
+    font-family:var(--f-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--rail-ink); background:rgba(20,23,28,.72);
+    padding:4px 8px; border-radius:5px;
+  }
+
   /* compact rows for "more work" */
   .more-grid{
     display:grid;
@@ -476,11 +528,19 @@
     border:1px solid var(--line);
     border-radius:var(--r-m);
     background:var(--panel);
-    padding:var(--sp-4);
+    overflow:hidden;
     display:flex;
     flex-direction:column;
-    gap:6px;
   }
+  .more-thumb{ height:128px; background:var(--panel); overflow:hidden; position:relative; display:flex; flex-direction:column; }
+  .more-thumb .preview-chrome{ height:18px; }
+  .more-thumb .preview-shot{ padding:10px; }
+  .more-card:hover .more-thumb .preview-shot img{ transform:scale(1.03); }
+  .more-thumb.is-abstract .preview-shot{ display:flex; align-items:center; justify-content:center; padding:0; }
+  .more-thumb.is-abstract span.note-text{
+    font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.04em;
+  }
+  .more-body{ padding:var(--sp-4); display:flex; flex-direction:column; gap:6px; }
   .more-card .top{ display:flex; justify-content:space-between; gap:8px; align-items:center; }
   .more-card h5{ margin:0; font-family:var(--f-display); font-size:14.5px; }
   .more-card p{ margin:0; font-size:13px; color:var(--ink-soft); }
@@ -847,10 +907,7 @@
   </div>
 
   <div class="proj-hero-visual">
-    <div class="proj-hero-abstract thumb thumb--ux">
-      <div class="grid"></div>
-      <span class="proj-hero-note">Gallery on request — assets held with the client</span>
-    </div>
+    <img src="../assets/everest-hero.jpg" alt="Everest Networks homepage design">
   </div>
 
   <div class="proj-body">
@@ -876,6 +933,15 @@
     </aside>
   </div>
 
+  <div class="proj-gallery">
+    <div class="eyebrow"><span class="num">SAMPLE</span> DESIGN ATTACHED</div>
+    <div class="gallery-grid">
+      <button class="gallery-item" data-src="../assets/everest-hero.jpg"><img src="../assets/everest-hero.jpg" alt="Everest Networks homepage design" loading="lazy"></button>
+<button class="gallery-item" data-src="../assets/everest-desktop-sheet.jpg"><img src="../assets/everest-desktop-sheet.jpg" alt="Everest Networks desktop page designs" loading="lazy"></button>
+<button class="gallery-item" data-src="../assets/everest-mobile-sheet.jpg"><img src="../assets/everest-mobile-sheet.jpg" alt="Everest Networks mobile page designs" loading="lazy"></button>
+<button class="gallery-item" data-src="../assets/everest-flow-diagram.jpg"><img src="../assets/everest-flow-diagram.jpg" alt="Everest Networks site flow and information architecture diagram" loading="lazy"></button>
+    </div>
+  </div>
   <div class="proj-nav">
     <a href="oscars.html" class="proj-nav-link prev">← Oscars.org</a>
     <a href="../index.html#work" class="proj-nav-link all">All work</a>
