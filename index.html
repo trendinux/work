@@ -402,7 +402,7 @@
   }
   .case-card:hover{ border-color:var(--line-strong); transform:translateY(-3px); box-shadow:0 14px 30px -20px rgba(20,23,28,.35); }
   .thumb{
-    height:138px;
+    height:152px;
     position:relative;
     overflow:hidden;
   }
@@ -481,6 +481,41 @@
   .thumb--ux .box{ position:absolute; border:1.5px dashed var(--line-strong); border-radius:4px; }
   .thumb--ux .corner{ position:absolute; width:9px; height:9px; border-top:2px solid var(--ink-faint); border-left:2px solid var(--ink-faint); }
 
+  /* real design preview thumbnails — framed, calm, minimal */
+  .thumb--img{ padding:0; background:var(--panel); overflow:hidden; display:flex; flex-direction:column; }
+  .preview-chrome{
+    height:20px; flex:none;
+    display:flex; align-items:center; gap:5px;
+    padding:0 10px;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+  }
+  .preview-chrome span{ width:6px; height:6px; border-radius:50%; background:var(--line-strong); }
+  .preview-shot{
+    flex:1;
+    display:flex; align-items:center; justify-content:center;
+    padding:14px;
+    background:var(--bg);
+    overflow:hidden;
+  }
+  .preview-shot img{
+    max-width:100%; max-height:100%;
+    width:auto; height:auto;
+    object-fit:contain;
+    display:block;
+    border-radius:3px;
+    box-shadow:0 8px 18px -12px rgba(20,23,28,.3);
+    filter:saturate(.8) contrast(.95);
+    transition:transform .35s var(--ease);
+  }
+  .case-card:hover .preview-shot img{ transform:scale(1.025); }
+  .thumb-note{
+    position:absolute; bottom:8px; left:8px;
+    font-family:var(--f-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--rail-ink); background:rgba(20,23,28,.72);
+    padding:4px 8px; border-radius:5px;
+  }
+
   /* compact rows for "more work" */
   .more-grid{
     display:grid;
@@ -492,11 +527,19 @@
     border:1px solid var(--line);
     border-radius:var(--r-m);
     background:var(--panel);
-    padding:var(--sp-4);
+    overflow:hidden;
     display:flex;
     flex-direction:column;
-    gap:6px;
   }
+  .more-thumb{ height:128px; background:var(--panel); overflow:hidden; position:relative; display:flex; flex-direction:column; }
+  .more-thumb .preview-chrome{ height:18px; }
+  .more-thumb .preview-shot{ padding:10px; }
+  .more-card:hover .more-thumb .preview-shot img{ transform:scale(1.03); }
+  .more-thumb.is-abstract .preview-shot{ display:flex; align-items:center; justify-content:center; padding:0; }
+  .more-thumb.is-abstract span.note-text{
+    font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.04em;
+  }
+  .more-body{ padding:var(--sp-4); display:flex; flex-direction:column; gap:6px; }
   .more-card .top{ display:flex; justify-content:space-between; gap:8px; align-items:center; }
   .more-card h5{ margin:0; font-family:var(--f-display); font-size:14.5px; }
   .more-card p{ margin:0; font-size:13px; color:var(--ink-soft); }
@@ -744,11 +787,9 @@
     <div class="grid">
 
       <article class="case-card reveal" data-category="ai saas">
-        <div class="thumb thumb--ai">
-          <div class="grid"></div>
-          <span class="node" style="top:30%; left:24%;"></span>
-          <span class="node alt" style="top:60%; left:50%;"></span>
-          <span class="node" style="top:40%; left:74%;"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png" alt="OneHouse.ai dashboard design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -775,13 +816,9 @@
       </article>
 
       <article class="case-card reveal" data-category="saas">
-        <div class="thumb thumb--saas">
-          <span class="bar" style="height:40%;"></span>
-          <span class="bar" style="height:70%;"></span>
-          <span class="bar" style="height:30%;"></span>
-          <span class="bar" style="height:85%;"></span>
-          <span class="bar" style="height:55%;"></span>
-          <span class="bar" style="height:65%;"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9a2b6851-0c13-438d-b7f3-c06fff13c0ff/nester2.png" alt="Nester.app dashboard design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -808,15 +845,9 @@
       </article>
 
       <article class="case-card reveal" data-category="ecommerce">
-        <div class="thumb thumb--ecom">
-          <span class="sw" style="background:var(--amber);"></span>
-          <span class="sw" style="background:var(--blue);"></span>
-          <span class="sw" style="background:var(--teal);"></span>
-          <span class="sw" style="background:#f0d9b5;"></span>
-          <span class="sw" style="background:#cdd3f5;"></span>
-          <span class="sw" style="background:#bfe2da;"></span>
-          <span class="sw" style="background:var(--ink);"></span>
-          <span class="sw" style="background:#e8c98a;"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626198682887-H9W2Y7M31XW3UYZPXLWG/jf2.jpg" alt="Fabletics.com UI design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -844,11 +875,9 @@
       </article>
 
       <article class="case-card reveal" data-category="crm">
-        <div class="thumb thumb--crm">
-          <span class="lane" style="width:55%;"></span>
-          <span class="lane" style="width:85%;"></span>
-          <span class="lane" style="width:35%;"></span>
-          <span class="lane" style="width:65%;"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1a4acacd-b33c-478c-ad79-1cbae99571da/techstars.png" alt="Techstars.com dashboard design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -876,15 +905,9 @@
       </article>
 
       <article class="case-card reveal" data-category="ecommerce">
-        <div class="thumb thumb--ecom">
-          <span class="sw" style="background:var(--ink);"></span>
-          <span class="sw" style="background:#e8c98a;"></span>
-          <span class="sw" style="background:var(--blue);"></span>
-          <span class="sw" style="background:#cdd3f5;"></span>
-          <span class="sw" style="background:var(--amber);"></span>
-          <span class="sw" style="background:#f0d9b5;"></span>
-          <span class="sw" style="background:var(--teal);"></span>
-          <span class="sw" style="background:#bfe2da;"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/8ed27e19-e8fa-4aef-bb05-c7559fee5922/katin2.png" alt="Katin storefront design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -910,11 +933,9 @@
       </article>
 
       <article class="case-card reveal" data-category="ux">
-        <div class="thumb thumb--ux">
-          <div class="box" style="top:18%; left:12%; width:40%; height:30%;"></div>
-          <div class="box" style="top:55%; left:20%; width:55%; height:30%;"></div>
-          <span class="corner" style="top:8%; left:6%;"></span>
-          <span class="corner" style="bottom:8%; right:8%; transform:rotate(180deg);"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626199775806-D5GHQVOGF0RYT82HAC09/JLU_oscars_desktop.jpg" alt="Oscars.org desktop design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -939,11 +960,9 @@
       </article>
 
       <article class="case-card reveal" data-category="ux">
-        <div class="thumb thumb--ux">
-          <div class="box" style="top:14%; left:55%; width:35%; height:28%;"></div>
-          <div class="box" style="top:50%; left:10%; width:35%; height:36%;"></div>
-          <span class="corner" style="top:10%; left:10%;"></span>
-          <span class="corner" style="bottom:10%; right:10%; transform:rotate(180deg);"></span>
+        <div class="thumb thumb--img">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="assets/everest-hero.jpg" alt="Everest Networks homepage design preview" loading="lazy"></div>
         </div>
         <div class="case-body">
           <div class="case-top">
@@ -976,52 +995,100 @@
     </div>
     <div class="more-grid">
       <div class="more-card reveal" data-category="ux">
-        <div class="top"><h5>VSP.com</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">UX &amp; Web</p>
-        <p>Heatmap and click-map research drove a redesigned checkout flow.</p>
-        <a class="case-link" href="projects/vsp.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626362842689-3I679Z9WHTYIZ78NOFP9/VSPHome.jpg" alt="VSP.com homepage design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>VSP.com</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">UX &amp; Web</p>
+          <p>Heatmap and click-map research drove a redesigned checkout flow.</p>
+          <a class="case-link" href="projects/vsp.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="saas">
-        <div class="top"><h5>Symantec — Norton</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">Dashboards &amp; SaaS</p>
-        <p>Design across four product lines, including a VPN app that passed 10M downloads.</p>
-        <a class="case-link" href="projects/norton.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626194984886-K1S9N0T4M9DFPOJA00UJ/JLU_NortonFam_landing.jpg" alt="Norton Family landing page design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>Symantec — Norton</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">Dashboards &amp; SaaS</p>
+          <p>Design across four product lines, including a VPN app that passed 10M downloads.</p>
+          <a class="case-link" href="projects/norton.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="crm">
-        <div class="top"><h5>DispatchTrack.com</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">CRM &amp; Enterprise</p>
-        <p>HubSpot CRM, web, and landing page design for a logistics platform.</p>
-        <a class="case-link" href="projects/dispatchtrack.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="assets/dispatchtrack-hero.jpg" alt="DispatchTrack.com homepage design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>DispatchTrack.com</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">CRM &amp; Enterprise</p>
+          <p>HubSpot CRM, web, and landing page design for a logistics platform.</p>
+          <a class="case-link" href="projects/dispatchtrack.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="saas">
-        <div class="top"><h5>UpClear.com</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">Dashboards &amp; SaaS</p>
-        <p>Ongoing product updates and UI refinement for a B2B SaaS dashboard.</p>
-        <a class="case-link" href="projects/upclear.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/63058097-d103-4f72-bd20-5e1e4028b9c4/Frame+3.png" alt="UpClear.com dashboard design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>UpClear.com</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">Dashboards &amp; SaaS</p>
+          <p>Ongoing product updates and UI refinement for a B2B SaaS dashboard.</p>
+          <a class="case-link" href="projects/upclear.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="saas">
-        <div class="top"><h5>APPT Booking</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">Dashboards &amp; SaaS</p>
-        <p>Parallel B2B and B2C flows for an appointment-booking SaaS.</p>
-        <a class="case-link" href="projects/appt.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1625160751815-IE9RW9T7YJJ5NMZPT6DV/homepage3.jpg" alt="APPT Booking homepage design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>APPT Booking</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">Dashboards &amp; SaaS</p>
+          <p>Parallel B2B and B2C flows for an appointment-booking SaaS.</p>
+          <a class="case-link" href="projects/appt.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="crm">
-        <div class="top"><h5>Watch Box</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">CRM &amp; Enterprise</p>
-        <p>Custom Salesforce Lightning design for a luxury watch marketplace.</p>
-        <a class="case-link" href="projects/wbox.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/d42290e7-3f16-41b9-88e0-81a5ebefbb48/wb.png" alt="Watch Box Salesforce design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>Watch Box</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">CRM &amp; Enterprise</p>
+          <p>Custom Salesforce Lightning design for a luxury watch marketplace.</p>
+          <a class="case-link" href="projects/wbox.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="ecommerce">
-        <div class="top"><h5>Veterinary Formula</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">E-commerce</p>
-        <p>Full redesign with ingredient education and a subscription model.</p>
-        <a class="case-link" href="projects/vet.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626358858634-5K22JUXQXIPGE2NFHEUL/VFhome.jpg" alt="Veterinary Formula homepage design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>Veterinary Formula</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">E-commerce</p>
+          <p>Full redesign with ingredient education and a subscription model.</p>
+          <a class="case-link" href="projects/vet.html">View case study →</a>
+        </div>
       </div>
       <div class="more-card reveal" data-category="crm">
-        <div class="top"><h5>IRC Sales Solutions</h5><span class="pill pill--shipped">Shipped</span></div>
-        <p class="case-cat">CRM &amp; Enterprise</p>
-        <p>Custom web design and HubSpot landing page optimization.</p>
-        <a class="case-link" href="projects/irc.html">View case study →</a>
+        <div class="more-thumb">
+          <div class="preview-chrome"><span></span><span></span><span></span></div>
+          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/417c58ad-79ba-4bff-8a1b-f7fb73fb7300/irc.png" alt="IRC Sales Solutions site design preview" loading="lazy"></div>
+        </div>
+        <div class="more-body">
+          <div class="top"><h5>IRC Sales Solutions</h5><span class="pill pill--shipped">Shipped</span></div>
+          <p class="case-cat">CRM &amp; Enterprise</p>
+          <p>Custom web design and HubSpot landing page optimization.</p>
+          <a class="case-link" href="projects/irc.html">View case study →</a>
+        </div>
       </div>
     </div>
   </section>
