@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loopwork — Agentic AI Operations Console — Jonathan Lu</title>
-<meta name="description" content="Designing the supervisory layer that lets ops teams trust, steer, and audit a fleet of autonomous AI agents — without reading a single log file.">
+<title>Loopwork — AI Agent Operating System — Jonathan Lu</title>
+<meta name="description" content="A control plane for every AI agent in the company — provisioning, permissions, live monitoring, and human oversight in one operating system.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -388,6 +388,74 @@
   }
   @keyframes scan{ 0%{ top:6%; } 50%{ top:88%; } 100%{ top:6%; } }
 
+  /* agent OS dashboard mockup — used on Loopwork's hero/feature visual */
+  .aos-wrap{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:18px; }
+  .aos-wrap .grid{
+    position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size:16px 16px;
+  }
+  .aos-mock{
+    position:relative;
+    width:100%; max-width:460px;
+    background:#fafaf8;
+    border-radius:10px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,.55);
+    border:1px solid rgba(0,0,0,.06);
+  }
+  .aos-sidebar{
+    width:30%;
+    background:#1c1f26;
+    color:#9da3ad;
+    padding:14px 10px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    flex:none;
+  }
+  .aos-brand{
+    font-family:var(--f-mono);
+    font-size:10px;
+    letter-spacing:.1em;
+    color:#fff;
+    margin-bottom:10px;
+  }
+  .aos-nav-item{
+    font-family:var(--f-body);
+    font-size:10.5px;
+    padding:6px 8px;
+    border-radius:5px;
+  }
+  .aos-nav-item.is-active{ background:rgba(255,255,255,.08); color:#fff; }
+  .aos-main{ flex:1; padding:14px; min-width:0; }
+  .aos-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
+  .aos-stat-label{
+    display:block; font-family:var(--f-mono); font-size:7.5px; letter-spacing:.04em;
+    text-transform:uppercase; color:#9aa0a8; margin-bottom:3px;
+  }
+  .aos-stat-val{ font-family:var(--f-display); font-weight:700; font-size:13px; color:#14171c; }
+  .aos-stat-val.aos-amber{ color:#b9791e; }
+  .aos-stat-val.aos-teal{ color:#1c8472; }
+  .aos-table{ border-top:1px solid #e7e5dd; }
+  .aos-row{
+    display:grid; grid-template-columns:1.5fr .9fr 1fr .7fr; gap:6px; align-items:center;
+    padding:6px 0; border-bottom:1px solid #ece9e0; font-size:9.5px; color:#3a3d42;
+    font-family:var(--f-body);
+  }
+  .aos-row-head{
+    font-family:var(--f-mono); font-size:7.5px; letter-spacing:.05em; text-transform:uppercase;
+    color:#9aa0a8; border-bottom:1px solid #e0ddd3;
+  }
+  .aos-badge{
+    font-family:var(--f-mono); font-size:7.5px; padding:2px 6px; border-radius:4px;
+    display:inline-block; white-space:nowrap; width:fit-content;
+  }
+  .aos-badge.aos-running{ background:#dbece7; color:#1c8472; }
+  .aos-badge.aos-review{ background:#f6e8d2; color:#8a5d10; }
+  .aos-badge.aos-idle{ background:#eceae3; color:#8b8f96; }
+
   /* ============ CASE GRID ============ */
   .grid{
     display:grid;
@@ -642,6 +710,149 @@
     .stat:first-child{ padding-left:0; }
   }
 
+  /* ============ DETAILED AGENT-OS DASHBOARD MOCKUP ============ */
+  .dash-section{ padding:0 var(--sp-8) var(--sp-8); max-width:1240px; }
+  .dash-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .dash-section h3{ font-size:clamp(22px,2.6vw,30px); margin-top:0; max-width:34ch; }
+  .dash-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:64ch; }
+
+  .dash{
+    --d-bg:#16181d;
+    --d-panel:#1c1f26;
+    --d-line:#2a2e37;
+    --d-ink:#e9eaec;
+    --d-mut:#878d99;
+    --d-faint:#5d636e;
+    background:var(--d-bg);
+    border:1px solid var(--d-line);
+    border-radius:14px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:212px 1fr;
+    font-family:var(--f-body);
+    color:var(--d-ink);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+
+  /* sidebar */
+  .dash-side{ background:var(--d-panel); border-right:1px solid var(--d-line); padding:14px 10px; min-width:0; }
+  .dash-ws{
+    display:flex; align-items:center; gap:8px; padding:6px 8px 12px; border-bottom:1px solid var(--d-line); margin-bottom:10px;
+  }
+  .dash-ws .ws-logo{ width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#6366f1,#a855f7); flex:none; }
+  .dash-ws .ws-meta{ min-width:0; }
+  .dash-ws .ws-ey{ font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--d-faint); }
+  .dash-ws .ws-name{ font-size:12.5px; font-weight:600; color:var(--d-ink); }
+  .dash-nav{ display:flex; flex-direction:column; gap:1px; }
+  .dash-nav-item{
+    display:flex; align-items:center; gap:9px;
+    font-size:12px; color:var(--d-mut);
+    padding:6px 8px; border-radius:6px; cursor:default;
+  }
+  .dash-nav-item .ic{ width:13px; height:13px; border-radius:3px; background:var(--d-faint); flex:none; opacity:.7; }
+  .dash-nav-item.is-active{ background:rgba(255,255,255,.07); color:var(--d-ink); }
+  .dash-nav-item.is-active .ic{ background:#a855f7; opacity:1; }
+  .dash-nav-badge{ margin-left:auto; font-family:var(--f-mono); font-size:9px; color:var(--d-faint); }
+  .dash-nav-sec{
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--d-faint); padding:12px 8px 5px;
+  }
+  .dash-sub{ display:flex; flex-direction:column; gap:1px; }
+  .dash-sub-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:11.5px; color:var(--d-mut); padding:5px 8px 5px 10px; border-radius:6px; cursor:default;
+  }
+  .dash-sub-item .dot{ width:7px; height:7px; border-radius:2px; flex:none; box-shadow:none; animation:none; }
+  .dash-sub-item.is-active{ background:rgba(255,255,255,.07); color:var(--d-ink); }
+  .dash-sub-badge{ margin-left:auto; font-family:var(--f-mono); font-size:9px; color:var(--d-faint); }
+
+  /* main */
+  .dash-main{ min-width:0; display:flex; flex-direction:column; }
+  .dash-top{
+    display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--d-line);
+  }
+  .dash-title{ font-size:15px; font-weight:600; }
+  .dash-chip{
+    font-family:var(--f-mono); font-size:9px; padding:3px 8px; border-radius:5px;
+    background:rgba(34,197,94,.14); color:#4ade80;
+  }
+  .dash-top-right{ margin-left:auto; display:flex; align-items:center; gap:7px; }
+  .dash-pill{
+    font-size:10px; padding:5px 10px; border-radius:6px; border:1px solid var(--d-line); color:var(--d-mut);
+    display:flex; align-items:center; gap:5px;
+  }
+  .dash-pill.accent{ background:#6366f1; border-color:#6366f1; color:#fff; }
+  .dash-pill.ai{ color:#c4b5fd; border-color:#3b3160; background:rgba(139,92,246,.12); }
+
+  .dash-tabs{
+    display:flex; gap:2px; padding:0 16px; border-bottom:1px solid var(--d-line); overflow-x:auto; scrollbar-width:none;
+  }
+  .dash-tabs::-webkit-scrollbar{ display:none; }
+  .dash-tab{
+    font-size:11.5px; color:var(--d-mut); padding:10px 10px; white-space:nowrap; border-bottom:2px solid transparent;
+  }
+  .dash-tab.is-active{ color:var(--d-ink); border-bottom-color:#a855f7; }
+
+  .dash-toolbar{
+    display:flex; align-items:center; gap:8px; padding:10px 16px;
+  }
+  .dash-tool{
+    font-size:10.5px; color:var(--d-mut); border:1px solid var(--d-line); border-radius:6px; padding:5px 10px;
+    display:flex; align-items:center; gap:5px;
+  }
+  .dash-prog{ margin-left:auto; display:flex; align-items:center; gap:8px; font-size:10px; color:var(--d-mut); }
+  .dash-prog-bar{ width:90px; height:5px; border-radius:3px; background:var(--d-line); overflow:hidden; }
+  .dash-prog-bar i{ display:block; height:100%; width:62%; background:linear-gradient(90deg,#6366f1,#a855f7); }
+
+  .dash-list{ padding:0 16px 16px; }
+  .dash-group{
+    display:flex; align-items:center; gap:8px; padding:12px 0 8px;
+  }
+  .dash-group .g-label{
+    font-size:10px; font-weight:600; padding:3px 9px; border-radius:5px;
+  }
+  .g-run{ background:rgba(34,197,94,.16); color:#4ade80; }
+  .g-rev{ background:rgba(220,154,50,.16); color:#fbbf24; }
+  .g-idle{ background:rgba(255,255,255,.08); color:var(--d-mut); }
+  .g-paused{ background:rgba(248,113,113,.14); color:#f87171; }
+  .dash-group .g-count{ font-family:var(--f-mono); font-size:9.5px; color:var(--d-faint); }
+
+  .dash-head-row, .dash-task{
+    display:grid;
+    grid-template-columns:24px 2.3fr .8fr .9fr .8fr .7fr 60px;
+    align-items:center; gap:10px;
+    padding:8px 6px; font-size:11.5px;
+  }
+  .dash-head-row{
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--d-faint);
+    border-bottom:1px solid var(--d-line);
+  }
+  .dash-task{ border-bottom:1px solid var(--d-line); color:var(--d-ink); }
+  .dash-task .t-name{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .dash-task .t-check{ width:13px; height:13px; border-radius:50%; border:1.5px solid var(--d-faint); flex:none; }
+  .dash-task .t-check.done{ border-color:#4ade80; background:#4ade80; }
+  .dash-task .t-name span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .t-tag{ font-size:9.5px; padding:3px 8px; border-radius:5px; white-space:nowrap; width:fit-content; }
+  .ts-run{ background:rgba(34,197,94,.14); color:#4ade80; }
+  .ts-rev{ background:rgba(220,154,50,.14); color:#fbbf24; }
+  .ts-idle{ background:rgba(255,255,255,.06); color:var(--d-mut); }
+  .ts-paused{ background:rgba(248,113,113,.14); color:#f87171; }
+  .t-risk{ font-size:9.5px; padding:3px 8px; border-radius:5px; width:fit-content; }
+  .tr-low{ background:rgba(34,197,94,.12); color:#4ade80; }
+  .tr-med{ background:rgba(220,154,50,.14); color:#fbbf24; }
+  .tr-high{ background:rgba(248,113,113,.14); color:#f87171; }
+  .t-mut{ color:var(--d-mut); }
+  .t-conf{ font-family:var(--f-mono); font-size:10.5px; }
+  .t-owner{ width:18px; height:18px; border-radius:50%; background:linear-gradient(135deg,#6366f1,#a855f7); flex:none; }
+  .t-more{ color:var(--d-faint); text-align:right; letter-spacing:1px; }
+
+  @media (max-width:760px){
+    .dash{ grid-template-columns:1fr; }
+    .dash-side{ display:none; }
+    .dash-head-row, .dash-task{ grid-template-columns:20px 2fr .9fr .8fr; }
+    .dash-head-row span:nth-child(n+5), .dash-task > :nth-child(n+5){ display:none; }
+  }
+
   /* ============ PROJECT DETAIL PAGE ============ */
   .back-link{
     font-family:var(--f-mono);
@@ -855,13 +1066,45 @@
   .case-outcome .eyebrow{ margin-bottom:var(--sp-3); }
   .case-outcome p{ margin:0; font-size:15px; color:var(--ink-soft); max-width:62ch; }
 
+  /* ============ EXAMPLE-USE-CASE SCENARIOS (Loopwork) ============ */
+  .proj-scenarios{ padding:0 var(--sp-8) var(--sp-8); max-width:1240px; }
+  .proj-scenarios h3{ font-size:clamp(22px,2.6vw,30px); margin-top:var(--sp-3); max-width:36ch; }
+  .scenarios-note{
+    margin-top:var(--sp-3); margin-bottom:var(--sp-5);
+    font-size:13.5px; color:var(--ink-faint); max-width:62ch;
+  }
+  .scenario-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:var(--sp-4);
+  }
+  .scenario-card{
+    border:1px solid var(--line);
+    border-radius:var(--r-l);
+    background:var(--panel);
+    padding:var(--sp-5);
+  }
+  .scenario-card h5{
+    font-family:var(--f-display);
+    font-size:16px;
+    margin:0 0 var(--sp-3);
+  }
+  .scenario-card p{ margin:0 0 var(--sp-4); font-size:14px; color:var(--ink-soft); }
+  .scenario-card ul{ margin:0; padding:0; list-style:none; display:grid; gap:9px; }
+  .scenario-card li{
+    font-size:12.5px; color:var(--ink-soft); padding-left:16px; position:relative;
+  }
+  .scenario-card li::before{
+    content:''; position:absolute; left:0; top:6px; width:6px; height:6px; background:var(--amber);
+  }
+
   @media (max-width:640px){
     .process-row{ grid-template-columns:1fr; }
     .process-num{ margin-bottom:4px; }
   }
 
   @media (max-width:980px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav{ padding-left:var(--sp-5); padding-right:var(--sp-5); margin-left:var(--sp-5); margin-right:var(--sp-5); }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios{ padding-left:var(--sp-5); padding-right:var(--sp-5); margin-left:var(--sp-5); margin-right:var(--sp-5); }
     .proj-body{ grid-template-columns:1fr; }
     .proj-meta{ position:static; }
     .mockset{ grid-template-columns:1fr; }
@@ -899,8 +1142,8 @@
   <div class="proj-head">
     <a class="back-link" href="../index.html#work">← All work</a>
     <div class="eyebrow"><span class="num">AI &amp; Agentic</span> · CONCEPT</div>
-    <h1>Loopwork — Agentic AI Operations Console</h1>
-    <p class="proj-lede">Designing the supervisory layer that lets ops teams trust, steer, and audit a fleet of autonomous AI agents — without reading a single log file.</p>
+    <h1>Loopwork — AI Agent Operating System</h1>
+    <p class="proj-lede">A control plane for every AI agent in the company — provisioning, permissions, live monitoring, and human oversight in one operating system.</p>
     <div class="tagrow">
       <span class="badge badge--new">New</span>
       <span class="badge badge--concept">Self-initiated concept</span>
@@ -908,47 +1151,62 @@
   </div>
 
   <div class="proj-hero-visual">
-    <div class="proj-hero-abstract agent-graph">
+    <div class="proj-hero-abstract aos-wrap">
       <div class="grid"></div>
-      <div class="scan"></div>
-      <span class="node" style="top:28%; left:18%;"></span>
-      <span class="node alt" style="top:60%; left:34%;"></span>
-      <span class="node" style="top:22%; left:58%;"></span>
-      <span class="node alt" style="top:74%; left:66%;"></span>
-      <span class="node" style="top:46%; left:80%;"></span>
-      <svg style="position:absolute; inset:0; width:100%; height:100%;" aria-hidden="true">
-        <line x1="18%" y1="28%" x2="34%" y2="60%" stroke="rgba(255,255,255,.18)" />
-        <line x1="34%" y1="60%" x2="58%" y2="22%" stroke="rgba(255,255,255,.18)" />
-        <line x1="58%" y1="22%" x2="66%" y2="74%" stroke="rgba(255,255,255,.18)" />
-        <line x1="66%" y1="74%" x2="80%" y2="46%" stroke="rgba(255,255,255,.1)" />
-      </svg>
+      
+      <div class="aos-mock">
+        <div class="aos-sidebar">
+          <div class="aos-brand">LOOPWORK</div>
+          <div class="aos-nav-item is-active">Overview</div>
+          <div class="aos-nav-item">Agents</div>
+          <div class="aos-nav-item">Permissions</div>
+          <div class="aos-nav-item">Workflows</div>
+          <div class="aos-nav-item">Audit Log</div>
+        </div>
+        <div class="aos-main">
+          <div class="aos-stats">
+            <div class="aos-stat"><span class="aos-stat-label">Active agents</span><span class="aos-stat-val">38</span></div>
+            <div class="aos-stat"><span class="aos-stat-label">Pending approval</span><span class="aos-stat-val aos-amber">6</span></div>
+            <div class="aos-stat"><span class="aos-stat-label">Avg confidence</span><span class="aos-stat-val aos-teal">94%</span></div>
+            <div class="aos-stat"><span class="aos-stat-label">Cost today</span><span class="aos-stat-val">$184</span></div>
+          </div>
+          <div class="aos-table">
+            <div class="aos-row aos-row-head"><span>Agent</span><span>Fleet</span><span>Status</span><span>Confidence</span></div>
+            <div class="aos-row"><span>Refund-Bot-03</span><span>Finance</span><span class="aos-badge aos-running">Running</span><span>96%</span></div>
+            <div class="aos-row"><span>Scheduler-Bot-01</span><span>Ops</span><span class="aos-badge aos-running">Running</span><span>91%</span></div>
+            <div class="aos-row"><span>Outreach-Bot-07</span><span>Support</span><span class="aos-badge aos-review">Needs review</span><span>68%</span></div>
+            <div class="aos-row"><span>Deploy-Bot-02</span><span>DevOps</span><span class="aos-badge aos-idle">Idle</span><span>—</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="proj-body">
     <div class="proj-main">
       
-      <p class="case-brief">As AI agents move from answering questions to actually executing multi-step business workflows — refunds, scheduling, vendor outreach — the people supervising them need a different kind of dashboard. <b>Loopwork</b> is a self-directed concept project asking what that dashboard should be.</p>
+      <p class="case-brief">Most companies running AI agents today have a different one bolted onto every team — a support bot here, a finance bot there — each with its own ad-hoc logging and no shared way to see, govern, or trust any of them. <b>Loopwork</b> is a self-directed concept project exploring what an actual operating system for that fleet should look like.</p>
       <div class="case-process">
-      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>Existing "AI dashboards" mostly visualize system health — uptime, token spend, latency. None of that tells an operator whether a specific agent decision was reasonable. I audited a handful of public agent-framework demos and found the same gap everywhere: raw logs, no judgment layer.</p></div></div>
-      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>I framed the console around three jobs it had to do for a non-technical operator: explain what an agent is doing in plain language, flag the actions actually worth a human's attention, and leave a trail that survives an audit. Everything else — including most of what a typical logging UI shows — got cut.</p></div></div>
-      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I wireframed three core surfaces in Figma: a plain-language activity feed, a confidence/risk-scored approval queue, and a replay view for completed runs. The two fragments below are working sketches of the feed and the queue, not final visuals — I'm still iterating on density and how much agent "reasoning" to surface versus summarize.</p></div></div>
-      <div class="process-row"><div class="process-num">04</div><div class="process-copy"><h5>Validate</h5><p>There's no live user base yet, so validation so far has meant walking the design through worst-case scenarios by hand — a wrong refund, a missed escalation, a confidently wrong agent — and checking whether the interface would have caught it. The honest next step is putting this in front of real ops teams.</p></div></div>
+      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>I looked at how teams currently run multiple agents in production and found the same pattern everywhere: every agent gets its own one-off dashboard, permission model, and log format, built by whichever engineer shipped it first. There's no shared registry, no consistent guardrail system, and no single place to see the whole fleet at once.</p></div></div>
+      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>I scoped Loopwork around five things an operating system for agents has to do regardless of department: register and provision agents in one place, set per-agent permissions and guardrails, monitor fleet health and cost live, route only the genuinely risky actions to a human, and keep a full audit trail. Everything else — including most of what a typical logging UI shows — got cut.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I designed the core OS dashboard in Figma — fleet overview, per-agent permissions, and the approval queue — plus two supporting module sketches below for the activity feed and audit replay. The dashboard mockup shown here is a working concept screen, not a final visual; I'm still iterating on information density.</p></div></div>
+      <div class="process-row"><div class="process-num">04</div><div class="process-copy"><h5>Validate</h5><p>There's no live user base yet, so validation so far has meant walking the design through worst-case scenarios by hand across a few different team types — a wrong refund, a missed escalation, a confidently wrong agent — and checking whether the interface would have caught it. The honest next step is putting this in front of real platform and ops teams.</p></div></div>
       </div>
       <div class="case-outcome">
         <div class="eyebrow"><span class="num">OUTCOME</span></div>
-        <p>No shipped outcome yet — this is an active concept piece, included to show how I'm thinking about agentic AI interfaces, not a completed client engagement.</p>
+        <p>No shipped outcome yet — this is an active concept piece, included to show how I'm thinking about agentic AI platform design, not a completed client engagement.</p>
       </div>
       
+      <p class="case-brief" style="margin-top:var(--sp-6);">Two of the OS's modules sketched up close — the activity feed agents report into, and the approval queue that routes only the genuinely risky actions to a human.</p>
       <div class="mockset">
         <div class="mock-card">
-          <h5>Agent Activity Feed — concept sketch</h5>
+          <h5>Activity Feed module — concept sketch</h5>
           <div class="feed-row"><span class="who">Refund-Bot</span><span>Verifying order #48213</span><span class="conf conf--high">High</span></div>
           <div class="feed-row"><span class="who">Scheduler-Bot</span><span>Proposing 3 vendor slots</span><span class="conf conf--high">High</span></div>
           <div class="feed-row"><span class="who">Outreach-Bot</span><span>Drafting reply to Acme Co.</span><span class="conf conf--mid">Medium</span></div>
         </div>
         <div class="mock-card">
-          <h5>Approval Queue — concept sketch</h5>
+          <h5>Approval Queue module — concept sketch</h5>
           <div class="queue-row">
             <span>Refund $410 above auto-limit</span>
             <span class="queue-actions"><button class="approve">Approve</button><button class="escalate">Escalate</button></span>
@@ -965,11 +1223,117 @@
     <aside class="proj-meta">
       <div class="meta-row"><span>Status</span><b>CONCEPT</b></div>
       <div class="meta-row"><span>Category</span><b>AI &amp; Agentic</b></div>
-      <div class="meta-row"><span>Role</span><b>Agent Orchestration UX, Human-in-the-Loop Design, Dashboard &amp; Data Viz</b></div>
+      <div class="meta-row"><span>Role</span><b>Agent Fleet &amp; Platform UX, Permissions &amp; Governance Design, Dashboard &amp; Data Viz, Human-in-the-Loop Design</b></div>
       <div class="meta-row"><span>Tools</span><b>Figma, Figma Make</b></div>
     </aside>
   </div>
 
+  <div class="dash-section">
+    <div class="eyebrow"><span class="num">DASHBOARD CONCEPT</span></div>
+    <h3>The Loopwork console — fleet view</h3>
+    <p class="dash-cap">A concept screen for the OS's main view: the full agent fleet grouped by run state, with each
+    agent's status, risk level, confidence, and owner inline — the way a project tool lists tasks, but for autonomous agents.</p>
+    <div class="dash">
+      <aside class="dash-side">
+        <div class="dash-ws">
+          <span class="ws-logo"></span>
+          <span class="ws-meta"><span class="ws-ey">Workspace</span><span class="ws-name">Acme Ops</span></span>
+        </div>
+        <div class="dash-nav">
+          <div class="dash-nav-item"><span class="ic"></span>Inbox</div>
+          <div class="dash-nav-item"><span class="ic"></span>Direct Messages</div>
+          <div class="dash-nav-item"><span class="ic"></span>My Tasks</div>
+          <div class="dash-nav-item is-active"><span class="ic"></span>AI Agents <span class="dash-nav-badge">38</span></div>
+          <div class="dash-nav-item"><span class="ic"></span>Chat</div>
+        </div>
+        <div class="dash-nav-sec">Projects</div>
+        <div class="dash-sub">
+          <div class="dash-sub-item is-active"><span class="dot" style="background:#22c55e;"></span>Marketing Automation</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#a855f7;"></span>Sprints <span class="dash-sub-badge">3</span></div>
+          <div class="dash-sub-item"><span class="dot" style="background:#6366f1;"></span>Copywriting</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#f59e0b;"></span>SEO</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#22c55e;"></span>Email Automation</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#ec4899;"></span>Website Redesign</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#38bdf8;"></span>Newsletter Launch</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#14b8a6;"></span>Website Launch</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#f43f5e;"></span>Chatbot Integration</div>
+          <div class="dash-sub-item"><span class="dot" style="background:#eab308;"></span>Blog Content Creation</div>
+        </div>
+        <div class="dash-nav-sec">Workspace</div>
+        <div class="dash-nav">
+          <div class="dash-nav-item"><span class="ic"></span>Goals <span class="dash-nav-badge">8</span></div>
+          <div class="dash-nav-item"><span class="ic"></span>Docs</div>
+          <div class="dash-nav-item"><span class="ic"></span>Channels <span class="dash-nav-badge">5</span></div>
+          <div class="dash-nav-item"><span class="ic"></span>Teams <span class="dash-nav-badge">7</span></div>
+          <div class="dash-nav-item"><span class="ic"></span>Track Time</div>
+        </div>
+      </aside>
+
+      <div class="dash-main">
+        <div class="dash-top">
+          <span class="dash-title">AI Agents</span>
+          <span class="dash-chip">All systems nominal</span>
+          <div class="dash-top-right">
+            <span class="dash-pill ai">✦ Ask Loopwork</span>
+            <span class="dash-pill">Automations 8</span>
+            <span class="dash-pill accent">+ Deploy agent</span>
+          </div>
+        </div>
+
+        <div class="dash-tabs">
+          <span class="dash-tab is-active">Fleet</span>
+          <span class="dash-tab">Board</span>
+          <span class="dash-tab">Permissions</span>
+          <span class="dash-tab">Timeline</span>
+          <span class="dash-tab">Workload</span>
+          <span class="dash-tab">Audit Log</span>
+          <span class="dash-tab">Cost</span>
+          <span class="dash-tab">Risks</span>
+        </div>
+
+        <div class="dash-toolbar">
+          <span class="dash-tool">Group by: Status</span>
+          <span class="dash-tool">Filters</span>
+          <span class="dash-tool">Search agents</span>
+          <span class="dash-prog">Fleet health 94%
+            <span class="dash-prog-bar"><i></i></span>
+          </span>
+        </div>
+
+        <div class="dash-list">
+          <div class="dash-group"><span class="g-label g-run">Running</span><span class="g-count">5</span></div>
+          <div class="dash-head-row"><span></span><span>Agent</span><span>Fleet</span><span>Status</span><span>Risk</span><span>Confidence</span><span>Owner</span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check done"></span></span><span class="t-name"><span>Refund-Bot-03</span></span><span class="t-mut">Finance</span><span><span class="t-tag ts-run">Running</span></span><span><span class="t-risk tr-low">Low</span></span><span class="t-conf">96%</span><span class="t-owner"></span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check done"></span></span><span class="t-name"><span>Scheduler-Bot-01</span></span><span class="t-mut">Ops</span><span><span class="t-tag ts-run">Running</span></span><span><span class="t-risk tr-low">Low</span></span><span class="t-conf">91%</span><span class="t-owner"></span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check done"></span></span><span class="t-name"><span>Invoice-Reconciler-02</span></span><span class="t-mut">Finance</span><span><span class="t-tag ts-run">Running</span></span><span><span class="t-risk tr-med">Medium</span></span><span class="t-conf">88%</span><span class="t-owner"></span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check done"></span></span><span class="t-name"><span>Ticket-Triage-05</span></span><span class="t-mut">Support</span><span><span class="t-tag ts-run">Running</span></span><span><span class="t-risk tr-low">Low</span></span><span class="t-conf">93%</span><span class="t-owner"></span></div>
+
+          <div class="dash-group"><span class="g-label g-rev">Needs review</span><span class="g-count">2</span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check"></span></span><span class="t-name"><span>Outreach-Bot-07</span></span><span class="t-mut">Support</span><span><span class="t-tag ts-rev">Needs review</span></span><span><span class="t-risk tr-high">High</span></span><span class="t-conf">68%</span><span class="t-owner"></span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check"></span></span><span class="t-name"><span>Vendor-Negotiator-01</span></span><span class="t-mut">Finance</span><span><span class="t-tag ts-rev">Needs review</span></span><span><span class="t-risk tr-high">High</span></span><span class="t-conf">71%</span><span class="t-owner"></span></div>
+
+          <div class="dash-group"><span class="g-label g-idle">Idle</span><span class="g-count">2</span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check"></span></span><span class="t-name"><span>Deploy-Bot-02</span></span><span class="t-mut">DevOps</span><span><span class="t-tag ts-idle">Idle</span></span><span><span class="t-risk tr-med">Medium</span></span><span class="t-conf t-mut">—</span><span class="t-owner"></span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check"></span></span><span class="t-name"><span>Report-Builder-04</span></span><span class="t-mut">Analytics</span><span><span class="t-tag ts-idle">Idle</span></span><span><span class="t-risk tr-low">Low</span></span><span class="t-conf t-mut">—</span><span class="t-owner"></span></div>
+
+          <div class="dash-group"><span class="g-label g-paused">Paused</span><span class="g-count">1</span></div>
+          <div class="dash-task"><span class="t-name"><span class="t-check"></span></span><span class="t-name"><span>Incident-Responder-01</span></span><span class="t-mut">DevOps</span><span><span class="t-tag ts-paused">Paused</span></span><span><span class="t-risk tr-high">High</span></span><span class="t-conf t-mut">—</span><span class="t-owner"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="proj-scenarios">
+    <div class="eyebrow"><span class="num">EXAMPLE USE CASES</span></div>
+    <h3>Where an agent OS like this would plug in</h3>
+    <p class="scenarios-note">Loopwork is a concept project — these are illustrative scenarios it's designed to support, not completed deployments.</p>
+    <div class="scenario-grid">
+      <div class="scenario-card"><h5>Customer support fleet</h5><p>A 40-agent fleet handling refund verification, ticket triage, and customer outreach across support queues.</p><ul><li>Per-agent confidence thresholds tuned by ticket type</li><li>Auto-escalation when a refund exceeds policy limits</li><li>Full conversation replay available for QA review</li></ul></div>
+      <div class="scenario-card"><h5>Finance &amp; revenue ops fleet</h5><p>Agents reconciling vendor invoices and flagging mismatches before they ever reach the ledger.</p><ul><li>Dollar-amount guardrails route high-value entries to a human</li><li>Audit trail built to satisfy SOX-style review requirements</li><li>Cost-per-agent tracked against the savings each one generates</li></ul></div>
+      <div class="scenario-card"><h5>Platform &amp; DevOps fleet</h5><p>Agents proposing deploys, running rollbacks, and triaging incidents overnight without a human on call yet.</p><ul><li>Read-only agents get broader autonomy than ones that can deploy</li><li>On-call humans are paged only above a defined risk threshold</li><li>Every automated rollback is replayable step by step</li></ul></div>
+    </div>
+  </div>
   <div class="proj-nav">
     <a href="irc.html" class="proj-nav-link prev">← IRC Sales Solutions</a>
     <a href="../index.html#work" class="proj-nav-link all">All work</a>
