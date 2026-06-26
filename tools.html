@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tools for UI/UX — Jonathan Lu</title>
+<meta name="description" content="A curated collection of AI tools, skills, MCP servers, and resources for building beautiful user interfaces.">
+<style>
+  :root{
+    --bg:#f8f7f4;
+    --panel:#ffffff;
+    --ink:#1d1d1f;
+    --ink-soft:#48484a;
+    --ink-faint:#6e6e73;
+    --line:#d2d2d7;
+    --line-light:#e8e8ed;
+    --blue:#0071e3;
+    --blue-dim:#e8f0fe;
+    --teal:#007a6e;
+    --teal-dim:#e0f2ef;
+    --amber:#8a6d00;
+    --amber-dim:#fef3d7;
+    --red:#d40025;
+    --rail-bg:#1d1d1f;
+    --rail-ink:#f5f5f7;
+    --rail-muted:#a1a1a6;
+    --rail-line:rgba(255,255,255,.1);
+    --r-s:8px; --r-m:12px; --r-l:20px; --r-xl:28px;
+    --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:64px;
+    --f-display:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --f-body:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --f-mono:'SF Mono', SFMono-Regular, ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace;
+    --rail-w:268px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--f-body); font-size:17px; line-height:1.58;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; overflow-wrap:break-word; }
+  ::selection{ background:var(--blue); color:#fff; }
+  h1,h2,h3{ font-family:var(--f-display); font-weight:700; letter-spacing:0; margin:0; text-wrap:balance; overflow-wrap:break-word; }
+  p,li,.page-hero,.hero-meta,.hero-pill,.filter-chip,.tools-section,
+  .cat-head,.cat-desc,.tool-card,.card-name,.card-desc,.card-footer{ min-width:0; overflow-wrap:break-word; }
+  .eyebrow{
+    font-family:var(--f-mono); font-size:12px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint);
+    display:flex; align-items:center; gap:var(--sp-2);
+  }
+  .eyebrow .num{ color:var(--blue); }
+
+  /* rail */
+  .rail{position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);background:var(--rail-bg);color:var(--rail-ink);display:flex;flex-direction:column;padding:32px 24px;z-index:40;border-right:1px solid var(--rail-line)}
+  .canvas{margin-left:var(--rail-w);min-height:100vh}
+  .brand{margin-bottom:48px}
+  .brand-mark{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1}
+  .brand-mark span{color:var(--amber)}
+  .brand-sub{margin-top:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rail-muted)}
+  .rail-status{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--rail-muted);padding:12px 0;border-top:1px solid var(--rail-line);border-bottom:1px solid var(--rail-line);margin-bottom:32px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,122,110,.5)}70%{box-shadow:0 0 0 7px rgba(0,122,110,0)}100%{box-shadow:0 0 0 0 rgba(0,122,110,0)}}
+  .rail-nav{list-style:none;margin:0;padding:0;flex:1}
+  .rail-nav li+li{margin-top:4px}
+  .rail-link{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--rail-muted);font-size:15px;font-weight:500;padding:8px;border-radius:var(--r-s);transition:color .2s,background .2s}
+  .rail-link .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint)}
+  .rail-link:hover,.rail-link.is-active{color:var(--rail-ink);background:rgba(255,255,255,.08)}
+  .rail-link.is-active .n{color:var(--amber)}
+  .rail-foot{font-family:var(--f-mono);font-size:11px;color:var(--rail-muted);padding-top:24px;border-top:1px solid var(--rail-line);line-height:1.7}
+
+  /* page hero */
+  .page-hero{
+    padding:96px var(--sp-8) var(--sp-6);
+    max-width:1120px;
+    position:relative;
+    overflow:hidden;
+  }
+  .page-hero::before{
+    content:'';
+    position:absolute;
+    inset:0 var(--sp-8) auto var(--sp-8);
+    height:1px;
+    background:linear-gradient(90deg,var(--blue),rgba(0,122,110,.55),transparent);
+  }
+  .page-hero h1{ font-size:60px; line-height:1.04; margin-top:var(--sp-3); max-width:14ch; }
+  .page-hero h1 em{ font-style:normal; color:var(--blue); }
+  .page-hero .lede{ margin-top:var(--sp-5); font-size:19px; color:var(--ink-soft); max-width:58ch; line-height:1.55; }
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--sp-2);
+    margin-top:var(--sp-5);
+    max-width:760px;
+  }
+  .hero-pill{
+    display:inline-flex;
+    align-items:center;
+    min-height:34px;
+    padding:7px 12px;
+    border:1px solid var(--line-light);
+    border-radius:999px;
+    background:rgba(255,255,255,.76);
+    color:var(--ink-soft);
+    font-size:13px;
+    line-height:1.25;
+    font-weight:600;
+    white-space:normal;
+    text-align:left;
+    box-shadow:0 10px 26px -22px rgba(0,0,0,.28);
+  }
+  .hero-pill strong{ color:var(--ink); font-weight:700; }
+
+  /* filter bar */
+  .filter-bar{ padding:0 var(--sp-8); max-width:1100px; display:flex; flex-wrap:wrap; gap:var(--sp-2); margin-bottom:var(--sp-7); }
+  .filter-chip{
+    font-family:var(--f-body); font-size:14px; font-weight:500;
+    line-height:1.25;
+    padding:10px 18px; border-radius:999px;
+    border:1px solid var(--line); background:var(--panel);
+    color:var(--ink-soft); cursor:pointer;
+    white-space:normal;
+    text-align:center;
+    transition:background .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
+  }
+  .filter-chip:hover{ border-color:var(--ink); color:var(--ink); }
+  .filter-chip.is-active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  /* tool sections */
+  .tools-section{ padding:0 var(--sp-8) var(--sp-7); max-width:1100px; }
+  .cat-head{ display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-4); padding-bottom:var(--sp-3); border-bottom:1px solid var(--line-light); }
+  .cat-icon{ width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex:none; }
+  .cat-head h2{ font-size:26px; }
+  .cat-count{ font-family:var(--f-mono); font-size:12px; background:var(--line-light); color:var(--ink-soft); padding:4px 10px; border-radius:999px; margin-left:auto; }
+  .cat-desc{ font-size:15px; color:var(--ink-faint); margin-bottom:var(--sp-5); max-width:60ch; line-height:1.55; }
+
+  /* tool cards — frosted glass */
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:var(--sp-5); margin-bottom:var(--sp-7); }
+  .tool-card{
+    position:relative;
+    background:rgba(255,255,255,.78);
+    backdrop-filter:blur(24px) saturate(1.6);
+    -webkit-backdrop-filter:blur(24px) saturate(1.6);
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:var(--r-xl);
+    padding:var(--sp-5) var(--sp-5) var(--sp-4);
+    display:flex; flex-direction:column; gap:var(--sp-3);
+    transition:transform .24s var(--ease), box-shadow .24s var(--ease), border-color .24s var(--ease);
+    text-decoration:none; color:var(--ink); cursor:pointer; overflow:hidden;
+  }
+  .tool-card:hover{ transform:translateY(-5px); box-shadow:0 20px 48px -16px rgba(0,0,0,.14); border-color:rgba(180,180,185,.5); }
+  .tool-card::before{
+    content:''; position:absolute; top:-40%; left:-20%; width:160%; height:100%;
+    background:radial-gradient(ellipse at 30% 0%, var(--card-glow, rgba(0,113,227,.05)), transparent 70%);
+    pointer-events:none;
+  }
+
+  .card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--sp-3); }
+  .card-icon{
+    width:48px; height:48px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px; flex:none;
+    background:linear-gradient(135deg, var(--icon-from, #0071e3), var(--icon-to, #34aadc));
+    color:#fff; box-shadow:0 4px 14px -4px rgba(0,0,0,.18);
+  }
+  .card-star{
+    font-family:var(--f-mono); font-size:10px; letter-spacing:.04em;
+    color:var(--amber); background:var(--amber-dim);
+    padding:5px 10px; border-radius:8px; white-space:nowrap;
+    border:1px solid rgba(138,109,0,.15);
+  }
+
+  .card-name{ font-family:var(--f-display); font-size:19px; font-weight:600; letter-spacing:0; }
+  .card-desc{ font-size:15px; color:var(--ink-soft); line-height:1.52; flex:1; }
+  .card-footer{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:var(--sp-3);
+    flex-wrap:wrap;
+    padding-top:var(--sp-3); border-top:1px solid var(--line-light);
+  }
+  .card-cat{ font-family:var(--f-mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); }
+  .card-arrow{
+    width:30px; height:30px; border-radius:50%;
+    background:var(--ink); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; transition:background .18s var(--ease);
+  }
+  .tool-card:hover .card-arrow{ background:var(--blue); }
+
+  /* card color variants */
+  .tool-card[data-cat="skills"]{ --card-glow:rgba(88,86,214,.06); --icon-from:#5856d6; --icon-to:#af52de; }
+  .tool-card[data-cat="apps"]{ --card-glow:rgba(52,199,89,.05); --icon-from:#34c759; --icon-to:#30d158; }
+  .tool-card[data-cat="mcp"]{ --card-glow:rgba(0,113,227,.05); --icon-from:#0071e3; --icon-to:#64d2ff; }
+  .tool-card[data-cat="design"]{ --card-glow:rgba(255,45,85,.05); --icon-from:#ff2d55; --icon-to:#ff375f; }
+  .tool-card[data-cat="resources"]{ --card-glow:rgba(255,159,10,.05); --icon-from:#ff9f0a; --icon-to:#ffcc02; }
+
+  footer{
+    padding:var(--sp-6) var(--sp-8) var(--sp-8);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:var(--sp-3);
+    font-family:var(--f-mono); font-size:12px; color:var(--ink-faint);
+  }
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+  .reveal.is-visible{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; transition:none; } *{ animation-duration:.001ms !important; } }
+
+  @media (max-width:980px){
+    .rail{position:relative;width:100%;height:auto;flex-direction:row;align-items:center;padding:16px 20px;gap:20px;overflow-x:auto}
+    .brand{margin-bottom:0}.rail-status{border:none;padding:0;margin-bottom:0;flex:none}
+    .rail-nav{display:flex;gap:8px;flex:none}.rail-nav li+li{margin-top:0}
+    .rail-foot{display:none}.canvas{margin-left:0}
+    .page-hero,.tools-section,.filter-bar,footer{ padding-left:var(--sp-5); padding-right:var(--sp-5); }
+    .page-hero{ padding-top:var(--sp-7); }
+    .page-hero h1{ font-size:42px; line-height:1.08; max-width:13ch; }
+    .page-hero::before{ left:var(--sp-5); right:var(--sp-5); }
+  }
+  @media (max-width:620px){
+    .page-hero,.tools-section,.filter-bar,footer{ padding-left:20px; padding-right:20px; }
+    .page-hero{ padding-top:40px; }
+    .page-hero h1{ font-size:36px; }
+    .hero-meta,.filter-bar{ gap:10px; }
+    .card-grid{ grid-template-columns:1fr; gap:var(--sp-4); }
+    .cat-head{ align-items:flex-start; flex-wrap:wrap; }
+    .cat-count{ margin-left:0; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="rail">
+  <div class="brand"><div class="brand-mark">J<span>L</span>.</div><div class="brand-sub">betayard.com</div></div>
+  <div class="rail-status"><span class="dot"></span>OPEN FOR Q3 ENGAGEMENTS</div>
+  <ul class="rail-nav">
+    <li><a class="rail-link" href="index.html#overview"><span class="n">01</span>Overview</a></li>
+    <li><a class="rail-link" href="index.html#work"><span class="n">02</span>Work</a></li>
+    <li><a class="rail-link" href="index.html#process"><span class="n">03</span>Process</a></li>
+    <li><a class="rail-link" href="index.html#stack"><span class="n">04</span>Stack</a></li>
+    <li><a class="rail-link" href="index.html#contact"><span class="n">05</span>Contact</a></li>
+    <li><a class="rail-link is-active" href="tools.html"><span class="n">06</span>AI Tools</a></li>
+  </ul>
+  <div class="rail-foot">PRODUCT &amp; UX DESIGN<br>REMOTE · US HOURS<br>&copy; 2026</div>
+</nav>
+
+<main class="canvas">
+  <header class="page-hero">
+    <div class="eyebrow"><span class="num">06</span> AI DESIGN TOOLKIT</div>
+    <h1>Tools that make AI-built interfaces feel <em>designed</em>.</h1>
+    <p class="lede">A curated shelf of AI platforms, skills, MCP servers, design utilities, and references for turning rough prompts into polished product UI.</p>
+    <div class="hero-meta" aria-label="Ways to use this collection">
+      <span class="hero-pill"><strong>Choose</strong>&nbsp;the right model</span>
+      <span class="hero-pill"><strong>Upgrade</strong>&nbsp;agent taste</span>
+      <span class="hero-pill"><strong>Audit</strong>&nbsp;UI quality</span>
+      <span class="hero-pill"><strong>Ship</strong>&nbsp;cleaner interfaces</span>
+    </div>
+  </header>
+
+  <div class="filter-bar">
+    <button class="filter-chip is-active" data-filter="all">All tools</button>
+    <button class="filter-chip" data-filter="platforms">AI Platforms</button>
+    <button class="filter-chip" data-filter="claude-skills">Top Claude Skills</button>
+    <button class="filter-chip" data-filter="skills">Skills</button>
+    <button class="filter-chip" data-filter="apps">Apps</button>
+    <button class="filter-chip" data-filter="mcp">MCP Servers &amp; Plugins</button>
+    <button class="filter-chip" data-filter="design">Design Tools</button>
+    <button class="filter-chip" data-filter="resources">Resources</button>
+  </div>
+
+  <section class="tools-section" data-section="platforms">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a); color:#fff;">⚙️</span><h2>AI Platforms</h2><span class="cat-count">10</span></div>
+    <p class="cat-desc reveal">The leading AI assistants and inference platforms — the engines behind modern design and development workflows.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="platforms" href="https://claude.ai" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b);">C</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Claude</div><div class="card-desc">Anthropic's AI assistant — leading in coding, long-form writing, and agent-based workflows via Claude Code, Co-Work, and Design.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://chatgpt.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#10a37f,#1a7f64);">G</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">ChatGPT</div><div class="card-desc">OpenAI's flagship assistant — broadest multimodal coverage with GPT-5.5, image generation, voice mode, and Codex for coding.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://gemini.google.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#4285f4,#34a853);">G</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Gemini</div><div class="card-desc">Google's AI with the largest context window (1M tokens), deep Workspace integration, and Veo video generation.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://www.perplexity.ai" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#20808d,#1fb8cd);">P</span></div><div class="card-name">Perplexity</div><div class="card-desc">Search-native AI that retrieves real-time, source-cited answers — the go-to for research and fact-checking.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://grok.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#4a4a4f);">X</span></div><div class="card-name">Grok</div><div class="card-desc">xAI's conversational assistant with live X/Twitter data access and strong reasoning benchmarks.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://copilot.microsoft.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#0078d4,#00a4ef);">M</span></div><div class="card-name">Microsoft Copilot</div><div class="card-desc">AI embedded in Microsoft 365 — natively integrated with Word, Excel, PowerPoint, and Teams.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://chat.deepseek.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">D</span></div><div class="card-name">DeepSeek</div><div class="card-desc">Open-source frontier model from China — 10x cheaper than GPT-4o with competitive reasoning and coding.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://groq.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#f97316,#ef4444);">G</span></div><div class="card-name">Groq</div><div class="card-desc">Ultra-fast LPU inference engine — runs open models like Llama and Mixtral at hundreds of tokens per second.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://chat.mistral.ai" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#ff7000,#ff9a00);">M</span></div><div class="card-name">Mistral</div><div class="card-desc">European AI lab with strong open-weight models — Le Chat offers free access with code execution and web search.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="platforms" href="https://www.midjourney.com" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">M</span></div><div class="card-name">Midjourney</div><div class="card-desc">Leading AI image generator — produces distinctive stylized art and has become a core tool for visual design exploration.</div><div class="card-footer"><span class="card-cat">AI Platform</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+  <section class="tools-section" data-section="claude-skills">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b); color:#fff;">⭐</span><h2>Top Claude Skills</h2><span class="cat-count">8</span></div>
+    <p class="cat-desc reveal">The most-installed skills for Claude Code — production-grade design, accessibility, React patterns, and UX intelligence.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/anthropics/skills/tree/main/skills/frontend-design" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b);">🎨</span><span class="card-star">★ 65,847</span></div><div class="card-name">Anthropic Frontend Design</div><div class="card-desc">Distinctive, production-grade UI with bold aesthetics — Anthropic's official skill for building frontends with strong visual direction.</div><div class="card-footer"><span class="card-cat">anthropics/skills</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/vercel-labs/agent-skills/blob/main/skills/web-design-guidelines/SKILL.md" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a);">✅</span><span class="card-star">★ 19,487</span></div><div class="card-name">Vercel Web Design Guidelines</div><div class="card-desc">Web interface audit covering 100+ rules for accessibility, UX patterns, and design best practices.</div><div class="card-footer"><span class="card-cat">vercel-labs/agent-skills</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/vercel-labs/agent-skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a);">⚛️</span><span class="card-star">★ 19,487</span></div><div class="card-name">Vercel React Best Practices</div><div class="card-desc">React and Next.js performance skill — 57 rules across 8 categories for production-quality components.</div><div class="card-footer"><span class="card-cat">vercel-labs/agent-skills</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/vercel-labs/agent-skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a);">🧩</span><span class="card-star">★ 19,487</span></div><div class="card-name">Vercel Composition Patterns</div><div class="card-desc">React component architecture and design patterns — how to structure, compose, and scale UI components.</div><div class="card-footer"><span class="card-cat">vercel-labs/agent-skills</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#6366f1,#a855f7);">💎</span><span class="card-star">★ 29,636</span></div><div class="card-name">UI/UX Pro Max</div><div class="card-desc">Full design intelligence — 50 styles, 97 palettes, 9 framework stacks for generating complete design systems.</div><div class="card-footer"><span class="card-cat">nextlevelbuilder/ui-ux-pro-max-skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/bencium/bencium-claude-code-design-skill" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e);">🖌️</span><span class="card-star">★ 72</span></div><div class="card-name">Bencium UX Designer</div><div class="card-desc">Comprehensive UX with accessibility, responsive design, and motion specs — full design-system generation for Claude Code.</div><div class="card-footer"><span class="card-cat">bencium/bencium-claude-code-design-skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/accesslint/claude-marketplace" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#0071e3,#34aadc);">♿</span><span class="card-star">★ 8</span></div><div class="card-name">AccessLint</div><div class="card-desc">WCAG 2.1 accessibility auditing, contrast checking, and refactoring — automated a11y compliance for Claude Code.</div><div class="card-footer"><span class="card-cat">accesslint/claude-marketplace</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="claude-skills" href="https://github.com/vercel-labs/agent-skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a);">📱</span><span class="card-star">★ 19,487</span></div><div class="card-name">Vercel React Native Skills</div><div class="card-desc">Mobile UI performance, animations, and navigation patterns for React Native — production-grade mobile development.</div><div class="card-footer"><span class="card-cat">vercel-labs/agent-skills</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+  <section class="tools-section" data-section="skills">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#5856d6,#af52de); color:#fff;">⚡</span><h2>Skills</h2><span class="cat-count">16</span></div>
+    <p class="cat-desc reveal">AI agent skills that enhance code editors and coding assistants with design intelligence.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="skills" href="https://impeccable.style/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">✦</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Impeccable</div><div class="card-desc">20 design commands that teach your AI agent about typography, spacing, and visual hierarchy.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://www.tasteskill.dev/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎨</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Taste Skill</div><div class="card-desc">Open-source SKILL.md that stops AI agents from producing cookie-cutter frontend designs.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://swiss.ziki.boo/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🇨🇭</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Swiss Design System</div><div class="card-desc">Teaches AI agents Swiss design principles through grotesque typography, disciplined grids, restrained color, and Tailwind patterns.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/maxbogo/yc-web-design-strategy-skill" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🚀</span></div><div class="card-name">YC Web Design Strategy</div><div class="card-desc">Web design and strategy principles from YC's Design Review series, packaged as a skill file.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/emilkowalski/skill" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎯</span></div><div class="card-name">Emil Kowalski Skill</div><div class="card-desc">Skill file based on Emil Kowalski's UI articles, aimed at designers and engineers building better interfaces.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/jakubkrehel/make-interfaces-feel-better" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">✨</span></div><div class="card-name">Make Interfaces Feel Better</div><div class="card-desc">Agent skill that teaches small design engineering details that compound into better interfaces.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://www.userinterface.wiki/skill" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📐</span></div><div class="card-name">UserInterface.wiki Skill</div><div class="card-desc">152 UI design rules packaged as a skill file for coding assistants.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🧩</span></div><div class="card-name">UI UX Pro Max Skill</div><div class="card-desc">Generates design systems — colors, typography, layouts — based on your project type and framework.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/anthropics/skills/tree/main/skills/frontend-design" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🤖</span></div><div class="card-name">Anthropic Frontend Design</div><div class="card-desc">Teaches Claude to build frontend UIs with strong visual direction instead of generic defaults.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://ui.shadcn.com/docs/skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔲</span></div><div class="card-name">shadcn/ui Skills</div><div class="card-desc">Gives your AI assistant context about your shadcn/ui setup so it generates correct component code.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/vercel-labs/agent-skills/blob/main/skills/web-design-guidelines/SKILL.md" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">✅</span></div><div class="card-name">Web Design Guidelines</div><div class="card-desc">Checks your UI code against web design best practices and flags violations.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/Owl-Listener/designer-skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📦</span></div><div class="card-name">Designer Skills Collection</div><div class="card-desc">Pack of skills and commands — from research to systems, UI, interaction, and delivery.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://www.typeui.sh/design-skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔤</span></div><div class="card-name">TypeUI Design Skills</div><div class="card-desc">Collection of UI designs with downloadable skill.md files.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/bencium/bencium-marketplace" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🛒</span></div><div class="card-name">Bencium Marketplace</div><div class="card-desc">Claude Code plugin marketplace with skills for design, architecture, productivity, typography, and code review.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/CloudAI-X/threejs-skills" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎮</span></div><div class="card-name">Three.js Skills</div><div class="card-desc">Collection of Three.js skills covering scenes, geometry, lighting, shaders, loaders, animation, and interaction.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="skills" href="https://github.com/VoltAgent/awesome-design-md/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📄</span></div><div class="card-name">Awesome DESIGN.md</div><div class="card-desc">Curated collection of DESIGN.md files inspired by developer-focused websites.</div><div class="card-footer"><span class="card-cat">Skill</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+  <section class="tools-section" data-section="apps">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#34c759,#30d158); color:#fff;">◈</span><h2>Apps</h2><span class="cat-count">10</span></div>
+    <p class="cat-desc reveal">AI-powered applications for designing and building user interfaces.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="apps" href="https://21st.dev/home" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🧱</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">21st.dev</div><div class="card-desc">UI component library and templates for building AI-powered products.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://variant.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔄</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Variant</div><div class="card-desc">Scroll through AI-generated design variations for your ideas.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://stitch.withgoogle.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🪡</span></div><div class="card-name">Stitch by Google</div><div class="card-desc">Google's AI design tool for creating UIs from prompts.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://github.com/nexu-io/open-design" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🖼️</span></div><div class="card-name">Open Design</div><div class="card-desc">Local-first, open-source alternative to Claude Design for generating prototypes, slides, images, and videos.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://www.khroma.co/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎨</span></div><div class="card-name">Khroma</div><div class="card-desc">Learns your color preferences and generates palettes you can search and save.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://app.superdesign.dev/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">✨</span></div><div class="card-name">Superdesign</div><div class="card-desc">AI design tool for generating interfaces in the browser.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://github.com/JCodesMore/ai-website-cloner-template" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📋</span></div><div class="card-name">AI Website Cloner</div><div class="card-desc">Clone any website into a Next.js codebase with one command using AI agents.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://noyzzi.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎛️</span></div><div class="card-name">Noyzzi</div><div class="card-desc">Growing collection of interactive designs with prompts you can copy and adapt.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://styles.refero.design/ai-agents/design-resources" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📚</span></div><div class="card-name">Design Resources for AI Agents</div><div class="card-desc">Curated directory of DESIGN.md resources and design references for AI agents.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="apps" href="https://www.prompt-kit.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🧰</span></div><div class="card-name">prompt-kit</div><div class="card-desc">Accessible, customizable component primitives for AI interfaces, including prompt inputs, messages, reasoning, and tool views.</div><div class="card-footer"><span class="card-cat">App</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+  <section class="tools-section" data-section="mcp">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#0071e3,#64d2ff); color:#fff;">⬡</span><h2>MCP Servers &amp; Plugins</h2><span class="cat-count">5</span></div>
+    <p class="cat-desc reveal">Model Context Protocol servers and plugins that add UI research and design workflows to AI editors.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="mcp" href="https://github.com/21st-dev/magic-mcp" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🪄</span></div><div class="card-name">Magic MCP</div><div class="card-desc">Generate UI components from text prompts inside Cursor, Windsurf, and VSCode.</div><div class="card-footer"><span class="card-cat">MCP Server</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="mcp" href="https://www.ui-layouts.com/mcp" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📐</span></div><div class="card-name">UI Layouts MCP</div><div class="card-desc">Lets AI editors search and use real UI components instead of guessing the code.</div><div class="card-footer"><span class="card-cat">MCP Server</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="mcp" href="https://www.lazyweb.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔍</span></div><div class="card-name">Lazyweb</div><div class="card-desc">MCP server and skills that help agents research real app screens before designing UI.</div><div class="card-footer"><span class="card-cat">MCP Server</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="mcp" href="https://github.com/0xdesign/design-plugin" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔁</span></div><div class="card-name">Design and Refine</div><div class="card-desc">Claude Code plugin for generating, comparing, and refining multiple UI variations in your codebase.</div><div class="card-footer"><span class="card-cat">MCP Server</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="mcp" href="https://github.com/Dammyjay93/interface-design" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🧠</span></div><div class="card-name">Interface Design</div><div class="card-desc">Claude Code plugin for remembering interface decisions across sessions and keeping UI systems consistent.</div><div class="card-footer"><span class="card-cat">MCP Server</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+  <section class="tools-section" data-section="design">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#ff2d55,#ff375f); color:#fff;">◆</span><h2>Design Tools</h2><span class="cat-count">6</span></div>
+    <p class="cat-desc reveal">Not AI-powered, but valuable utilities for everyday UI/UX work.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="design" href="https://arcade.pirillo.com/fontcrafter.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔤</span></div><div class="card-name">FontCrafter</div><div class="card-desc">Turn your handwriting into an installable font in the browser. Exports OTF, TTF, WOFF2.</div><div class="card-footer"><span class="card-cat">Design Tool</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="design" href="https://magecdn.com/tools/svg-loaders" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">⟳</span></div><div class="card-name">SVG Loaders</div><div class="card-desc">100+ open-source animated SVG loading spinners, MIT licensed.</div><div class="card-footer"><span class="card-cat">Design Tool</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="design" href="https://www.svgbackgrounds.com/set/free-svg-backgrounds-and-patterns/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">▦</span></div><div class="card-name">SVG Backgrounds</div><div class="card-desc">Free SVG backgrounds and patterns you can customize.</div><div class="card-footer"><span class="card-cat">Design Tool</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="design" href="https://www.realtimecolors.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🌈</span></div><div class="card-name">Realtime Colors</div><div class="card-desc">Preview color palettes and typography on a live website mockup.</div><div class="card-footer"><span class="card-cat">Design Tool</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="design" href="https://transitions.dev/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🔀</span></div><div class="card-name">Transitions.dev</div><div class="card-desc">Copy-and-paste transition patterns for common web app interactions.</div><div class="card-footer"><span class="card-cat">Design Tool</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="design" href="https://github.com/zarazhangrui/beautiful-html-templates" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🖥️</span></div><div class="card-name">Beautiful HTML Templates</div><div class="card-desc">Agent-ready library of reusable HTML slide templates for generating polished decks.</div><div class="card-footer"><span class="card-cat">Design Tool</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+<section class="tools-section" data-section="resources">
+    <div class="cat-head reveal"><span class="cat-icon" style="background:linear-gradient(135deg,#ff9f0a,#ffcc02); color:#fff;">📚</span><h2>Resources</h2><span class="cat-count">9</span></div>
+    <p class="cat-desc reveal">Learning materials, design references, and inspiration for UI/UX.</p>
+    <div class="card-grid">
+      <a class="tool-card reveal" data-cat="resources" href="https://www.shapeof.ai/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🧠</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">The Shape of AI</div><div class="card-desc">UX patterns for designing interfaces that use AI.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://lawsofux.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">⚖️</span></div><div class="card-name">Laws of UX</div><div class="card-desc">Psychology-backed design principles for better user interfaces.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://www.userinterface.wiki/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">📖</span></div><div class="card-name">UserInterface.wiki</div><div class="card-desc">Wiki covering UI design, animation, motion, and typography fundamentals.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://craftwork.design/curated/websites/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">💎</span></div><div class="card-name">Craftwork</div><div class="card-desc">Curated website designs and premium design resources — UI kits, illustrations, and mockups.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://motion.zajno.com/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎬</span></div><div class="card-name">Zajno Motion</div><div class="card-desc">Interactive collection of motion-heavy web experiences for animation and interaction inspiration.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://developers.openai.com/blog/designing-delightful-frontends-with-gpt-5-4" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon">🎨</span></div><div class="card-name">Delightful frontend</div><div class="card-desc">Practical techniques for steering AI toward polished frontend designs.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://trendshift.io/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a);">📈</span></div><div class="card-name">TrendShift</div><div class="card-desc">Live trending GitHub repositories caught as they rise — daily momentum ranking as an alternative to GitHub Trending.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://www.skills.sh/" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#1d1d1f,#48484a);">🛠️</span><span class="card-star">⭐ Editor's Choice</span></div><div class="card-name">Skills.sh</div><div class="card-desc">The open agent skills directory — discover and install skills for Claude Code, Cursor, Codex, Gemini, and 15+ agents with one command.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+      <a class="tool-card reveal" data-cat="resources" href="https://crossaitools.com/marketplaces" target="_blank" rel="noopener"><div class="card-top"><span class="card-icon" style="background:linear-gradient(135deg,#5856d6,#af52de);">🔌</span></div><div class="card-name">Cross AI Tools</div><div class="card-desc">Community-curated directory of Claude Code skills, plugins, MCP servers, and marketplace collections — updated daily from GitHub.</div><div class="card-footer"><span class="card-cat">Resource</span><span class="card-arrow">→</span></div></a>
+    </div>
+  </section>
+
+  
+  <!-- LEAD CAPTURE -->
+  <div style="padding:64px;max-width:1100px">
+    <div style="background:#1d1d1f;color:#f5f5f7;border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+      <div>
+        <div class="eyebrow" style="color:#a1a1a6"><span class="num" style="color:#a1a1a6">GET IN TOUCH</span></div>
+        <h3 style="font-size:34px;color:#fff;margin-top:12px;line-height:1.12">Have a project in mind?</h3>
+        <p style="margin-top:12px;font-size:15px;color:#a1a1a6;max-width:36ch">Drop me a note and I'll get back to you within 24 hours.</p>
+      </div>
+      <form action="https://formsubmit.co/betayards@gmail.com" method="POST" style="display:flex;flex-direction:column;gap:12px">
+        <input type="hidden" name="_next" value="https://www.betayard.com">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="New inquiry from Betayard AI Tools page">
+        <input type="text" name="name" placeholder="Your name" required style="font-family:inherit;font-size:15px;padding:14px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none">
+        <input type="email" name="email" placeholder="Your email" required style="font-family:inherit;font-size:15px;padding:14px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none">
+        <textarea name="message" rows="4" placeholder="Tell me about your project..." required style="font-family:inherit;font-size:15px;padding:14px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none;resize:vertical"></textarea>
+        <button type="submit" style="font-family:inherit;font-size:15px;font-weight:600;padding:14px 24px;border-radius:10px;border:none;background:#0071e3;color:#fff;cursor:pointer;align-self:flex-start">Send message →</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Jonathan Lu — Betayard Studio</span>
+    <span>64 tools curated by Jonathan Lu</span>
+  </footer>
+</main>
+
+<script>
+  var chips=document.querySelectorAll('.filter-chip'),sections=document.querySelectorAll('.tools-section');
+  chips.forEach(function(c){c.addEventListener('click',function(){chips.forEach(function(x){x.classList.remove('is-active')});c.classList.add('is-active');var f=c.dataset.filter;sections.forEach(function(s){s.style.display=(f==='all'||s.dataset.section===f)?'':'none'})})});
+  var pr=window.matchMedia('(prefers-reduced-motion:reduce)').matches,rv=document.querySelectorAll('.reveal');
+  if(pr){rv.forEach(function(r){r.classList.add('is-visible')})}else{var ro=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('is-visible');ro.unobserve(en.target)}})},{threshold:.08});rv.forEach(function(r){ro.observe(r)})}
+</script>
+</body>
+</html>

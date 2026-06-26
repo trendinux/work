@@ -4,1329 +4,446 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jonathan Lu — Product &amp; UX Design</title>
-<meta name="description" content="Product &amp; UX design for data-driven teams scaling fast — SaaS dashboards, e-commerce, enterprise CRM, and AI agent operating systems.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Product &amp; UX design for data-driven teams — SaaS dashboards, e-commerce, enterprise CRM, and AI agent operating systems.">
 <style>
+:root{
+  --rail-bg:#1d1d1f;--rail-ink:#f5f5f7;--rail-muted:#a1a1a6;--rail-line:rgba(255,255,255,.1);
+  --bg:#f8f7f4;--panel:#fff;--ink:#1d1d1f;--ink-soft:#48484a;--ink-faint:#6e6e73;
+  --line:#d2d2d7;--line-s:#c9c4b6;
+  --blue:#0071e3;--blue-dim:#e8f0fe;--teal:#007a6e;--teal-dim:#e0f2ef;--amber:#8a6d00;--amber-dim:#fef3d7;
+  --r-s:8px;--r-m:12px;--r-l:20px;
+  --f-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'SF Mono',SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
+  --rail-w:268px;--ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#fbfaf7 0%,var(--bg) 46%,#f2f5f4 100%);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.58;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}a{color:inherit;overflow-wrap:break-word}::selection{background:var(--blue);color:#fff}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:0;margin:0;text-wrap:balance;overflow-wrap:break-word}
+p,li,.hero-copy,.hero-intake,.lead-head,.lead-form,.contact-panel>*,
+.card-body,.card-sm,.stack-box,.stat,.step{min-width:0;overflow-wrap:break-word}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:8px}
+.eyebrow .num{color:var(--blue)}
 
-  /* ============ TOKENS ============ */
-  :root{
-    --rail-bg:#14171c;
-    --rail-ink:#edeee7;
-    --rail-muted:#878d97;
-    --rail-line:rgba(255,255,255,.09);
+/* rail */
+.rail{position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);background:var(--rail-bg);color:var(--rail-ink);display:flex;flex-direction:column;padding:32px 24px;z-index:40;border-right:1px solid var(--rail-line)}
+.canvas{margin-left:var(--rail-w);min-height:100vh}
+.brand{margin-bottom:48px}
+.brand-mark{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1}
+.brand-mark span{color:var(--amber)}
+.brand-sub{margin-top:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rail-muted)}
+.rail-status{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--rail-muted);padding:12px 0;border-top:1px solid var(--rail-line);border-bottom:1px solid var(--rail-line);margin-bottom:32px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,122,110,.5)}70%{box-shadow:0 0 0 7px rgba(0,122,110,0)}100%{box-shadow:0 0 0 0 rgba(0,122,110,0)}}
+.rail-nav{list-style:none;margin:0;padding:0;flex:1}
+.rail-nav li+li{margin-top:4px}
+.rail-link{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--rail-muted);font-size:15px;font-weight:500;padding:8px;border-radius:var(--r-s);transition:color .2s var(--ease),background .2s var(--ease)}
+.rail-link .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint)}
+.rail-link:hover,.rail-link.is-active{color:var(--rail-ink);background:rgba(255,255,255,.08)}
+.rail-link.is-active .n{color:var(--amber)}
+.rail-foot{font-family:var(--f-mono);font-size:11px;color:var(--rail-muted);padding-top:24px;border-top:1px solid var(--rail-line);line-height:1.7}
 
-    --bg:#f3f2ee;
-    --panel:#ffffff;
-    --ink:#14171c;
-    --ink-soft:#5b6068;
-    --ink-faint:#8b8f96;
-    --line:#dedad0;
-    --line-strong:#c9c4b6;
+/* hero */
+.hero{padding:88px 64px 48px;max-width:1240px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0 0 auto;height:420px;background:linear-gradient(135deg,rgba(0,113,227,.09),rgba(0,122,110,.08) 44%,rgba(138,109,0,.1));opacity:.9;z-index:-1}
+.hero-shell{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(340px,.74fr);gap:44px;align-items:start}
+.hero h1{font-size:60px;line-height:1.03;margin-top:12px;max-width:17ch}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-lede{margin-top:24px;max-width:60ch;font-size:18px;color:var(--ink-soft)}
+.hero-lede b{color:var(--ink);font-weight:600}
+.hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{font-family:var(--f-body);font-weight:600;font-size:15px;line-height:1.25;padding:13px 24px;border-radius:var(--r-m);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;cursor:pointer;text-align:center;white-space:normal;transition:transform .18s var(--ease),background .18s var(--ease)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
+.btn--p{background:var(--ink);color:#fff}.btn--p:hover{background:var(--blue)}
+.btn--g{background:transparent;color:var(--ink);border-color:var(--line-s)}.btn--g:hover{border-color:var(--ink)}
+.hero-intake{background:rgba(255,255,255,.9);border:1px solid rgba(29,29,31,.11);border-radius:var(--r-l);box-shadow:0 24px 60px -36px rgba(0,0,0,.42);padding:28px;backdrop-filter:blur(18px);position:sticky;top:28px}
+.intake-kicker{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.hero-intake h2{font-size:26px;line-height:1.12}
+.hero-intake p{margin:10px 0 18px;color:var(--ink-soft);font-size:14px;line-height:1.5}
+.mini-form,.lead-form{display:flex;flex-direction:column;gap:12px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mini-form input,.mini-form select,.mini-form textarea,.lead-form input,.lead-form select,.lead-form textarea{font-family:var(--f-body);font-size:15px;padding:14px 16px;border-radius:var(--r-s);outline:none;transition:border-color .18s,box-shadow .18s;resize:vertical}
+.mini-form input,.mini-form select,.mini-form textarea{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.mini-form input::placeholder,.mini-form textarea::placeholder{color:#8c8c91}
+.mini-form input:focus,.mini-form select:focus,.mini-form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.12)}
+.mini-form select,.lead-form select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 18px) calc(50% - 3px),calc(100% - 13px) calc(50% - 3px);background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.form-note{font-size:12px;color:var(--ink-faint);line-height:1.45;margin-top:2px}
+.trust-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.trust-item{font-size:12px;color:var(--ink-soft)}
 
-    --blue:#2c49f0;
-    --blue-dim:#e7e9fb;
-    --amber:#dc9a32;
-    --amber-dim:#f6e8d2;
-    --teal:#1c8472;
-    --teal-dim:#dbece7;
+/* stat ticker */
+.ticker{margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap}
+.stat{flex:1 1 220px;padding:24px 24px 24px 0;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:none}.stat:first-child{padding-left:0}
+.stat-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+.stat-val{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
 
-    --r-s:6px;
-    --r-m:10px;
-    --r-l:18px;
+/* section */
+section{padding:96px 64px;max-width:1240px;border-top:1px solid var(--line)}
+.sec-head{margin-bottom:56px;max-width:760px}
+.sec-head h2{font-size:38px;margin-top:12px}
+.sec-head p{margin-top:16px;color:var(--ink-soft);font-size:16px;max-width:60ch}
 
-    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px;
-    --sp-6:32px; --sp-7:48px; --sp-8:64px; --sp-9:96px;
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;text-decoration:none;color:var(--ink);transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .24s var(--ease)}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -18px rgba(0,0,0,.12);border-color:#c8c8cd}
+.thumb{height:160px;position:relative;overflow:hidden;background:var(--bg)}
+.thumb .chrome{display:flex;align-items:center;gap:5px;position:absolute;top:0;left:0;right:0;padding:8px 12px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.04);z-index:2}
+.chrome i{width:7px;height:7px;border-radius:50%;background:#d2d2d7}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.85) contrast(.95);transition:transform .35s var(--ease)}
+.card:hover .thumb img{transform:scale(1.03)}
+.loopwork-thumb{background:#12151b;padding:14px;color:#f5f5f7;font-family:var(--f-body)}
+.loopwork-ui{height:100%;display:grid;grid-template-columns:74px 1fr;gap:10px;border:1px solid #2a2e37;border-radius:10px;background:#171a21;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.loopwork-side{background:#1e222b;border-right:1px solid #2a2e37;padding:10px 8px}
+.loopwork-logo{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#7c3aed,#06b6d4);margin-bottom:12px}
+.loopwork-nav{display:grid;gap:6px}
+.loopwork-nav span{height:6px;border-radius:99px;background:#3a404d}
+.loopwork-nav span:nth-child(1){width:42px;background:#7c3aed}.loopwork-nav span:nth-child(2){width:34px}.loopwork-nav span:nth-child(3){width:48px}.loopwork-nav span:nth-child(4){width:28px}
+.loopwork-main{padding:10px 10px 10px 0;min-width:0}
+.loopwork-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.loopwork-title{font-size:11px;font-weight:700;line-height:1;color:#f8fafc}
+.loopwork-chip{font-family:var(--f-mono);font-size:8px;color:#4ade80;background:rgba(74,222,128,.14);border:1px solid rgba(74,222,128,.24);border-radius:5px;padding:3px 5px;white-space:nowrap}
+.loopwork-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.loopwork-metric{border:1px solid #2a2e37;border-radius:7px;background:#1f232c;padding:6px}
+.loopwork-metric strong{display:block;font-size:12px;line-height:1.1;color:#fff}.loopwork-metric span{display:block;font-family:var(--f-mono);font-size:7px;color:#8b93a3;margin-top:3px;text-transform:uppercase}
+.loopwork-agents{display:grid;gap:5px}
+.loopwork-agent{display:grid;grid-template-columns:7px 1fr 32px;align-items:center;gap:7px;border:1px solid #2a2e37;border-radius:7px;background:#1b1f27;padding:6px}
+.loopwork-agent i{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.12)}
+.loopwork-agent span{height:5px;border-radius:99px;background:#4b5261}.loopwork-agent span:nth-child(2){width:100%}.loopwork-agent em{height:5px;border-radius:99px;background:#7c3aed;font-style:normal}
+.card-body{padding:22px 24px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pill{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.pill--live{background:var(--teal-dim);color:var(--teal)}
+.pill--ship{background:var(--blue-dim);color:var(--blue)}
+.pill--acq{background:var(--amber-dim);color:var(--amber)}
+.pill--new{background:var(--ink);color:#fff}
+.card-cat{font-family:var(--f-mono);font-size:10px;color:var(--ink-faint)}
+.card-body h3{font-size:18px;letter-spacing:0;margin-bottom:6px}
+.card-body .desc{font-size:14px;color:var(--ink-soft);line-height:1.5}
+.card-metric{font-family:var(--f-mono);font-size:12px;color:var(--teal);margin-top:10px}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.card-go{font-family:var(--f-mono);font-size:12px;color:var(--blue);text-align:right}
 
-    --f-display:'Space Grotesk', sans-serif;
-    --f-body:'Inter', sans-serif;
-    --f-mono:'IBM Plex Mono', monospace;
+/* compact cards */
+.grid-sm{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:32px}
+.card-sm{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-m);padding:16px;text-decoration:none;color:var(--ink);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.card-sm:hover{transform:translateY(-3px);box-shadow:0 12px 24px -12px rgba(0,0,0,.1)}
+.card-sm h4{font-size:15px;margin:0 0 4px}.card-sm p{font-size:13px;color:var(--ink-soft);margin:0}
 
-    --rail-w:268px;
-    --ease:cubic-bezier(.22,.61,.36,1);
-  }
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:56px}
+.steps::before{content:'';position:absolute;top:24px;left:0;right:0;height:1px;background:var(--line)}
+.step{padding-right:24px;position:relative}
+.step-n{width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--f-mono);font-size:12px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;margin-bottom:16px}
+.step h4{font-size:16px;margin:0 0 6px}.step p{margin:0;font-size:14px;color:var(--ink-soft)}
 
-  *,*::before,*::after{ box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--f-body);
-    font-size:16px;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  img{ max-width:100%; display:block; }
-  a{ color:inherit; }
-  ::selection{ background:var(--blue); color:#fff; }
+/* stack */
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin-top:56px}
+.stack-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-s);padding:24px}
+.stack-box h4{font-size:13px;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:13px;color:var(--ink-soft);border:1px solid var(--line);padding:6px 12px;border-radius:8px;background:var(--bg)}
+.tag-ai{color:var(--blue);border-color:var(--blue-dim);background:var(--blue-dim)}
 
-  :focus-visible{
-    outline:2px solid var(--blue);
-    outline-offset:3px;
-    border-radius:4px;
-  }
+/* lead form */
+.lead-wrap{padding:96px 64px 64px;max-width:1240px;border-top:1px solid var(--line)}
+.lead-inner{background:var(--rail-bg);color:var(--rail-ink);border-radius:var(--r-l);padding:56px;display:grid;grid-template-columns:.85fr 1fr;gap:48px;align-items:start;box-shadow:0 30px 70px -46px rgba(0,0,0,.55)}
+.lead-head h3{font-size:34px;color:#fff;margin-top:12px}
+.lead-head p{margin-top:12px;font-size:15px;color:var(--rail-muted);max-width:40ch}
+.lead-points{margin:24px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.lead-points li{font-size:14px;color:var(--rail-muted);border-top:1px solid rgba(255,255,255,.1);padding-top:10px}
+.lead-form input,.lead-form select,.lead-form textarea{border:1px solid rgba(255,255,255,.12);background-color:rgba(255,255,255,.06);color:#fff}
+.lead-form select{background-color:#2b2d32}
+.lead-form select option{color:var(--ink)}
+.lead-form input::placeholder,.lead-form textarea::placeholder{color:rgba(255,255,255,.35)}
+.lead-form input:focus,.lead-form select:focus,.lead-form textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.2)}
+.lead-btn{font-family:var(--f-body);font-size:15px;font-weight:600;line-height:1.25;padding:14px 24px;border-radius:var(--r-s);border:none;background:var(--blue);color:#fff;cursor:pointer;transition:background .18s,transform .18s;align-self:flex-start;text-align:center;white-space:normal}
+.lead-btn:hover{background:#005bb5;transform:translateY(-1px)}.lead-btn:active{transform:scale(.97)}
+.hide-field{position:absolute;left:-9999px;opacity:0;height:0;width:0}
 
-  h1,h2,h3{
-    font-family:var(--f-display);
-    font-weight:700;
-    letter-spacing:-.01em;
-    margin:0;
-  }
+/* contact */
+.contact{padding:80px 64px 0;max-width:1240px}
+.contact-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-l);padding:42px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px}
+.contact-panel h2{font-size:34px;max-width:18ch}
+.contact-panel p{margin:10px 0 0;color:var(--ink-soft);font-size:15px;max-width:54ch}
+.contact-status{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--teal);display:flex;align-items:center;gap:8px;margin-bottom:16px}
 
-  .eyebrow{
-    font-family:var(--f-mono);
-    font-size:11.5px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    display:flex;
-    align-items:center;
-    gap:var(--sp-2);
-  }
-  .eyebrow .num{ color:var(--blue); }
+footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--f-mono);font-size:12px;color:var(--ink-faint)}
 
-  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
-  .reveal.is-visible{ opacity:1; transform:none; }
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.is-v{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
-  @media (prefers-reduced-motion:reduce){
-    html{ scroll-behavior:auto; }
-    .reveal{ opacity:1; transform:none; transition:none; }
-    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
-  }
-
-  /* ============ LAYOUT SHELL ============ */
-  .rail{
-    position:fixed;
-    top:0; left:0; bottom:0;
-    width:var(--rail-w);
-    background:var(--rail-bg);
-    color:var(--rail-ink);
-    display:flex;
-    flex-direction:column;
-    padding:var(--sp-6) var(--sp-5);
-    z-index:40;
-    border-right:1px solid var(--rail-line);
-  }
-  .canvas{
-    margin-left:var(--rail-w);
-    min-height:100vh;
-  }
-
-  .brand{ margin-bottom:var(--sp-7); }
-  .brand-mark{
-    font-family:var(--f-display);
-    font-size:26px;
-    font-weight:700;
-    line-height:1;
-  }
-  .brand-mark span{ color:var(--amber); }
-  .brand-sub{
-    margin-top:var(--sp-2);
-    font-family:var(--f-mono);
-    font-size:11px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--rail-muted);
-  }
-
-  .rail-status{
-    display:flex;
-    align-items:center;
-    gap:var(--sp-2);
-    font-family:var(--f-mono);
-    font-size:11px;
-    letter-spacing:.06em;
-    color:var(--rail-muted);
-    padding:var(--sp-3) 0;
-    border-top:1px solid var(--rail-line);
-    border-bottom:1px solid var(--rail-line);
-    margin-bottom:var(--sp-6);
-  }
-  .dot{
-    width:7px; height:7px; border-radius:50%;
-    background:var(--teal);
-    box-shadow:0 0 0 0 rgba(28,132,114,.6);
-    animation:pulse 2.4s infinite;
-    flex:none;
-  }
-  @keyframes pulse{
-    0%{ box-shadow:0 0 0 0 rgba(28,132,114,.55); }
-    70%{ box-shadow:0 0 0 7px rgba(28,132,114,0); }
-    100%{ box-shadow:0 0 0 0 rgba(28,132,114,0); }
-  }
-
-  .rail-nav{ list-style:none; margin:0; padding:0; flex:1; }
-  .rail-nav li + li{ margin-top:var(--sp-1); }
-  .rail-link{
-    display:flex;
-    align-items:baseline;
-    gap:var(--sp-3);
-    text-decoration:none;
-    color:var(--rail-muted);
-    font-family:var(--f-body);
-    font-size:14.5px;
-    font-weight:500;
-    padding:var(--sp-2) var(--sp-2);
-    border-radius:var(--r-s);
-    transition:color .2s var(--ease), background .2s var(--ease);
-  }
-  .rail-link .n{ font-family:var(--f-mono); font-size:11px; color:var(--ink-faint); }
-  .rail-link:hover, .rail-link.is-active{
-    color:var(--rail-ink);
-    background:rgba(255,255,255,.06);
-  }
-  .rail-link.is-active .n{ color:var(--amber); }
-
-  .rail-foot{
-    font-family:var(--f-mono);
-    font-size:10.5px;
-    color:var(--rail-muted);
-    padding-top:var(--sp-5);
-    border-top:1px solid var(--rail-line);
-    line-height:1.7;
-  }
-
-  /* ============ HERO ============ */
-  .hero{
-    padding:var(--sp-9) var(--sp-8) var(--sp-8);
-    max-width:1080px;
-  }
-  .hero h1{
-    font-size:clamp(36px, 4.6vw, 60px);
-    line-height:1.05;
-    margin-top:var(--sp-4);
-    max-width:18ch;
-  }
-  .hero h1 em{
-    font-style:normal;
-    color:var(--blue);
-  }
-  .hero-lede{
-    margin-top:var(--sp-5);
-    max-width:62ch;
-    font-size:17.5px;
-    color:var(--ink-soft);
-  }
-  .hero-lede b{ color:var(--ink); font-weight:600; }
-
-  .hero-cta{
-    margin-top:var(--sp-6);
-    display:flex;
-    flex-wrap:wrap;
-    gap:var(--sp-3);
-  }
-  .btn{
-    font-family:var(--f-body);
-    font-weight:600;
-    font-size:14.5px;
-    padding:13px 22px;
-    border-radius:var(--r-m);
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    border:1px solid transparent;
-    cursor:pointer;
-    transition:transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
-  }
-  .btn:hover{ transform:translateY(-2px); }
-  .btn--primary{ background:var(--ink); color:#fff; }
-  .btn--primary:hover{ background:var(--blue); }
-  .btn--ghost{ background:transparent; color:var(--ink); border-color:var(--line-strong); }
-  .btn--ghost:hover{ border-color:var(--ink); }
-
-  /* stat ticker — signature element */
-  .ticker{
-    margin-top:var(--sp-8);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    display:flex;
-    flex-wrap:wrap;
-  }
-  .stat{
-    flex:1 1 220px;
-    padding:var(--sp-5) var(--sp-5) var(--sp-5) 0;
-    border-right:1px solid var(--line);
-    position:relative;
-  }
-  .stat:last-child{ border-right:none; }
-  .stat:first-child{ padding-left:0; }
-  .stat-label{
-    font-family:var(--f-mono);
-    font-size:10.5px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    display:flex;
-    align-items:center;
-    gap:6px;
-    margin-bottom:var(--sp-2);
-  }
-  .stat-label .sq{ width:6px; height:6px; background:var(--amber); flex:none; }
-  .stat-val{
-    font-family:var(--f-display);
-    font-weight:700;
-    font-size:21px;
-    line-height:1.2;
-  }
-
-  /* ============ SECTION FRAME ============ */
-  section{ padding:var(--sp-8) var(--sp-8); max-width:1240px; }
-  .sec-head{ margin-bottom:var(--sp-7); max-width:760px; }
-  .sec-head h2{ font-size:clamp(26px,3vw,38px); margin-top:var(--sp-3); }
-  .sec-head p{ margin-top:var(--sp-4); color:var(--ink-soft); font-size:16px; max-width:60ch; }
-
-  /* ============ FILTER CHIPS ============ */
-  .chips{
-    display:flex;
-    flex-wrap:wrap;
-    gap:var(--sp-2);
-    margin-bottom:var(--sp-6);
-  }
-  .chip{
-    font-family:var(--f-mono);
-    font-size:12px;
-    letter-spacing:.03em;
-    padding:9px 16px;
-    border-radius:999px;
-    border:1px solid var(--line-strong);
-    background:var(--panel);
-    color:var(--ink-soft);
-    cursor:pointer;
-    transition:background .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
-  }
-  .chip:hover{ border-color:var(--ink); color:var(--ink); }
-  .chip.is-active{ background:var(--ink); color:#fff; border-color:var(--ink); }
-
-  /* ============ FEATURED CASE ============ */
-  .feature{
-    background:var(--rail-bg);
-    color:var(--rail-ink);
-    border-radius:var(--r-l);
-    padding:var(--sp-7);
-    display:grid;
-    grid-template-columns:1.05fr .95fr;
-    gap:var(--sp-7);
-    margin-bottom:var(--sp-6);
-    overflow:hidden;
-    position:relative;
-  }
-  .feature-top{ display:flex; gap:var(--sp-2); align-items:center; margin-bottom:var(--sp-4); flex-wrap:wrap; }
-  .badge{
-    font-family:var(--f-mono);
-    font-size:10.5px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    padding:4px 9px;
-    border-radius:4px;
-  }
-  .badge--new{ background:var(--amber); color:#1c1404; font-weight:600; }
-  .badge--concept{ border:1px dashed var(--rail-muted); color:var(--rail-muted); }
-  .feature h3{ font-size:clamp(24px,2.6vw,32px); color:#fff; }
-  .feature .one-liner{ margin-top:var(--sp-3); color:#c7cad2; font-size:15.5px; max-width:50ch; }
-  .feature-detail{ margin-top:var(--sp-4); color:#a9adb6; font-size:14.5px; display:none; }
-  .feature.is-open .feature-detail{ display:block; }
-  .feature-list{ margin:var(--sp-4) 0 0; padding:0; list-style:none; display:grid; gap:10px; }
-  .feature-list li{
-    font-size:14px; color:#c7cad2; padding-left:18px; position:relative;
-  }
-  .feature-list li::before{
-    content:''; position:absolute; left:0; top:7px; width:7px; height:7px; background:var(--teal);
-  }
-  .tagrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:var(--sp-5); }
-  .tag{
-    font-family:var(--f-mono);
-    font-size:11px;
-    color:var(--rail-muted);
-    border:1px solid var(--rail-line);
-    padding:5px 10px;
-    border-radius:5px;
-  }
-  .case-toggle{
-    margin-top:var(--sp-5);
-    background:none; border:none; cursor:pointer;
-    font-family:var(--f-mono);
-    font-size:12px;
-    color:var(--amber);
-    padding:0;
-    display:inline-flex; align-items:center; gap:6px;
-  }
-  .case-toggle::after{ content:'+ DETAILS'; }
-  .feature.is-open .case-toggle::after{ content:'– CLOSE'; }
-
-  .feature-visual{
-    position:relative;
-    border-radius:var(--r-m);
-    background:#0f1216;
-    overflow:hidden;
-    min-height:260px;
-  }
-  /* agent graph visual */
-  .agent-graph{ position:absolute; inset:0; }
-  .agent-graph .grid{
-    position:absolute; inset:0;
-    background-image:radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
-    background-size:18px 18px;
-  }
-  .node{
-    position:absolute; width:10px; height:10px; border-radius:50%;
-    background:var(--amber);
-    box-shadow:0 0 0 5px rgba(220,154,50,.14);
-  }
-  .node.alt{ background:var(--teal); box-shadow:0 0 0 5px rgba(28,132,114,.16); }
-  .edge{
-    position:absolute; height:1px; background:rgba(255,255,255,.18);
-    transform-origin:0 0;
-  }
-  .scan{
-    position:absolute; left:0; right:0; height:1px;
-    background:linear-gradient(90deg, transparent, rgba(220,154,50,.65), transparent);
-    animation:scan 5s linear infinite;
-  }
-  @keyframes scan{ 0%{ top:6%; } 50%{ top:88%; } 100%{ top:6%; } }
-
-  /* agent OS dashboard mockup — used on Loopwork's hero/feature visual */
-  .aos-wrap{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:16px; }
-  .aos-wrap .grid{
-    position:absolute; inset:0;
-    background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
-    background-size:16px 16px;
-  }
-  .aos-mock{
-    position:relative;
-    width:100%; max-width:480px;
-    background:#16181d;
-    border-radius:10px;
-    overflow:hidden;
-    display:flex;
-    box-shadow:0 20px 40px -20px rgba(0,0,0,.6);
-    border:1px solid #2a2e37;
-  }
-  .aos-sidebar{
-    width:34%;
-    background:#1c1f26;
-    color:#878d99;
-    padding:12px 9px;
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-    flex:none;
-    border-right:1px solid #2a2e37;
-  }
-  .aos-brand{
-    font-family:var(--f-display);
-    font-size:11px;
-    color:#fff;
-    margin-bottom:9px;
-  }
-  .aos-brand em{ font-style:italic; color:#dca455; font-weight:500; }
-  .aos-sec{
-    font-family:var(--f-mono); font-size:7px; letter-spacing:.08em; text-transform:uppercase;
-    color:#5d636e; padding:7px 6px 3px;
-  }
-  .aos-nav-item{
-    display:flex; align-items:center; gap:7px;
-    font-family:var(--f-body);
-    font-size:9.5px;
-    padding:4px 6px;
-    border-radius:5px;
-    color:#878d99;
-  }
-  .aos-nav-item.is-active{ background:rgba(255,255,255,.07); color:#e9eaec; }
-  .aos-ava{
-    width:14px; height:14px; border-radius:50%; flex:none;
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--f-mono); font-size:6.5px; color:#fff; font-weight:600;
-  }
-  .aos-main{ flex:1; padding:11px; min-width:0; display:flex; flex-direction:column; gap:8px; }
-  .aos-main-title{ font-family:var(--f-display); font-size:14px; color:#f3f1ec; }
-  .aos-fleet{ display:flex; flex-direction:column; }
-  .aos-frow{
-    display:grid; grid-template-columns:2fr .9fr .6fr; gap:6px; align-items:center;
-    padding:5px 0; border-bottom:1px solid #2a2e37; font-size:8.5px; color:#e9eaec;
-    font-family:var(--f-body);
-  }
-  .aos-fhead{ font-family:var(--f-mono); font-size:7px; letter-spacing:.05em; text-transform:uppercase; color:#878d99; border-bottom:1px solid #383c47; }
-  .aos-ftag{ font-family:var(--f-mono); font-size:7px; padding:2px 5px; border-radius:4px; width:fit-content; }
-  .g-run{ background:rgba(34,197,94,.16); color:#4ade80; }
-  .g-rev{ background:rgba(220,154,50,.16); color:#fbbf24; }
-  .g-idle{ background:rgba(255,255,255,.08); color:#878d99; }
-
-  /* ============ CASE GRID ============ */
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(300px,1fr));
-    gap:var(--sp-5);
-  }
-  .case-card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:var(--r-l);
-    overflow:hidden;
-    transition:border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
-  }
-  .case-card:hover{ border-color:var(--line-strong); transform:translateY(-3px); box-shadow:0 14px 30px -20px rgba(20,23,28,.35); }
-  .thumb{
-    height:152px;
-    position:relative;
-    overflow:hidden;
-  }
-  .case-body{ padding:var(--sp-5); }
-  .case-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:var(--sp-3); margin-bottom:var(--sp-3); }
-  .pill{
-    font-family:var(--f-mono);
-    font-size:10px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    padding:4px 9px;
-    border-radius:5px;
-    white-space:nowrap;
-  }
-  .pill--live{ background:var(--teal-dim); color:var(--teal); }
-  .pill--shipped{ background:var(--blue-dim); color:var(--blue); }
-  .pill--acquired{ background:var(--amber-dim); color:#8a5d10; }
-  .pill--concept{ background:var(--bg); color:var(--ink-faint); border:1px dashed var(--line-strong); }
-
-  .case-cat{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); }
-  .case-body h4{ font-family:var(--f-display); font-size:18px; margin:0 0 6px; }
-  .case-body .one-liner{ font-size:14px; color:var(--ink-soft); margin:0; }
-  .case-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:var(--sp-4); }
-  .case-tags .tag{ color:var(--ink-faint); border-color:var(--line); }
-  .case-detail{
-    margin-top:var(--sp-4);
-    padding-top:var(--sp-4);
-    border-top:1px solid var(--line);
-    font-size:13.5px;
-    color:var(--ink-soft);
-    display:none;
-  }
-  .case-card.is-open .case-detail{ display:block; }
-  .case-card .case-toggle{ color:var(--blue); margin-top:var(--sp-4); }
-  .case-card .case-toggle::after{ content:'+ DETAILS'; }
-  .case-card.is-open .case-toggle::after{ content:'– CLOSE'; }
-  .case-actions{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3); margin-top:var(--sp-4); }
-  .case-card .case-actions{ margin-top:var(--sp-4); }
-  .case-card .case-actions .case-toggle{ margin-top:0; }
-  .feature .case-actions .case-toggle{ margin-top:0; }
-  .case-link{
-    font-family:var(--f-mono);
-    font-size:12px;
-    color:var(--ink);
-    text-decoration:none;
-    border-bottom:1px solid var(--line-strong);
-    padding-bottom:1px;
-    white-space:nowrap;
-    transition:color .18s var(--ease), border-color .18s var(--ease);
-  }
-  .case-link:hover{ color:var(--blue); border-color:var(--blue); }
-  .more-card .case-link{ font-size:11px; margin-top:6px; align-self:flex-start; }
-  .feature .case-link{ color:var(--amber); border-color:rgba(220,154,50,.4); }
-  .metric{
-    margin-top:var(--sp-3);
-    font-family:var(--f-mono);
-    font-size:12px;
-    color:var(--teal);
-  }
-
-  /* thumbnail variants — abstract, category-coded */
-  .thumb--ai{ background:#161a22; }
-  .thumb--ai .grid{ position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size:16px 16px; }
-  .thumb--ai .node{ width:7px; height:7px; }
-
-  .thumb--saas{ background:var(--blue-dim); display:flex; align-items:flex-end; gap:8px; padding:24px 22px; }
-  .thumb--saas .bar{ flex:1; background:var(--blue); border-radius:3px 3px 0 0; opacity:.85; }
-
-  .thumb--ecom{ background:var(--amber-dim); display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:22px; }
-  .thumb--ecom .sw{ border-radius:4px; }
-
-  .thumb--crm{ background:var(--teal-dim); padding:22px; display:flex; flex-direction:column; gap:8px; justify-content:center; }
-  .thumb--crm .lane{ height:14px; border-radius:4px; background:var(--teal); }
-
-  .thumb--ux{ background:var(--bg); border-bottom:1px solid var(--line); position:relative; }
-  .thumb--ux .box{ position:absolute; border:1.5px dashed var(--line-strong); border-radius:4px; }
-  .thumb--ux .corner{ position:absolute; width:9px; height:9px; border-top:2px solid var(--ink-faint); border-left:2px solid var(--ink-faint); }
-
-  /* real design preview thumbnails — framed, calm, minimal */
-  .thumb--img{ padding:0; background:var(--panel); overflow:hidden; display:flex; flex-direction:column; }
-  .preview-chrome{
-    height:20px; flex:none;
-    display:flex; align-items:center; gap:5px;
-    padding:0 10px;
-    background:var(--panel);
-    border-bottom:1px solid var(--line);
-  }
-  .preview-chrome span{ width:6px; height:6px; border-radius:50%; background:var(--line-strong); }
-  .preview-shot{
-    flex:1;
-    display:flex; align-items:center; justify-content:center;
-    padding:14px;
-    background:var(--bg);
-    overflow:hidden;
-  }
-  .preview-shot img{
-    max-width:100%; max-height:100%;
-    width:auto; height:auto;
-    object-fit:contain;
-    display:block;
-    border-radius:3px;
-    box-shadow:0 8px 18px -12px rgba(20,23,28,.3);
-    filter:saturate(.8) contrast(.95);
-    transition:transform .35s var(--ease);
-  }
-  .case-card:hover .preview-shot img{ transform:scale(1.025); }
-  .thumb-note{
-    position:absolute; bottom:8px; left:8px;
-    font-family:var(--f-mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase;
-    color:var(--rail-ink); background:rgba(20,23,28,.72);
-    padding:4px 8px; border-radius:5px;
-  }
-
-  /* compact rows for "more work" */
-  .more-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
-    gap:var(--sp-3);
-    margin-top:var(--sp-5);
-  }
-  .more-card{
-    border:1px solid var(--line);
-    border-radius:var(--r-m);
-    background:var(--panel);
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
-  .more-thumb{ height:128px; background:var(--panel); overflow:hidden; position:relative; display:flex; flex-direction:column; }
-  .more-thumb .preview-chrome{ height:18px; }
-  .more-thumb .preview-shot{ padding:10px; }
-  .more-card:hover .more-thumb .preview-shot img{ transform:scale(1.03); }
-  .more-thumb.is-abstract .preview-shot{ display:flex; align-items:center; justify-content:center; padding:0; }
-  .more-thumb.is-abstract span.note-text{
-    font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.04em;
-  }
-  .more-body{ padding:var(--sp-4); display:flex; flex-direction:column; gap:6px; }
-  .more-card .top{ display:flex; justify-content:space-between; gap:8px; align-items:center; }
-  .more-card h5{ margin:0; font-family:var(--f-display); font-size:14.5px; }
-  .more-card p{ margin:0; font-size:13px; color:var(--ink-soft); }
-  .more-card .case-cat{ font-size:9.5px; }
-
-  /* ============ PROCESS ============ */
-  .steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:0; position:relative; }
-  .steps::before{
-    content:''; position:absolute; top:26px; left:0; right:0; height:1px; background:var(--line);
-  }
-  .step{ padding-right:var(--sp-4); position:relative; }
-  .step-num{
-    font-family:var(--f-mono);
-    font-size:12px;
-    color:var(--bg);
-    background:var(--ink);
-    width:34px; height:34px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    position:relative; z-index:2;
-    margin-bottom:var(--sp-4);
-  }
-  .step h4{ font-family:var(--f-display); font-size:16px; margin:0 0 8px; }
-  .step p{ margin:0; font-size:13.5px; color:var(--ink-soft); }
-
-  /* ============ STACK ============ */
-  .stack-groups{ display:grid; grid-template-columns:repeat(2,1fr); gap:var(--sp-6); }
-  .stack-group h4{
-    font-family:var(--f-mono);
-    font-size:11px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    margin:0 0 var(--sp-3);
-  }
-  .stack-tags{ display:flex; flex-wrap:wrap; gap:8px; }
-  .stack-tags .tag{ color:var(--ink-soft); border-color:var(--line); background:var(--panel); }
-  .stack-tags .tag--ai{ color:var(--amber); border-color:var(--amber-dim); background:var(--amber-dim); }
-
-  /* ============ CONTACT ============ */
-  .contact-panel{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:var(--r-l);
-    padding:var(--sp-7);
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
-    align-items:center;
-    gap:var(--sp-6);
-  }
-  .contact-panel h2{ font-size:clamp(24px,3vw,34px); max-width:18ch; }
-  .contact-status{
-    font-family:var(--f-mono);
-    font-size:11.5px;
-    letter-spacing:.06em;
-    color:var(--teal);
-    display:flex; align-items:center; gap:8px;
-    margin-bottom:var(--sp-4);
-  }
-
-  footer{
-    padding:var(--sp-6) var(--sp-8) var(--sp-8);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:var(--sp-3);
-    font-family:var(--f-mono);
-    font-size:11.5px;
-    color:var(--ink-faint);
-  }
-
-  /* ============ RESPONSIVE ============ */
-  @media (max-width:980px){
-    .rail{
-      position:relative;
-      width:100%;
-      height:auto;
-      flex-direction:row;
-      align-items:center;
-      padding:var(--sp-4) var(--sp-5);
-      gap:var(--sp-5);
-      overflow-x:auto;
-    }
-    .brand{ margin-bottom:0; }
-    .rail-status{ border:none; padding:0; margin-bottom:0; flex:none; }
-    .rail-nav{ display:flex; gap:var(--sp-2); flex:none; }
-    .rail-nav li + li{ margin-top:0; }
-    .rail-foot{ display:none; }
-    .canvas{ margin-left:0; }
-    .feature{ grid-template-columns:1fr; }
-    .feature-visual{ min-height:200px; order:-1; }
-    .steps{ grid-template-columns:1fr; gap:var(--sp-5); }
-    .steps::before{ display:none; }
-    .stack-groups{ grid-template-columns:1fr; }
-    section, .hero{ padding:var(--sp-7) var(--sp-5); }
-    .ticker{ flex-direction:column; }
-    .stat{ border-right:none; border-bottom:1px solid var(--line); padding:var(--sp-4) 0; }
-    .stat:first-child{ padding-left:0; }
-  }
+@media(max-width:980px){
+  .rail{position:relative;width:100%;height:auto;flex-direction:row;align-items:center;padding:16px 20px;gap:20px;overflow-x:auto}
+  .brand{margin-bottom:0}.rail-status{border:none;padding:0;margin-bottom:0;flex:none}
+  .rail-nav{display:flex;gap:8px;flex:none}.rail-nav li+li{margin-top:0}
+  .rail-foot{display:none}.canvas{margin-left:0}
+  .hero{padding:58px 24px 40px}
+  .hero-shell{grid-template-columns:1fr}
+  .hero h1{font-size:42px;line-height:1.08}
+  .hero-intake{position:relative;top:auto}
+  section,.contact{padding:72px 24px}
+  .sec-head h2,.lead-head h3,.contact-panel h2{font-size:32px;line-height:1.12}
+  .lead-wrap{padding:72px 24px 48px}
+  .ticker{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--line);padding:16px 0}
+  .steps{grid-template-columns:1fr;gap:24px}.steps::before{display:none}
+  .lead-inner{grid-template-columns:1fr}
+  .field-row,.contact-panel{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .trust-list{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
 <nav class="rail">
-  <div class="brand">
-    <div class="brand-mark">J<span>L</span>.</div>
-    <div class="brand-sub">betayard.com</div>
-  </div>
-
-  <div class="rail-status">
-    <span class="dot" aria-hidden="true"></span>
-    OPEN FOR Q3 ENGAGEMENTS
-  </div>
-
+  <div class="brand"><div class="brand-mark">J<span>L</span>.</div><div class="brand-sub">betayard.com</div></div>
+  <div class="rail-status"><span class="dot"></span>OPEN FOR Q3 ENGAGEMENTS</div>
   <ul class="rail-nav">
     <li><a class="rail-link is-active" href="#overview"><span class="n">01</span>Overview</a></li>
     <li><a class="rail-link" href="#work"><span class="n">02</span>Work</a></li>
     <li><a class="rail-link" href="#process"><span class="n">03</span>Process</a></li>
     <li><a class="rail-link" href="#stack"><span class="n">04</span>Stack</a></li>
     <li><a class="rail-link" href="#contact"><span class="n">05</span>Contact</a></li>
+    <li><a class="rail-link" href="tools.html"><span class="n">06</span>AI Tools</a></li>
   </ul>
-
-  <div class="rail-foot">
-    PRODUCT &amp; UX DESIGN<br>
-    REMOTE · US HOURS<br>
-    © 2026
-  </div>
+  <div class="rail-foot">PRODUCT &amp; UX DESIGN<br>REMOTE · US HOURS<br>© 2026</div>
 </nav>
 
 <main class="canvas">
-
-  <!-- ============ HERO ============ -->
-  <header id="overview" class="hero">
-    <div class="eyebrow"><span class="num">PORTFOLIO</span> — REBUILT 2026</div>
-    <h1 class="reveal">I design the dashboards, storefronts, and now the <em>agents</em>, that scaling brands run on.</h1>
-    <p class="hero-lede reveal">
-      For over a decade I've taken SaaS dashboards, e-commerce platforms, and enterprise CRMs from a blank
-      whiteboard to a shipped product — for teams like <b>Fabletics</b>, <b>Techstars</b>, the <b>Academy</b>
-      (Oscars.org), and <b>Everest Networks</b> (acquired by Fortinet). The latest chapter is bringing that same
-      data-driven rigor to <b>AI agent operating systems</b> — making fleets of autonomous agents legible enough for a human to trust.
-    </p>
-    <div class="hero-cta reveal">
-      <a class="btn btn--primary" href="#work">View the work →</a>
-      <a class="btn btn--ghost" href="#contact">Start a project</a>
-    </div>
-
-    <div class="ticker reveal">
-      <div class="stat">
-        <div class="stat-label"><span class="sq"></span>PRODUCTS SHIPPED</div>
-        <div class="stat-val">14+ case studies</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label"><span class="sq"></span>SUBSCRIBER GROWTH</div>
-        <div class="stat-val">833% YoY · Fabletics</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label"><span class="sq"></span>EXIT</div>
-        <div class="stat-val">Everest → Fortinet</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label"><span class="sq"></span>NOW EXPLORING</div>
-        <div class="stat-val">Agent operating systems</div>
+<header id="overview" class="hero">
+  <div class="hero-shell">
+    <div class="hero-copy">
+      <div class="eyebrow rv"><span class="num">PRODUCT &amp; UX DESIGN</span> — BETAYARD STUDIO</div>
+      <h1 class="rv">Design for SaaS, commerce, and AI products that need to <em>convert</em>.</h1>
+      <p class="hero-lede rv">I help scaling teams turn complex dashboards, checkout flows, CRM surfaces, and AI agent systems into products people can understand, trust, and buy. Recent work spans <b>Fabletics</b>, <b>Techstars</b>, the <b>Academy</b>, <b>Norton</b>, and <b>Everest Networks</b> before its Fortinet acquisition.</p>
+      <div class="hero-cta rv">
+        <a class="btn btn--p" href="#contact">Start a project →</a>
+        <a class="btn btn--g" href="#work">View case studies</a>
       </div>
     </div>
-  </header>
-
-  <!-- ============ WORK ============ -->
-  <section id="work">
-    <div class="sec-head reveal">
-      <div class="eyebrow"><span class="num">02</span> SELECTED WORK</div>
-      <h2>Case studies</h2>
-      <p>Sixteen products, one through-line: turn a messy, technical surface into something a real person can
-      use confidently. Filter by category, or open any card for the brief.</p>
-    </div>
-
-    <div class="chips reveal" role="group" aria-label="Filter case studies by category">
-      <button class="chip is-active" data-filter="all">All work</button>
-      <button class="chip" data-filter="ai">AI &amp; Agentic</button>
-      <button class="chip" data-filter="saas">Dashboards &amp; SaaS</button>
-      <button class="chip" data-filter="ecommerce">E-commerce</button>
-      <button class="chip" data-filter="crm">CRM &amp; Enterprise</button>
-      <button class="chip" data-filter="ux">UX &amp; Web</button>
-    </div>
-
-    <!-- FEATURED: agentic AI -->
-    <article class="feature reveal" data-category="ai">
-      <div class="feature-copy">
-        <div class="feature-top">
-          <span class="badge badge--new">New</span>
-          <span class="badge badge--concept">Self-initiated concept</span>
-        </div>
-        <h3>Loopwork — AI Agent Operating System</h3>
-        <p class="one-liner">A control plane for every AI agent in the company — provisioning, permissions,
-        live monitoring, and human oversight in one operating system.</p>
-
-        <div class="feature-detail">
-          <p>Most companies running AI agents today have a different one bolted onto every team — a support
-          bot here, a finance bot there — each with its own ad-hoc logging and no shared way to see, govern,
-          or trust any of them.</p>
-          <p>Loopwork is a self-directed concept project exploring what an actual operating system for that
-          fleet should look like: one place to register agents, set their permissions, watch them work, and
-          step in only when it actually matters.</p>
-          <ul class="feature-list">
-            <li>Agent registry — provision, version, and retire agents from one place instead of every team rolling its own</li>
-            <li>Per-agent permissions &amp; guardrails, so a support bot and a deploy bot don't share the same blast radius</li>
-            <li>Live fleet monitoring with confidence and cost tracked per agent, not just system-wide</li>
-            <li>One-tap approve / escalate queue for any action above a risk threshold</li>
-            <li>Full replay and audit trail for every completed workflow, end to end</li>
-          </ul>
-        </div>
-
-        <div class="tagrow">
-          <span class="tag">Agent Fleet &amp; Platform UX</span>
-          <span class="tag">Permissions &amp; Governance Design</span>
-          <span class="tag">Dashboard &amp; Data Viz</span>
-          <span class="tag">Figma · Figma Make</span>
-        </div>
-        <div class="case-actions">
-          <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-          <a class="case-link" href="projects/loopwork.html">View full case study →</a>
-        </div>
+    <aside class="hero-intake rv" aria-labelledby="quick-intake-title">
+      <div class="intake-kicker"><span class="dot"></span> OPEN FOR Q3 ENGAGEMENTS</div>
+      <h2 id="quick-intake-title">Get a fit check this week</h2>
+      <p>Send the basics and Jonathan will reply with next steps, timing, and whether the project is a good match.</p>
+      <form class="mini-form" action="https://formsubmit.co/betayards@gmail.com" method="POST">
+        <input type="hidden" name="_next" value="https://www.betayard.com">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="New quick-fit inquiry from Betayard portfolio">
+        <input type="text" name="_honey" class="hide-field" tabindex="-1" autocomplete="off">
+        <input type="text" name="name" placeholder="Name" autocomplete="name" required>
+        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+        <select name="project_type" required>
+          <option value="">What needs design?</option>
+          <option>Product or SaaS dashboard</option>
+          <option>E-commerce or conversion flow</option>
+          <option>AI agent or automation UX</option>
+          <option>CRM or enterprise workflow</option>
+        </select>
+        <textarea name="message" rows="3" placeholder="What are you trying to improve?" required></textarea>
+        <button type="submit" class="lead-btn">Request fit check →</button>
+        <div class="form-note">No newsletter funnel. Just a direct project inquiry.</div>
+      </form>
+      <div class="trust-list" aria-label="Engagement highlights">
+        <div class="trust-item">833% subscriber growth</div>
+        <div class="trust-item">42% conversion lift</div>
+        <div class="trust-item">Enterprise CRM depth</div>
+        <div class="trust-item">AI product systems</div>
       </div>
+    </aside>
+  </div>
+  <div class="ticker rv">
+    <div class="stat"><div class="stat-label">SUBSCRIBER GROWTH</div><div class="stat-val">833% YoY · Fabletics</div></div>
+    <div class="stat"><div class="stat-label">CONVERSION LIFT</div><div class="stat-val">42% · Norton Family</div></div>
+    <div class="stat"><div class="stat-label">EXIT</div><div class="stat-val">Everest → Fortinet</div></div>
+    <div class="stat"><div class="stat-label">NOW EXPLORING</div><div class="stat-val">Agent operating systems</div></div>
+  </div>
+</header>
 
-      <div class="feature-visual">
-        <div class="aos-wrap">
-          <div class="grid"></div>
-          <div class="aos-mock">
-            <div class="aos-sidebar">
-              <div class="aos-brand">Agentic <em>OS</em></div>
-              <div class="aos-sec">Workspace</div>
-              <div class="aos-nav-item is-active">Mission Control</div>
-              <div class="aos-nav-item">Paperclip</div>
-              <div class="aos-sec">Agents</div>
-              <div class="aos-nav-item"><span class="aos-ava" style="background:linear-gradient(135deg,#f97316,#fb923c);">C</span>Claude</div>
-              <div class="aos-nav-item"><span class="aos-ava" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);">H</span>Hermes</div>
-              <div class="aos-nav-item"><span class="aos-ava" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">G</span>Gemini</div>
-              <div class="aos-nav-item"><span class="aos-ava" style="background:linear-gradient(135deg,#14b8a6,#2dd4bf);">Cx</span>Codex</div>
+<section id="work">
+  <div class="sec-head rv">
+    <div class="eyebrow"><span class="num">02</span> SELECTED WORK</div>
+    <h2>Proof across the surfaces that drive revenue</h2>
+    <p>Case studies are grouped around the work clients usually hire for: product clarity, checkout performance, enterprise workflows, and AI systems that need human trust.</p>
+  </div>
+
+  <div class="grid">
+    <a class="card rv" href="projects/loopwork.html">
+      <div class="thumb loopwork-thumb" aria-label="Loopwork AI Agent OS dashboard preview">
+        <div class="loopwork-ui">
+          <div class="loopwork-side">
+            <div class="loopwork-logo"></div>
+            <div class="loopwork-nav"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="loopwork-main">
+            <div class="loopwork-top"><div class="loopwork-title">Agent Control</div><div class="loopwork-chip">LIVE</div></div>
+            <div class="loopwork-metrics">
+              <div class="loopwork-metric"><strong>42</strong><span>agents</span></div>
+              <div class="loopwork-metric"><strong>98%</strong><span>healthy</span></div>
+              <div class="loopwork-metric"><strong>7</strong><span>reviews</span></div>
             </div>
-            <div class="aos-main">
-              <div class="aos-main-title">Fleet Overview</div>
-              <div class="aos-fleet">
-                <div class="aos-frow aos-fhead"><span>Agent</span><span>Status</span><span>Conf</span></div>
-                <div class="aos-frow"><span>Refund-Bot-03</span><span class="aos-ftag g-run">Running</span><span>96%</span></div>
-                <div class="aos-frow"><span>Scheduler-Bot-01</span><span class="aos-ftag g-run">Running</span><span>91%</span></div>
-                <div class="aos-frow"><span>Outreach-Bot-07</span><span class="aos-ftag g-rev">Review</span><span>68%</span></div>
-                <div class="aos-frow"><span>Deploy-Bot-02</span><span class="aos-ftag g-idle">Idle</span><span>—</span></div>
-              </div>
+            <div class="loopwork-agents">
+              <div class="loopwork-agent"><i></i><span></span><em></em></div>
+              <div class="loopwork-agent"><i></i><span></span><em></em></div>
+              <div class="loopwork-agent"><i></i><span></span><em></em></div>
             </div>
           </div>
         </div>
       </div>
-    </article>
+      <div class="card-body"><div class="card-top"><span class="card-cat">AI &amp; Agentic</span><span class="pill pill--new">New</span></div><h3>Loopwork — AI Agent OS</h3><p class="desc">A control plane for every AI agent in the company — provisioning, permissions, live monitoring, and human oversight.</p><div class="card-foot"><span class="card-cat">Concept</span><span class="card-go">View case study →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/onehouse.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png" alt="OneHouse.ai" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">AI · Dashboard</span><span class="pill pill--ship">Shipped</span></div><h3>OneHouse.ai</h3><p class="desc">Dashboard and core user flows for an AI-driven data automation platform during stealth phase.</p><div class="card-foot"><span class="card-cat">SaaS</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/fabletics.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626198682887-H9W2Y7M31XW3UYZPXLWG/jf2.jpg" alt="Fabletics" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">E-commerce</span><span class="pill pill--live">Live</span></div><h3>Fabletics.com</h3><p class="desc">Subscription checkout, bra line launch, and loyalty program — 833% YoY subscriber growth.</p><div class="card-metric">▲ 833% subscriber growth</div><div class="card-foot"><span class="card-cat">TechStyle</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/norton.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626194984886-K1S9N0T4M9DFPOJA00UJ/JLU_NortonFam_landing.jpg" alt="Norton" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">Dashboards &amp; SaaS</span><span class="pill pill--ship">Shipped</span></div><h3>Symantec — Norton</h3><p class="desc">Design across four product lines — 10M+ VPN downloads and 42% conversion lift.</p><div class="card-metric">▲ 10M+ downloads · 42% conversion</div><div class="card-foot"><span class="card-cat">Enterprise</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/techstars.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1a4acacd-b33c-478c-ad79-1cbae99571da/techstars.png" alt="Techstars" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">CRM &amp; Enterprise</span><span class="pill pill--ship">Shipped</span></div><h3>Techstars.com</h3><p class="desc">Rebuilt the investor-onboarding dashboard on Salesforce Lightning.</p><div class="card-foot"><span class="card-cat">Salesforce</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/oscars.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626199775806-D5GHQVOGF0RYT82HAC09/JLU_oscars_desktop.jpg" alt="Oscars.org" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">UX &amp; Web</span><span class="pill pill--ship">Shipped</span></div><h3>Oscars.org</h3><p class="desc">Reorganized the Academy's public site across desktop, tablet, and mobile.</p><div class="card-foot"><span class="card-cat">Trailer Park</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/nester.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9a2b6851-0c13-438d-b7f3-c06fff13c0ff/nester2.png" alt="Nester" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">Dashboards &amp; SaaS</span><span class="pill pill--ship">Shipped</span></div><h3>Nester.app</h3><p class="desc">Real estate SaaS — marketing site, dashboard, reports as one connected system.</p><div class="card-foot"><span class="card-cat">SaaS</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/katin.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/8ed27e19-e8fa-4aef-bb05-c7559fee5922/katin2.png" alt="Katin" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">E-commerce</span><span class="pill pill--ship">Shipped</span></div><h3>Katin</h3><p class="desc">Replaced a bespoke storefront with a reusable component library.</p><div class="card-foot"><span class="card-cat">Agency</span><span class="card-go">View →</span></div></div>
+    </a>
+    <a class="card rv" href="projects/everest.html">
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="assets/everest-hero.jpg" alt="Everest" loading="lazy"></div>
+      <div class="card-body"><div class="card-top"><span class="card-cat">UX &amp; Web</span><span class="pill pill--acq">Acquired</span></div><h3>Everest Networks</h3><p class="desc">Mobile-first, video-driven site — later acquired by Fortinet.</p><div class="card-foot"><span class="card-cat">B2B</span><span class="card-go">View →</span></div></div>
+    </a>
+  </div>
 
-    <!-- DETAILED CASE GRID -->
-    <div class="grid">
+  <div class="eyebrow rv" style="margin-top:64px;margin-bottom:16px">MORE FROM THE ARCHIVE</div>
+  <div class="grid-sm">
+    <a class="card-sm rv" href="projects/vsp.html"><div class="card-top"><span class="card-cat">UX</span><span class="pill pill--ship">Shipped</span></div><h4>VSP.com</h4><p>Heatmap-driven checkout redesign</p></a>
+    <a class="card-sm rv" href="projects/dispatchtrack.html"><div class="card-top"><span class="card-cat">CRM</span><span class="pill pill--ship">Shipped</span></div><h4>DispatchTrack</h4><p>HubSpot CRM + web + landing pages</p></a>
+    <a class="card-sm rv" href="projects/upclear.html"><div class="card-top"><span class="card-cat">SaaS</span><span class="pill pill--ship">Shipped</span></div><h4>UpClear</h4><p>Dashboard updates + redesign target</p></a>
+    <a class="card-sm rv" href="projects/appt.html"><div class="card-top"><span class="card-cat">SaaS</span><span class="pill pill--ship">Shipped</span></div><h4>APPT Booking</h4><p>Parallel B2B/B2C scheduling flows</p></a>
+    <a class="card-sm rv" href="projects/wbox.html"><div class="card-top"><span class="card-cat">CRM</span><span class="pill pill--ship">Shipped</span></div><h4>Watch Box</h4><p>Custom Salesforce Lightning pages</p></a>
+    <a class="card-sm rv" href="projects/vet.html"><div class="card-top"><span class="card-cat">E-com</span><span class="pill pill--ship">Shipped</span></div><h4>Veterinary Formula</h4><p>Ingredient education + subscription</p></a>
+    <a class="card-sm rv" href="projects/irc.html"><div class="card-top"><span class="card-cat">CRM</span><span class="pill pill--ship">Shipped</span></div><h4>IRC Sales</h4><p>Responsive site + HubSpot landing</p></a>
+  </div>
+</section>
 
-      <article class="case-card reveal" data-category="ai saas">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png" alt="OneHouse.ai dashboard design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">AI &amp; Agentic · Dashboard</span>
-            <span class="pill pill--shipped">Shipped</span>
-          </div>
-          <h4>OneHouse.ai</h4>
-          <p class="one-liner">Dashboard and core user flows for an AI-driven data automation platform, designed during the company's stealth phase.</p>
-          <div class="case-detail">
-            OneHouse.ai needed a way to visualize and manage a new data-automation infrastructure product before
-            launch. I led UX strategy, wireframes, and final dashboard design — organizing a dense technical
-            surface into something a data engineer could actually navigate day to day.
-          </div>
-          <div class="case-tags">
-            <span class="tag">UX Design</span>
-            <span class="tag">Wireframes</span>
-            <span class="tag">Figma</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/onehouse.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
+<section id="process">
+  <div class="sec-head rv">
+    <div class="eyebrow"><span class="num">03</span> HOW I WORK</div>
+    <h2>A repeatable process for fast-moving teams</h2>
+  </div>
+  <div class="steps">
+    <div class="step rv"><div class="step-n">01</div><h4>Discover</h4><p>Stakeholder interviews, analytics review, competitive audit.</p></div>
+    <div class="step rv"><div class="step-n">02</div><h4>Define</h4><p>User flows, information architecture, low-fidelity wireframes.</p></div>
+    <div class="step rv"><div class="step-n">03</div><h4>Design</h4><p>High-fidelity UI and a reusable design system in Figma.</p></div>
+    <div class="step rv"><div class="step-n">04</div><h4>Validate</h4><p>Usability and A/B testing against real users.</p></div>
+    <div class="step rv"><div class="step-n">05</div><h4>Ship &amp; measure</h4><p>Clean handoff, analytics, and feedback loop.</p></div>
+  </div>
+</section>
 
-      <article class="case-card reveal" data-category="saas">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9a2b6851-0c13-438d-b7f3-c06fff13c0ff/nester2.png" alt="Nester.app dashboard design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">Dashboards &amp; SaaS</span>
-            <span class="pill pill--shipped">Shipped</span>
-          </div>
-          <h4>Nester.app</h4>
-          <p class="one-liner">Took a real estate management SaaS from unfinished build to launch-ready, end to end.</p>
-          <div class="case-detail">
-            Nester needed both its marketing site and its property-management product finished in time for
-            launch. I designed the responsive marketing site, the SaaS dashboard, and the recurring Nester
-            reports and email campaigns that kept property managers in the loop.
-          </div>
-          <div class="case-tags">
-            <span class="tag">UX Design</span>
-            <span class="tag">SaaS Design</span>
-            <span class="tag">Figma</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/nester.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
+<section id="stack">
+  <div class="sec-head rv">
+    <div class="eyebrow"><span class="num">04</span> TOOLKIT</div>
+    <h2>What I build with</h2>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-box rv"><h4>Design &amp; Prototyping</h4><div class="tags"><span class="tag">Figma</span><span class="tag">Sketch</span><span class="tag">Adobe XD</span><span class="tag">Photoshop</span><span class="tag">Illustrator</span><span class="tag">InVision</span><span class="tag">Framer</span></div></div>
+    <div class="stack-box rv"><h4>Research &amp; Data</h4><div class="tags"><span class="tag">User Interviews</span><span class="tag">A/B Testing</span><span class="tag">Google Analytics</span><span class="tag">Tableau</span><span class="tag">Usability Testing</span></div></div>
+    <div class="stack-box rv"><h4>Enterprise &amp; CRM</h4><div class="tags"><span class="tag">Salesforce Lightning</span><span class="tag">Salesforce OmniStudio</span><span class="tag">HubSpot CRM</span></div></div>
+    <div class="stack-box rv"><h4>AI Platforms</h4><div class="tags"><span class="tag tag-ai">ChatGPT</span><span class="tag tag-ai">Claude</span><span class="tag tag-ai">Claude Co-Work</span><span class="tag tag-ai">Claude Design</span><span class="tag tag-ai">Gemini</span><span class="tag tag-ai">Codex</span><span class="tag tag-ai">Google Antigravity</span><span class="tag tag-ai">Perplexity</span></div></div>
+    <div class="stack-box rv"><h4>AI Design Patterns</h4><div class="tags"><span class="tag tag-ai">Agent Fleet UX</span><span class="tag tag-ai">Permissions Design</span><span class="tag tag-ai">Human-in-the-Loop</span><span class="tag tag-ai">Trust &amp; Explainability UI</span></div></div>
+  </div>
+</section>
 
-      <article class="case-card reveal" data-category="ecommerce">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626198682887-H9W2Y7M31XW3UYZPXLWG/jf2.jpg" alt="Fabletics.com UI design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">E-commerce</span>
-            <span class="pill pill--live">Live</span>
-          </div>
-          <h4>Fabletics.com</h4>
-          <p class="one-liner">Helped scale a subscription athleisure brand to 833% year-over-year subscriber growth.</p>
-          <div class="case-detail">
-            As an in-house UX designer at Fabletics (TechStyle), I built wireframes and user flows for the
-            subscription checkout, a new women's bra line launch, and a customer loyalty program — working
-            shoulder-to-shoulder with creative and marketing to keep the experience consistent from mobile to desktop.
-          </div>
-          <div class="metric">▲ 833% YoY subscriber growth</div>
-          <div class="case-tags">
-            <span class="tag">UX Design</span>
-            <span class="tag">A/B Testing</span>
-            <span class="tag">Sketch</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/fabletics.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="case-card reveal" data-category="crm">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1a4acacd-b33c-478c-ad79-1cbae99571da/techstars.png" alt="Techstars.com dashboard design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">CRM &amp; Enterprise</span>
-            <span class="pill pill--shipped">Shipped</span>
-          </div>
-          <h4>Techstars.com</h4>
-          <p class="one-liner">Rebuilt the investor-onboarding dashboard on Salesforce Lightning, fit to the actual product.</p>
-          <div class="case-detail">
-            Techstars wanted to refresh its CRM dashboard for new investment-onboarding workflows. After
-            interviewing stakeholders and engineers, I designed on top of Salesforce OmniStudio (OmniScript and
-            FlexCards) and adapted Lightning Design System — rather than defaulting to Salesforce's stock
-            system — to fit what they actually needed.
-          </div>
-          <div class="case-tags">
-            <span class="tag">Dashboard Design</span>
-            <span class="tag">Salesforce Lightning</span>
-            <span class="tag">Figma</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/techstars.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="case-card reveal" data-category="ecommerce">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/8ed27e19-e8fa-4aef-bb05-c7559fee5922/katin2.png" alt="Katin storefront design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">E-commerce</span>
-            <span class="pill pill--shipped">Shipped</span>
-          </div>
-          <h4>Katin</h4>
-          <p class="one-liner">Replaced a slow, bespoke storefront with a reusable e-commerce component library.</p>
-          <div class="case-detail">
-            Brought on through an agency, I rebuilt Katin's storefront around a component-based design system
-            so the team could ship new pages and promotions without rebuilding layouts from scratch each time.
-          </div>
-          <div class="case-tags">
-            <span class="tag">UX Design</span>
-            <span class="tag">Design Systems</span>
-            <span class="tag">Figma</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/katin.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="case-card reveal" data-category="ux">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626199775806-D5GHQVOGF0RYT82HAC09/JLU_oscars_desktop.jpg" alt="Oscars.org desktop design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">UX &amp; Web</span>
-            <span class="pill pill--shipped">Shipped</span>
-          </div>
-          <h4>Oscars.org</h4>
-          <p class="one-liner">Reorganized the Academy's public site across desktop, tablet, and mobile.</p>
-          <div class="case-detail">
-            Working with the UX team at Trailer Park, I helped define brand guidelines, user flows, and fully
-            annotated wireframes for Oscars.org — specifying desktop, tablet, and mobile experiences end to end.
-          </div>
-          <div class="case-tags">
-            <span class="tag">Information Architecture</span>
-            <span class="tag">Wireframes</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/oscars.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="case-card reveal" data-category="ux">
-        <div class="thumb thumb--img">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="assets/everest-hero.jpg" alt="Everest Networks homepage design preview" loading="lazy"></div>
-        </div>
-        <div class="case-body">
-          <div class="case-top">
-            <span class="case-cat">UX &amp; Web</span>
-            <span class="pill pill--acquired">Acquired</span>
-          </div>
-          <h4>Everest Networks</h4>
-          <p class="one-liner">Mobile-first, video-driven site for wireless access points — later acquired by Fortinet.</p>
-          <div class="case-detail">
-            Used Google Analytics to prioritize content and simplify dense technical product comparisons for B2B
-            and sports-venue buyers, then built a responsive, video-forward site to show the hardware in action.
-          </div>
-          <div class="case-tags">
-            <span class="tag">User Research</span>
-            <span class="tag">Video Editing</span>
-            <span class="tag">Adobe XD</span>
-          </div>
-          <div class="case-actions">
-            <button class="case-toggle" aria-expanded="false">+ DETAILS</button>
-            <a class="case-link" href="projects/everest.html">View full case study →</a>
-          </div>
-        </div>
-      </article>
-
+<section id="contact" class="contact">
+  <div class="contact-panel rv">
+    <div>
+      <div class="contact-status"><span class="dot"></span>OPEN FOR Q3 ENGAGEMENTS</div>
+      <h2>Have a dashboard, storefront, or AI product that needs shape?</h2>
+      <p>For a faster response, send a few project details below. Prefer email? Use the direct line.</p>
     </div>
+    <a class="btn btn--p" href="mailto:betayards@gmail.com">Email betayards@gmail.com</a>
+  </div>
+</section>
 
-    <!-- MORE WORK — compact -->
-    <div class="more-head" style="margin-top:var(--sp-7);">
-      <div class="eyebrow reveal" style="margin-bottom:var(--sp-3);">MORE FROM THE ARCHIVE</div>
+<!-- LEAD CAPTURE -->
+<div class="lead-wrap">
+  <div class="lead-inner rv">
+    <div class="lead-head">
+      <div class="eyebrow"><span class="num" style="color:var(--rail-muted)">GET IN TOUCH</span></div>
+      <h3>Tell me what you want to move</h3>
+      <p>A short intake makes the first reply more useful: goals, timeline, and the kind of product surface you need designed.</p>
+      <ul class="lead-points">
+        <li>Best fit: SaaS dashboards, e-commerce funnels, CRM workflows, AI tools, and design systems.</li>
+        <li>Typical work: strategy, UX audits, prototypes, full UI systems, and launch support.</li>
+        <li>Response window: usually within one business day.</li>
+      </ul>
     </div>
-    <div class="more-grid">
-      <div class="more-card reveal" data-category="ux">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626362842689-3I679Z9WHTYIZ78NOFP9/VSPHome.jpg" alt="VSP.com homepage design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>VSP.com</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">UX &amp; Web</p>
-          <p>Heatmap and click-map research drove a redesigned checkout flow.</p>
-          <a class="case-link" href="projects/vsp.html">View case study →</a>
-        </div>
+    <form class="lead-form" action="https://formsubmit.co/betayards@gmail.com" method="POST">
+      <input type="hidden" name="_next" value="https://www.betayard.com">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="New qualified inquiry from Betayard portfolio">
+      <input type="text" name="_honey" class="hide-field" tabindex="-1" autocomplete="off">
+      <div class="field-row">
+        <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+        <input type="email" name="email" placeholder="Work email" autocomplete="email" required>
       </div>
-      <div class="more-card reveal" data-category="saas">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626194984886-K1S9N0T4M9DFPOJA00UJ/JLU_NortonFam_landing.jpg" alt="Norton Family landing page design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>Symantec — Norton</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">Dashboards &amp; SaaS</p>
-          <p>Design across four product lines, including a VPN app that passed 10M downloads.</p>
-          <a class="case-link" href="projects/norton.html">View case study →</a>
-        </div>
+      <div class="field-row">
+        <input type="text" name="company" placeholder="Company or project" autocomplete="organization">
+        <select name="timeline">
+          <option value="">Timeline</option>
+          <option>ASAP</option>
+          <option>Next 2-4 weeks</option>
+          <option>This quarter</option>
+          <option>Exploring options</option>
+        </select>
       </div>
-      <div class="more-card reveal" data-category="crm">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="assets/dispatchtrack-hero.jpg" alt="DispatchTrack.com homepage design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>DispatchTrack.com</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">CRM &amp; Enterprise</p>
-          <p>HubSpot CRM, web, and landing page design for a logistics platform.</p>
-          <a class="case-link" href="projects/dispatchtrack.html">View case study →</a>
-        </div>
-      </div>
-      <div class="more-card reveal" data-category="saas">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/63058097-d103-4f72-bd20-5e1e4028b9c4/Frame+3.png" alt="UpClear.com dashboard design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>UpClear.com</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">Dashboards &amp; SaaS</p>
-          <p>Ongoing product updates and UI refinement for a B2B SaaS dashboard.</p>
-          <a class="case-link" href="projects/upclear.html">View case study →</a>
-        </div>
-      </div>
-      <div class="more-card reveal" data-category="saas">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1625160751815-IE9RW9T7YJJ5NMZPT6DV/homepage3.jpg" alt="APPT Booking homepage design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>APPT Booking</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">Dashboards &amp; SaaS</p>
-          <p>Parallel B2B and B2C flows for an appointment-booking SaaS.</p>
-          <a class="case-link" href="projects/appt.html">View case study →</a>
-        </div>
-      </div>
-      <div class="more-card reveal" data-category="crm">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/d42290e7-3f16-41b9-88e0-81a5ebefbb48/wb.png" alt="Watch Box Salesforce design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>Watch Box</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">CRM &amp; Enterprise</p>
-          <p>Custom Salesforce Lightning design for a luxury watch marketplace.</p>
-          <a class="case-link" href="projects/wbox.html">View case study →</a>
-        </div>
-      </div>
-      <div class="more-card reveal" data-category="ecommerce">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/1626358858634-5K22JUXQXIPGE2NFHEUL/VFhome.jpg" alt="Veterinary Formula homepage design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>Veterinary Formula</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">E-commerce</p>
-          <p>Full redesign with ingredient education and a subscription model.</p>
-          <a class="case-link" href="projects/vet.html">View case study →</a>
-        </div>
-      </div>
-      <div class="more-card reveal" data-category="crm">
-        <div class="more-thumb">
-          <div class="preview-chrome"><span></span><span></span><span></span></div>
-          <div class="preview-shot"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/417c58ad-79ba-4bff-8a1b-f7fb73fb7300/irc.png" alt="IRC Sales Solutions site design preview" loading="lazy"></div>
-        </div>
-        <div class="more-body">
-          <div class="top"><h5>IRC Sales Solutions</h5><span class="pill pill--shipped">Shipped</span></div>
-          <p class="case-cat">CRM &amp; Enterprise</p>
-          <p>Custom web design and HubSpot landing page optimization.</p>
-          <a class="case-link" href="projects/irc.html">View case study →</a>
-        </div>
-      </div>
-    </div>
-  </section>
+      <select name="project_type" required>
+        <option value="">Project type</option>
+        <option>SaaS or product dashboard</option>
+        <option>E-commerce conversion flow</option>
+        <option>AI agent or automation product</option>
+        <option>CRM or enterprise workflow</option>
+        <option>Website or design system</option>
+      </select>
+      <textarea name="message" rows="4" placeholder="What should the design help your team change?" required></textarea>
+      <button type="submit" class="lead-btn">Send project details →</button>
+    </form>
+  </div>
+</div>
 
-  <!-- ============ PROCESS ============ -->
-  <section id="process">
-    <div class="sec-head reveal">
-      <div class="eyebrow"><span class="num">03</span> HOW I WORK</div>
-      <h2>A repeatable process for fast-moving teams</h2>
-      <p>The medium changes — storefront, dashboard, or agent console — the sequence doesn't.</p>
-    </div>
-
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <h4>Discover</h4>
-        <p>Stakeholder interviews, analytics review, and a competitive audit to find where the real friction is.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">02</div>
-        <h4>Define</h4>
-        <p>User flows and information architecture, then low-fidelity wireframes to test the structure cheaply.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">03</div>
-        <h4>Design</h4>
-        <p>High-fidelity UI and a reusable design system, built in Figma with engineering in the room.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">04</div>
-        <h4>Validate</h4>
-        <p>Usability and A/B testing against real users before anything ships to production.</p>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">05</div>
-        <h4>Ship &amp; measure</h4>
-        <p>Clean handoff, instrumented analytics, and a feedback loop back into the next iteration.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ STACK ============ -->
-  <section id="stack">
-    <div class="sec-head reveal">
-      <div class="eyebrow"><span class="num">04</span> TOOLKIT</div>
-      <h2>What I build with</h2>
-    </div>
-
-    <div class="stack-groups">
-      <div class="stack-group reveal">
-        <h4>Design &amp; Prototyping</h4>
-        <div class="stack-tags">
-          <span class="tag">Figma</span><span class="tag">Sketch</span><span class="tag">Adobe XD</span>
-          <span class="tag">Photoshop</span><span class="tag">Illustrator</span><span class="tag">InVision</span>
-          <span class="tag">Framer</span>
-        </div>
-      </div>
-      <div class="stack-group reveal">
-        <h4>Research &amp; Data</h4>
-        <div class="stack-tags">
-          <span class="tag">User Interviews</span><span class="tag">A/B Testing</span>
-          <span class="tag">Google Analytics</span><span class="tag">Tableau</span>
-          <span class="tag">Usability Testing</span>
-        </div>
-      </div>
-      <div class="stack-group reveal">
-        <h4>Enterprise &amp; CRM</h4>
-        <div class="stack-tags">
-          <span class="tag">Salesforce Lightning</span><span class="tag">Salesforce OmniStudio</span>
-          <span class="tag">HubSpot CRM</span>
-        </div>
-      </div>
-      <div class="stack-group reveal">
-        <h4>Emerging — AI &amp; Agents</h4>
-        <div class="stack-tags">
-          <span class="tag tag--ai">Agent Fleet &amp; Platform UX</span>
-          <span class="tag tag--ai">Permissions &amp; Governance Design</span>
-          <span class="tag tag--ai">Human-in-the-Loop Patterns</span>
-          <span class="tag tag--ai">AI Trust &amp; Explainability UI</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CONTACT ============ -->
-  <section id="contact">
-    <div class="contact-panel reveal">
-      <div>
-        <div class="contact-status"><span class="dot" aria-hidden="true" style="background:var(--teal);"></span>STATUS: OPEN FOR Q3 ENGAGEMENTS</div>
-        <h2>Have a dashboard, storefront, or AI product that needs shape?</h2>
-      </div>
-      <a class="btn btn--primary" href="mailto:hello@betayard.com">Email hello@betayard.com</a>
-    </div>
-  </section>
-
-  <footer>
-    <span>© 2026 Jonathan Lu — Betayard Studio</span>
-    <span>Rebuilt as a live console, not a template.</span>
-  </footer>
-
+<footer>
+  <span>© 2026 Jonathan Lu — Betayard Studio</span>
+  <span>Rebuilt as a live console, not a template.</span>
+</footer>
 </main>
 
 <script>
-  // filter
-  var chips = document.querySelectorAll('.chip');
-  var filterables = document.querySelectorAll('[data-category]');
-  chips.forEach(function(chip){
-    chip.addEventListener('click', function(){
-      chips.forEach(function(c){ c.classList.remove('is-active'); });
-      chip.classList.add('is-active');
-      var f = chip.dataset.filter;
-      filterables.forEach(function(card){
-        var cats = card.dataset.category.split(' ');
-        var show = f === 'all' || cats.indexOf(f) !== -1;
-        card.style.display = show ? '' : 'none';
-      });
-    });
-  });
-
-  // accordion toggles
-  document.querySelectorAll('.case-toggle').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var card = btn.closest('.case-card, .feature');
-      var open = card.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-
-  // nav active state on scroll
-  var sections = document.querySelectorAll('main > header, main > section');
-  var links = document.querySelectorAll('.rail-link');
-  var navObserver = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        links.forEach(function(l){ l.classList.remove('is-active'); });
-        var id = entry.target.id;
-        var match = document.querySelector('.rail-link[href="#' + id + '"]');
-        if(match) match.classList.add('is-active');
-      }
-    });
-  }, { rootMargin: '-40% 0px -50% 0px' });
-  sections.forEach(function(s){ navObserver.observe(s); });
-
-  // reveal-on-scroll
-  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var reveals = document.querySelectorAll('.reveal');
-  if(prefersReduced){
-    reveals.forEach(function(r){ r.classList.add('is-visible'); });
-  } else {
-    var revealObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(function(r){ revealObserver.observe(r); });
-  }
+var sections=document.querySelectorAll('main>header,main>section');
+var links=document.querySelectorAll('.rail-link');
+var no=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){links.forEach(function(l){l.classList.remove('is-active')});var m=document.querySelector('.rail-link[href="#'+en.target.id+'"]');if(m)m.classList.add('is-active')}})},{rootMargin:'-40% 0px -50% 0px'});
+sections.forEach(function(s){no.observe(s)});
+var rv=document.querySelectorAll('.rv');
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){rv.forEach(function(r){r.classList.add('is-v')})}
+else{var ro=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('is-v');ro.unobserve(en.target)}})},{threshold:.1});rv.forEach(function(r){ro.observe(r)})}
 </script>
-
 </body>
 </html>
