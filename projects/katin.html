@@ -415,6 +415,33 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   .gallery-item:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
   .gallery-item img{ width:100%; height:240px; object-fit:cover; display:block; }
 
+  /* ============ TEMPLATE & SYSTEM WALKTHROUGH ============ */
+  .artifact-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .artifact-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .artifact-section h3{ font-size:30px; margin-top:0; max-width:36ch; }
+  .artifact-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:72ch; }
+  .artifact-frame{
+    display:block; width:100%; padding:0; margin:0;
+    font:inherit; text-align:left; appearance:none;
+    border:1px solid var(--line); border-radius:var(--r-m);
+    overflow:hidden; background:var(--panel); cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .artifact-frame:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .artifact-frame img{ width:100%; height:auto; object-fit:unset; display:block; }
+  .screen-card{ min-width:0; margin-top:var(--sp-7); }
+  .screen-card:first-of-type{ margin-top:var(--sp-5); }
+  .screen-card .artifact-frame{ margin-bottom:var(--sp-4); }
+  .screen-tag{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:6px;
+  }
+  .screen-card h5{
+    margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
+  }
+  .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:72ch; }
+  .artifact-hint{ margin-top:var(--sp-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; color:var(--ink-faint); }
+
   .lightbox{
     position:fixed; inset:0;
     background:rgba(15,17,21,.92);
@@ -650,7 +677,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
   @media (max-width:980px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
     .proj-head{ padding-top:56px; }
     .proj-head h1{ font-size:40px; line-height:1.08; }
     .proj-hero-visual{ margin:40px auto 0; }
@@ -663,7 +690,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     .lead-head h3{ font-size:30px; line-height:1.14; }
   }
   @media (max-width:640px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 40px); }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 40px); }
     .proj-head h1{ font-size:34px; }
     .proj-nav{ display:grid; grid-template-columns:1fr; gap:var(--sp-3); }
     .proj-nav-link, .proj-nav-link.next{ justify-content:flex-start; text-align:left; }
@@ -672,6 +699,15 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P0R1QSTBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-0P0R1QSTBK");
+</script>
 </head>
 <body>
 
@@ -718,14 +754,16 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   <div class="proj-body">
     <div class="proj-main">
       
-      <p class="case-brief">Katin's storefront had grown slow and hard to update — every new promotion meant a layout built from scratch, which meant every promotion shipped late.</p>
+      <p class="case-brief">Katin's storefront had grown slow and hard to update — every new promotion meant a layout built from scratch, which meant every promotion shipped late. The fix wasn't a redesign; it was replacing bespoke pages with a library of named, versioned modules that the team could assemble, and that could survive a platform migration intact.</p>
       <div class="case-process">
-      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover &amp; define</h5><p>Brought on through an agency, I audited the existing site to find the actual bottleneck: it wasn't the visual design, it was the lack of any reusable structure underneath it.</p></div></div>
-      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Design</h5><p>I rebuilt the storefront around a component-based design system in Figma — buttons, cards, promo modules, and layout patterns the team could combine instead of redrawing every time.</p></div></div>
+      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover &amp; define</h5><p>Brought on through an agency, I audited the existing site to find the actual bottleneck: it wasn't the visual design, it was the lack of any reusable structure underneath it. Auditing the recurring layouts across listing pages, product pages, and editorial produced the module inventory — heroes, product grids, buy boxes, accordions, video blocks, cross-sells, social-proof bands — that the new system would need to cover.</p></div></div>
+      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Build the system</h5><p>Before any page, the foundations: a token-based design system in Figma — color cut to a navy/brick brand palette with one neutral ramp, a single responsive type scale, a CTA state matrix, product ribbons, and imagery rules. The full component sheet is below; every template in this case study is assembled only from what it defines.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Assemble the templates</h5><p>The three storefront templates — collection listing, product detail, and the About page — were then composed from the library, with desktop and mobile designed as one deliverable per module rather than two parallel sites. The modules are deliberately content-agnostic: the same buy box, accordion, and cross-sell serve any product the merchandising team points them at.</p></div></div>
+      <div class="process-row"><div class="process-num">04</div><div class="process-copy"><h5>Hand off &amp; ship</h5><p>Every module on the boards carries its own annotation — an ID, the device, and its status through the pipeline: design approved, transferred into the Nyla e-commerce platform, then direct-transferred to the live site. The annotations aren't decoration; they were the tracking system that let design, platform, and site stay in sync module by module.</p></div></div>
       </div>
       <div class="case-outcome">
         <div class="eyebrow"><span class="num">OUTCOME</span></div>
-        <p>The team could assemble new pages and promotions from existing parts instead of rebuilding layouts from scratch each time.</p>
+        <p>The team could assemble new pages and promotions from existing parts instead of rebuilding layouts from scratch each time — and because every module had an ID and a pipeline status, the design-to-platform handoff was auditable rather than a folder of loose mockups.</p>
       </div>
       
     </div>
@@ -738,10 +776,63 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   </div>
 
 
-  <div class="proj-gallery">
-    <div class="eyebrow"><span class="num">SAMPLE</span> DESIGN ATTACHED</div>
-    <div class="gallery-grid">
-      <button class="gallery-item" data-src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/8ed27e19-e8fa-4aef-bb05-c7559fee5922/katin2.png"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/8ed27e19-e8fa-4aef-bb05-c7559fee5922/katin2.png" alt="Katin storefront component library" loading="lazy"></button>
+  <div class="artifact-section" id="templates">
+    <div class="eyebrow"><span class="num">TEMPLATE BOARDS</span></div>
+    <h3>Three templates, one library — with the pipeline on the page</h3>
+    <p class="artifact-cap">Each board below is a full template shown as it was actually delivered: desktop and mobile
+    side by side, assembled from named modules, with every section annotated — module ID, device, design status,
+    Nyla platform transfer, and site transfer. Zoom in on any board and the component library's paper trail is right
+    there in the margins.</p>
+
+    <div class="screen-card">
+      <button type="button" class="gallery-item artifact-frame" data-src="katin-img/katin-plp.jpg">
+        <img src="katin-img/katin-plp.jpg" alt="Katin collection listing template — desktop and mobile side by side, assembled from annotated modules: Hero 016, a product grid, and the Social Proof 012 follow-us band, each labeled with design, Nyla, and site transfer status" loading="lazy">
+      </button>
+      <span class="screen-tag">TEMPLATE 01 · COLLECTION LISTING (PLP)</span>
+      <h5>The listing page as three modules</h5>
+      <p>Hero, product grid, social-proof band — that's the whole template. The hero (module <em>Hero 016</em>) carries
+      the seasonal story; the grid renders any collection the team feeds it; the <em>Social Proof 012</em> band closes
+      with the community. Desktop and mobile sit on one board because each module was designed as a single component
+      with two layouts, not two designs — which is what let the mobile site stop being a maintenance afterthought.</p>
+    </div>
+
+    <div class="screen-card">
+      <button type="button" class="gallery-item artifact-frame" data-src="katin-img/katin-pdp.jpg">
+        <img src="katin-img/katin-pdp.jpg" alt="Katin product detail template — desktop and mobile, assembled from a buy box, Columns 004, Accordion 002 for Help and FAQ, Video 007, and Cross Sell 002, each with pipeline annotations" loading="lazy">
+      </button>
+      <span class="screen-tag">TEMPLATE 02 · PRODUCT DETAIL (PDP)</span>
+      <h5>A buy box that doesn't care what it's selling</h5>
+      <p>The PDP stacks five modules: the buy box, a story section (<em>Columns 004</em>), a Help &amp; FAQ accordion
+      (<em>Accordion 002</em>), a video feature (<em>Video 007</em>), and a cross-sell row (<em>Cross Sell 002</em>).
+      Look closely and the buy box on a flannel photo reads "Lip Liner · 50mL" — deliberately. The demo content proves
+      the point of the whole system: modules are content-agnostic, so the same template sells a sherpa-lined flannel
+      or a skincare product without anyone redesigning a page.</p>
+    </div>
+
+    <div class="screen-card">
+      <button type="button" class="gallery-item artifact-frame" data-src="katin-img/katin-about.jpg">
+        <img src="katin-img/katin-about.jpg" alt="Katin About page template — desktop and mobile, assembled from Hero 009, text modules 010 and 016, Video 008, Columns 002, and Image 009, each annotated with its pipeline status" loading="lazy">
+      </button>
+      <span class="screen-tag">TEMPLATE 03 · ABOUT / EDITORIAL</span>
+      <h5>Editorial from the same parts bin</h5>
+      <p>The brand-story page is the stress test: if a component library can only build grids, editorial pages leak
+      back into bespoke work. This one is composed entirely from the library — <em>Hero 009</em>, two text modules,
+      <em>Video 008</em>, a three-up heading row, <em>Columns 002</em>, and the layered <em>Image 009</em> — proving
+      the team could publish campaign and story pages, not just commerce, without opening a blank Figma frame.</p>
+    </div>
+
+    <div class="screen-card">
+      <button type="button" class="gallery-item artifact-frame" data-src="katin-img/katin-design-system.png">
+        <img src="katin-img/katin-design-system-preview.png" alt="Katin component system V2.0 — masthead, reorganization notes, and the color foundations: brand palette, one ten-stop neutral ramp, status colors, and backgrounds. Click to view the full seven-section sheet" loading="lazy">
+      </button>
+      <p class="artifact-hint">Preview shows the masthead and color foundations — click to open the full seven-section sheet</p>
+      <span class="screen-tag" style="margin-top:14px">FOUNDATIONS · COMPONENT SYSTEM V2.0</span>
+      <h5>The sheet everything above is built from</h5>
+      <p>The system behind the templates, reorganized onto a single spec sheet: 21 color tokens (brand, one ten-stop
+      neutral ramp, status, backgrounds), one responsive type ramp covering both breakpoints per style, a CTA
+      variant-by-state matrix, five product ribbons bound to tokens, logo and imagery rules, and the base-4 spacing
+      and grid constants. Every module on the three boards above resolves to a value on this sheet — nothing on any
+      template is a one-off.</p>
     </div>
   </div>
 
