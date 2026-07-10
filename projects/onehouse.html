@@ -755,7 +755,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   </div>
 
   <div class="proj-hero-visual">
-    <img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png" alt="OneHouse.ai dashboard design">
+    <img src="onehouse-img/onehouse-banner.png" alt="OneHouse product banner — three screens of the branded platform (Getting Started home, a live stream capture, and a data lake detail view) composed on a purple field">
   </div>
 
   <div class="proj-body">
@@ -784,71 +784,62 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
   <div class="artifact-section" id="screens">
     <div class="eyebrow"><span class="num">SELECTED SCREENS</span></div>
-    <h3>From first sign-in to a live pipeline</h3>
-    <p class="artifact-cap">Five screens covering the two journeys the design had to nail: a brand-new team's first run
-    through the platform, and the day-to-day anatomy of a single capture pipeline — status, logs, and configuration as
-    three tabs on one object. This is the "pipelines as the primary object" decision from the process above, made
-    visible.</p>
-
-    <div class="screen-card screen-lede">
-      <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-getting-started.png">
-        <img src="onehouse-img/onehouse-getting-started.png" alt="OneHouse.ai Getting Started home — a five-step lakehouse setup wizard with sequential cards, a tutorial video and resources row, an action items panel surfacing detected errors, and a recents list" loading="lazy">
-      </button>
-      <span class="screen-tag">HOME · GETTING STARTED</span>
-      <h5>The home screen is a to-do list</h5>
-      <p>A data platform with nothing connected is an empty room, so the home screen sells the path instead: five
-      sequential cards from linking a cloud account to querying the finished lakehouse, with only the current step
-      enabled — each stage unlocks the next. Below it, the platform is already earning trust before setup is even done:
-      the Action Items panel surfaces detected problems (columns that may contain sensitive data, tables missing SLAs)
-      rather than waiting to be asked.</p>
-    </div>
+    <h3>The branded product — from first run to a self-tuning table</h3>
+    <p class="artifact-cap">Four screens from the high-fidelity branded design: the guided first run, a live stream
+    capture, and the two power tabs of a single table's detail view. Together they walk the platform's core promise —
+    data flows in through a capture pipeline, lands in a lakehouse table, and the table then manages itself — with the
+    "pipelines and tables as primary objects" architecture from the process above carried through every screen.</p>
 
     <div class="screen-grid">
       <div class="screen-card">
-        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-signin.png">
-          <img src="onehouse-img/onehouse-signin.png" alt="OneHouse.ai sign-in page — a centered card with username and password fields, forgot-password link, and Google sign-in" loading="lazy">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-home.png">
+          <img src="onehouse-img/onehouse-home.png" alt="OneHouse Getting Started home — a five-step data lake setup wizard on a dark tray with only the first step enabled, above a guide video tutorials panel with a request-a-demo action" loading="lazy">
         </button>
-        <span class="screen-tag">ONBOARDING · SIGN IN</span>
-        <h5>A deliberately boring front door</h5>
-        <p>For a stealth-phase infrastructure product, the sign-in screen's job is credibility, not spectacle: one
-        centered card, username/password plus Google SSO, and nothing else competing for attention. The restraint here
-        buys the density budget that the console screens spend.</p>
+        <span class="screen-tag">HOME &middot; GETTING STARTED</span>
+        <h5>The home screen is a guided path</h5>
+        <p>An empty data platform is an empty room, so the home screen sells the route instead: five sequential cards
+        from linking a cloud provider to exploring the finished lake, with only the current step enabled &mdash; each
+        stage unlocks the next. The dark tray isolates the wizard from the rest of the chrome, and the video rail
+        beneath it acknowledges who's arriving: engineers evaluating a stealth product, one demo request away.</p>
       </div>
 
       <div class="screen-card">
-        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-capture-status.png">
-          <img src="onehouse-img/onehouse-capture-status.png" alt="Capture service status tab — sync cadence, an alerts panel, headline stats for total records, average batch size, and latency, plus records-captured and commit-history bar charts" loading="lazy">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-stream-capture.png">
+          <img src="onehouse-img/onehouse-stream-capture.png" alt="Kyle's Stream Capture status view — plain-language sync cadence, an alerts panel, headline stats for records, bytes, and commit duration, a records-captured area chart, and a color-coded capture commit timeline with a savepoint tooltip" loading="lazy">
         </button>
-        <span class="screen-tag">CAPTURE SERVICE · STATUS</span>
-        <h5>One pipeline, one page</h5>
-        <p>Every capture service gets a persistent header — source, destination, owner, run state, pause/stop — and the
-        Status tab answers an engineer's first three questions above the fold: is it healthy (alerts), how much has it
-        moved (541K records, 2,412 per batch, 35-sec latency), and what does the trend look like. The commit-history
-        chart colors failures red inline, so a bad night is visible from across the room.</p>
+        <span class="screen-tag">SERVICES &middot; STREAM CAPTURE</span>
+        <h5>A pipeline that reports in plain language</h5>
+        <p>The status tab answers an engineer's first questions in order: is it alive ("last sync 15 mins ago &middot;
+        next in 1 min"), is it healthy (alerts), and how is it performing (4,000 records and 35 seconds per commit).
+        The payoff is the commit timeline at the bottom &mdash; every lakehouse event type gets a color (commits,
+        savepoints, rollbacks, replaces, cleans, compactions), turning internals that normally live in log files into
+        something you can read at a glance and hover for detail.</p>
       </div>
 
       <div class="screen-card">
-        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-capture-logs.png">
-          <img src="onehouse-img/onehouse-capture-logs.png" alt="Capture commit logs tab — a table of commits with records, duration, size, and result, with a failed commit expanded inline to show the raw stack trace and a download option" loading="lazy">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-table-hudi.png">
+          <img src="onehouse-img/onehouse-table-hudi.png" alt="Table detail view for currency_map_ro, Hudi tab — table metadata including S3 path, schema location, and primary key, above a swimlane timeline of Hudi operations: save points, rollbacks, compaction, delta commits, cleans, and commits" loading="lazy">
         </button>
-        <span class="screen-tag">CAPTURE SERVICE · LOGS</span>
-        <h5>The stack trace lives in the table</h5>
-        <p>Commit logs read as a table — time, commit ID, records, duration, size, result — and the failed row expands
-        in place to the raw stack trace, downloadable, without bouncing the engineer out to a separate log aggregator.
-        Debugging stays inside the object being debugged; the successful commits collapse back to a single quiet line
-        each.</p>
+        <span class="screen-tag">DATA &middot; TABLE DETAIL &mdash; HUDI</span>
+        <h5>Lakehouse internals as swimlanes</h5>
+        <p>Every table is a first-class object, reachable through the lake &rarr; database &rarr; table tree, with its
+        identity card up top: S3 path, schema location, primary key. The Hudi tab renders the table's operational
+        history as a swimlane timeline &mdash; save points, rollbacks, compactions, delta commits, cleans &mdash; so
+        the open-source machinery underneath the product is inspectable rather than hidden. This is the screen that
+        earned trust with engineers who already knew Hudi.</p>
       </div>
 
       <div class="screen-card">
-        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-capture-setup.png">
-          <img src="onehouse-img/onehouse-capture-setup.png" alt="Capture service setup tab — a read-back of the configuration: S3 source folder, file format, bootstrap choice, and destination lake, database, and table as links" loading="lazy">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-table-optimizations.png">
+          <img src="onehouse-img/onehouse-table-optimizations.png" alt="Table detail Optimizations tab — a Hudi timeline chart above four managed services, clustering, compaction, file sizing, and cleaning, each with an insight banner, an on/off toggle, and outcome stats such as data optimized, files resized, and space reclaimed" loading="lazy">
         </button>
-        <span class="screen-tag">CAPTURE SERVICE · SETUP</span>
-        <h5>Configuration as record</h5>
-        <p>The Setup tab isn't a form to fight with — it's a plain-language read-back of what this pipeline actually is:
-        the S3 folder it watches, the format it expects, whether it bootstrapped historical data, and where the output
-        lands, with lake, database, and table as clickable links into the data itself. Six months later, this page is
-        the documentation.</p>
+        <span class="screen-tag">DATA &middot; TABLE DETAIL &mdash; OPTIMIZATIONS</span>
+        <h5>The product's pitch, as four toggles</h5>
+        <p>OneHouse's core promise &mdash; a lakehouse that tunes itself &mdash; had to be a screen, not a slide. Each
+        managed service (clustering, compaction, file sizing, cleaning) is one toggle paired with its receipts: 2.4&nbsp;GB
+        optimized, 2,450 file groups compacted, 328&nbsp;GB of storage reclaimed. The insight banners above each block
+        explain <em>why</em> the platform is recommending an action, so automation reads as a colleague's suggestion
+        with evidence, not a black box flipping switches on your data.</p>
       </div>
     </div>
   </div>
