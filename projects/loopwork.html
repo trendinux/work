@@ -565,6 +565,45 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     content:''; position:absolute; left:0; top:6px; width:6px; height:6px; background:var(--amber);
   }
 
+  /* ============ DESIGN ARTIFACTS — FLOW MAP + COMPONENT SYSTEM ============ */
+  .artifact-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .artifact-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .artifact-section h3{ font-size:30px; margin-top:0; max-width:36ch; }
+  .artifact-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:72ch; }
+  .artifact-frame{
+    display:block; width:100%; padding:0; margin:0;
+    font:inherit; text-align:left; appearance:none;
+    border:1px solid var(--line); border-radius:var(--r-m);
+    overflow:hidden; background:#101115; cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .artifact-frame:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .artifact-frame img{ width:100%; height:auto; object-fit:unset; display:block; }
+  .artifact-stats{
+    display:flex; flex-wrap:wrap; gap:8px 22px;
+    margin-top:var(--sp-4);
+    font-family:var(--f-mono); font-size:12px; letter-spacing:.06em;
+    color:var(--ink-faint); text-transform:uppercase;
+  }
+  .artifact-stats b{ color:var(--ink); font-weight:600; margin-right:5px; }
+  .artifact-hint{ margin-top:var(--sp-2); font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; color:var(--ink-faint); }
+  .artifact-principles{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:var(--sp-4); margin:var(--sp-5) 0 0;
+  }
+  .principle-card{
+    border:1px solid var(--line); border-radius:var(--r-m);
+    background:var(--panel); padding:var(--sp-4) var(--sp-4) var(--sp-4);
+  }
+  .principle-card h5{
+    margin:0 0 6px; font-family:var(--f-display); font-size:15px; font-weight:700;
+  }
+  .principle-card p{ margin:0; font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+  .principle-card .p-num{
+    font-family:var(--f-mono); font-size:11px; color:var(--amber);
+    letter-spacing:.08em; display:block; margin-bottom:8px;
+  }
+
   /* ============ LEAD CAPTURE FORM ============ */
   .lead-form-wrap{
     width:min(1180px, calc(100% - 128px));
@@ -650,7 +689,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
   @media (max-width:980px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
     .proj-head{ padding-top:56px; }
     .proj-head h1{ font-size:40px; line-height:1.08; }
     .proj-hero-visual{ margin:40px auto 0; }
@@ -663,7 +702,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     .lead-head h3{ font-size:30px; line-height:1.14; }
   }
   @media (max-width:640px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 40px); }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 40px); }
     .proj-head h1{ font-size:34px; }
     .proj-nav{ display:grid; grid-template-columns:1fr; gap:var(--sp-3); }
     .proj-nav-link, .proj-nav-link.next{ justify-content:flex-start; text-align:left; }
@@ -672,6 +711,15 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P0R1QSTBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-0P0R1QSTBK");
+</script>
 </head>
 <body>
 
@@ -821,7 +869,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <div class="case-process">
       <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>I looked at how teams currently run multiple agents in production and found the same pattern everywhere: every agent gets its own one-off dashboard, permission model, and log format, built by whichever engineer shipped it first. There's no shared registry, no consistent guardrail system, and no single place to see the whole fleet at once.</p></div></div>
       <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>I scoped Loopwork around five things an operating system for agents has to do regardless of department: register and provision agents in one place, set per-agent permissions and guardrails, monitor fleet health and cost live, route only the genuinely risky actions to a human, and keep a full audit trail. Everything else — including most of what a typical logging UI shows — got cut.</p></div></div>
-      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I designed the core OS console in Figma as a fleet dashboard — the full sidebar holds workspace navigation (Mission Control, Paperclip, AI Agent Mastermind), the live agent roster (Claude, Hermes, Gemini, Codex, and others with status avatars), project channels, and workspace utilities. The main view groups all agents by run state — Running, Needs Review, Idle, Paused — with status, risk, confidence, and assigned owner inline for each. Below the dashboard, two module sketches show the activity feed and approval queue. This is a working concept screen, not a final visual; I'm still iterating on information density.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I designed the core OS console in Figma as a fleet dashboard — the full sidebar holds workspace navigation (Mission Control, Paperclip, AI Agent Mastermind), the live agent roster (Claude, Hermes, Gemini, Codex, and others with status avatars), project channels, and workspace utilities. The main view groups all agents by run state — Running, Needs Review, Idle, Paused — with status, risk, confidence, and assigned owner inline for each. Below the dashboard, two module sketches show the activity feed and approval queue. From there I scaled the concept out to a full 48-screen information architecture and a v2 component system (both below), so every screen in the OS is built from the same tokens and every governance warning traces back to a visible source.</p></div></div>
       <div class="process-row"><div class="process-num">04</div><div class="process-copy"><h5>Validate</h5><p>There's no live user base yet, so validation so far has meant walking the design through worst-case scenarios by hand across a few different team types — a wrong refund, a missed escalation, a confidently wrong agent — and checking whether the interface would have caught it. The honest next step is putting this in front of real platform and ops teams.</p></div></div>
       </div>
       <div class="case-outcome">
@@ -967,6 +1015,53 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     </div>
   </div>
 
+
+  <div class="artifact-section" id="flow-map">
+    <div class="eyebrow"><span class="num">INFORMATION ARCHITECTURE &amp; FLOW MAP</span></div>
+    <h3>The whole OS on one canvas — 48 screens, one closed loop</h3>
+    <p class="artifact-cap">The fleet console above is a single screen. This map is the rest of the product: every screen
+    in the OS, laid out as it's actually navigated — an eight-step onboarding flow, the eight-tab Mission Control console,
+    a dedicated view per agent, ten project channels, nine workspace surfaces, and the settings layer reached through the
+    workspace switcher. The organizing thesis is the numbered purple badges: they trace one governance event end to end.
+    A spend policy gets set in Chat&nbsp;<b>①</b>, is stored in Policies&nbsp;<b>②</b>, trips a warning in the Inbox&nbsp;<b>③</b>,
+    is logged in the Audit Log&nbsp;<b>④</b>, and its effect surfaces in Cost&nbsp;<b>⑤</b>. No warning, pause, or block appears
+    anywhere in the UI without a visible origin on another screen — that's the "closed loop" the product is named for.</p>
+    <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-flow-map.png">
+      <img src="img/loopwork-flow-map.png" alt="Loopwork Agentic OS information architecture and flow map — 48 screens across onboarding, mission control, agents, project channels, workspace, and settings, with numbered governance-loop badges" loading="lazy">
+    </button>
+    <p class="artifact-hint">Click to zoom · Governance badges ①–⑤ mark where the policy loop crosses screens</p>
+    <div class="artifact-stats">
+      <span><b>48</b>screens</span>
+      <span><b>6</b>sections</span>
+      <span><b>8</b>agents</span>
+      <span><b>10</b>channels</span>
+      <span><b>9</b>policies</span>
+      <span><b>100%</b>sidebar coverage</span>
+    </div>
+  </div>
+
+  <div class="artifact-section" id="design-system">
+    <div class="eyebrow"><span class="num">DESIGN SYSTEM · V2.0</span></div>
+    <h3>One component system behind all 48 screens</h3>
+    <p class="artifact-cap">Forty-eight screens stay coherent because none of them invents anything. Every surface,
+    tag, avatar, button, form, card, and empty state is drawn from this single sheet, and every value on it binds to
+    <em>loopwork-tokens.json</em> — a Tokens Studio file that maps color, spacing, radius, type, and sizing straight
+    into Figma variables. Three rules govern the whole system. <strong>Humans are visually distinct:</strong> the eight
+    agents each get a signature gradient avatar, while human teammates render flat white — you can never mistake who's
+    accountable in a row. <strong>Consequences are traceable:</strong> status, risk, and approval tags share one semantic
+    color scale, so a "Blocking" red in the fleet table means the same thing it does in a policy screen. <strong>Metadata
+    is mono:</strong> anything the system measured — costs, percentages, timestamps, IDs — is set in Roboto Mono, so
+    machine facts read differently from human language everywhere in the product.</p>
+    <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-design-system.png">
+      <img src="img/loopwork-design-system.png" alt="Loopwork Agentic OS component system v2.0 — color surfaces and accents, status and risk tags, eight agent gradient avatars, buttons and toggles, forms and stepper, cards, conversation and empty states, type ramp, and geometry constants" loading="lazy">
+    </button>
+    <p class="artifact-hint">Click to zoom · Pairs with loopwork-tokens.json and the flow map above</p>
+    <div class="artifact-principles">
+      <div class="principle-card"><span class="p-num">PRINCIPLE 01</span><h5>Humans are visually distinct</h5><p>Agent avatars are gradients; humans are flat white at 10%. Ownership and accountability are legible at a glance in any table, feed, or approval row.</p></div>
+      <div class="principle-card"><span class="p-num">PRINCIPLE 02</span><h5>Consequences are traceable</h5><p>Risk, status, and approval tags share one semantic scale across all 48 screens, so a warning always points back to the policy that produced it.</p></div>
+      <div class="principle-card"><span class="p-num">PRINCIPLE 03</span><h5>Metadata is mono</h5><p>Everything the system measured — spend, confidence, timestamps — is set in Roboto Mono. Machine facts and human language never blur together.</p></div>
+    </div>
+  </div>
 
   <div class="proj-scenarios">
     <div class="eyebrow"><span class="num">EXAMPLE USE CASES</span></div>
