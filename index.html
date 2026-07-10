@@ -95,24 +95,6 @@ section{padding:96px 64px;max-width:1240px;border-top:1px solid var(--line)}
 .chrome i{width:7px;height:7px;border-radius:50%;background:#d2d2d7}
 .thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.85) contrast(.95);transition:transform .35s var(--ease)}
 .card:hover .thumb img{transform:scale(1.03)}
-.loopwork-thumb{background:#12151b;padding:14px;color:#f5f5f7;font-family:var(--f-body)}
-.loopwork-ui{height:100%;display:grid;grid-template-columns:74px 1fr;gap:10px;border:1px solid #2a2e37;border-radius:10px;background:#171a21;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.loopwork-side{background:#1e222b;border-right:1px solid #2a2e37;padding:10px 8px}
-.loopwork-logo{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#7c3aed,#06b6d4);margin-bottom:12px}
-.loopwork-nav{display:grid;gap:6px}
-.loopwork-nav span{height:6px;border-radius:99px;background:#3a404d}
-.loopwork-nav span:nth-child(1){width:42px;background:#7c3aed}.loopwork-nav span:nth-child(2){width:34px}.loopwork-nav span:nth-child(3){width:48px}.loopwork-nav span:nth-child(4){width:28px}
-.loopwork-main{padding:10px 10px 10px 0;min-width:0}
-.loopwork-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.loopwork-title{font-size:11px;font-weight:700;line-height:1;color:#f8fafc}
-.loopwork-chip{font-family:var(--f-mono);font-size:8px;color:#4ade80;background:rgba(74,222,128,.14);border:1px solid rgba(74,222,128,.24);border-radius:5px;padding:3px 5px;white-space:nowrap}
-.loopwork-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
-.loopwork-metric{border:1px solid #2a2e37;border-radius:7px;background:#1f232c;padding:6px}
-.loopwork-metric strong{display:block;font-size:12px;line-height:1.1;color:#fff}.loopwork-metric span{display:block;font-family:var(--f-mono);font-size:7px;color:#8b93a3;margin-top:3px;text-transform:uppercase}
-.loopwork-agents{display:grid;gap:5px}
-.loopwork-agent{display:grid;grid-template-columns:7px 1fr 32px;align-items:center;gap:7px;border:1px solid #2a2e37;border-radius:7px;background:#1b1f27;padding:6px}
-.loopwork-agent i{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.12)}
-.loopwork-agent span{height:5px;border-radius:99px;background:#4b5261}.loopwork-agent span:nth-child(2){width:100%}.loopwork-agent em{height:5px;border-radius:99px;background:#7c3aed;font-style:normal}
 .card-body{padding:22px 24px}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .pill{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap}
@@ -200,6 +182,15 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   .trust-list{grid-template-columns:1fr}
 }
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P0R1QSTBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-0P0R1QSTBK");
+</script>
 </head>
 <body>
 
@@ -276,31 +267,11 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
   <div class="grid">
     <a class="card rv" href="projects/loopwork.html">
-      <div class="thumb loopwork-thumb" aria-label="Loopwork AI Agent OS dashboard preview">
-        <div class="loopwork-ui">
-          <div class="loopwork-side">
-            <div class="loopwork-logo"></div>
-            <div class="loopwork-nav"><span></span><span></span><span></span><span></span></div>
-          </div>
-          <div class="loopwork-main">
-            <div class="loopwork-top"><div class="loopwork-title">Agent Control</div><div class="loopwork-chip">LIVE</div></div>
-            <div class="loopwork-metrics">
-              <div class="loopwork-metric"><strong>42</strong><span>agents</span></div>
-              <div class="loopwork-metric"><strong>98%</strong><span>healthy</span></div>
-              <div class="loopwork-metric"><strong>7</strong><span>reviews</span></div>
-            </div>
-            <div class="loopwork-agents">
-              <div class="loopwork-agent"><i></i><span></span><em></em></div>
-              <div class="loopwork-agent"><i></i><span></span><em></em></div>
-              <div class="loopwork-agent"><i></i><span></span><em></em></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="projects/img/loopwork-board.png" alt="Loopwork — Agentic OS Mission Control board with the agent fleet grouped by run state" loading="lazy"></div>
       <div class="card-body"><div class="card-top"><span class="card-cat">AI &amp; Agentic</span><span class="pill pill--new">New</span></div><h3>Loopwork — AI Agent OS</h3><p class="desc">A control plane for every AI agent in the company — provisioning, permissions, live monitoring, and human oversight.</p><div class="card-foot"><span class="card-cat">Concept</span><span class="card-go">View case study →</span></div></div>
     </a>
     <a class="card rv" href="projects/onehouse.html">
-      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png" alt="OneHouse.ai" loading="lazy"></div>
+      <div class="thumb"><div class="chrome"><i></i><i></i><i></i></div><img src="projects/onehouse-img/onehouse-banner.png" alt="OneHouse product banner — three branded platform screens on a purple field" loading="lazy" style="object-position:center"></div>
       <div class="card-body"><div class="card-top"><span class="card-cat">AI · Dashboard</span><span class="pill pill--ship">Shipped</span></div><h3>OneHouse.ai</h3><p class="desc">Dashboard and core user flows for an AI-driven data automation platform during stealth phase.</p><div class="card-foot"><span class="card-cat">SaaS</span><span class="card-go">View →</span></div></div>
     </a>
     <a class="card rv" href="projects/fabletics.html">
