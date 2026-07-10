@@ -415,6 +415,39 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   .gallery-item:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
   .gallery-item img{ width:100%; height:240px; object-fit:cover; display:block; }
 
+  /* ============ SELECTED SCREENS WALKTHROUGH ============ */
+  .artifact-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .artifact-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .artifact-section h3{ font-size:30px; margin-top:0; max-width:36ch; }
+  .artifact-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:72ch; }
+  .artifact-frame{
+    display:block; width:100%; padding:0; margin:0;
+    font:inherit; text-align:left; appearance:none;
+    border:1px solid var(--line); border-radius:var(--r-m);
+    overflow:hidden; background:var(--panel); cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .artifact-frame:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .artifact-frame img{ width:100%; height:auto; object-fit:unset; display:block; }
+  .screen-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:var(--sp-6) var(--sp-5);
+    margin-top:var(--sp-6);
+  }
+  .screen-card{ min-width:0; }
+  .screen-card .artifact-frame{ margin-bottom:var(--sp-4); }
+  .screen-tag{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:6px;
+  }
+  .screen-card h5{
+    margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
+  }
+  .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:64ch; }
+  @media (max-width:900px){
+    .screen-grid{ grid-template-columns:1fr; }
+  }
+
   .lightbox{
     position:fixed; inset:0;
     background:rgba(15,17,21,.92);
@@ -650,7 +683,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
   @media (max-width:980px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
     .proj-head{ padding-top:56px; }
     .proj-head h1{ font-size:40px; line-height:1.08; }
     .proj-hero-visual{ margin:40px auto 0; }
@@ -663,7 +696,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     .lead-head h3{ font-size:30px; line-height:1.14; }
   }
   @media (max-width:640px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 40px); }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 40px); }
     .proj-head h1{ font-size:34px; }
     .proj-nav{ display:grid; grid-template-columns:1fr; gap:var(--sp-3); }
     .proj-nav-link, .proj-nav-link.next{ justify-content:flex-start; text-align:left; }
@@ -672,6 +705,15 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P0R1QSTBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-0P0R1QSTBK");
+</script>
 </head>
 <body>
 
@@ -722,7 +764,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <div class="case-process">
       <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>I audited what already existed — a partially built marketing site and an early dashboard prototype — to see what could be salvaged versus rebuilt, and talked to the team about how property managers actually used the early product day to day.</p></div></div>
       <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>Rather than treating the marketing site and the dashboard as two separate hand-offs, I defined them as one connected system: same visual language, same voice, with the marketing site setting up promises the product then had to keep.</p></div></div>
-      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I designed the responsive marketing site and the core SaaS dashboard in Figma, then extended the same system into the recurring Nester reports and email campaigns that kept property managers informed between logins.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I designed the responsive marketing site and the core SaaS dashboard in Figma, then extended the same system into the recurring Nester reports and email campaigns that kept property managers informed between logins. The four core product surfaces are below.</p></div></div>
       </div>
       <div class="case-outcome">
         <div class="eyebrow"><span class="num">OUTCOME</span></div>
@@ -739,8 +781,69 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   </div>
 
 
+  <div class="artifact-section" id="screens">
+    <div class="eyebrow"><span class="num">SELECTED SCREENS</span></div>
+    <h3>Two sides of a sale, one data loop</h3>
+    <p class="artifact-cap">Nester's core mechanic is that buyers and sellers feed the same engine: a buyer requests a
+    report on a home, the seller (or their agent) completes a wizard describing the home's systems, and both sides get
+    the payoff — a report that turns the house into a 15-year expense timeline. These four screens walk that loop in
+    order.</p>
+
+    <div class="screen-grid">
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="nester-img/nester-buyer-dashboard.png">
+          <img src="nester-img/nester-buyer-dashboard.png" alt="Nester buyer dashboard — an add-a-home address bar, a grid of homes the buyer is interested in with seven report credits remaining, one completed home card with a Nester Report button, and an 'I'm also selling a home' card" loading="lazy">
+        </button>
+        <span class="screen-tag">BUYER · DASHBOARD</span>
+        <h5>Shopping with a budget of reports</h5>
+        <p>Buyers add homes by address and spend report credits on the ones they're serious about — "7 reports left" sits
+        right in the section header, making the free tier legible without a paywall in the flow. The empty slots aren't
+        placeholders, they're invitations: eight certificate-icon cards that say the dashboard's job is comparison. And
+        the corner card — "I'm also selling a home" — quietly handles the truth of the market: most buyers are both
+        roles at once.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="nester-img/nester-home-wizard.png">
+          <img src="nester-img/nester-home-wizard.png" alt="Nester Home Wizard for a seller — required home details like roof, plumbing, electrical, and HVAC each with a completion percentage and a strength grade from weak to strong, optional detail sections, an overall 59% GOOD completion donut, and a submit-details prompt" loading="lazy">
+        </button>
+        <span class="screen-tag">SELLER · HOME WIZARD</span>
+        <h5>A physical for the house</h5>
+        <p>The wizard is where the data comes from, so it's built to fight abandonment: every system gets its own
+        progress bar and a plain-language grade — Roof 93% <em>Strong</em>, HVAC 18% <em>Weak</em> — while the donut
+        rolls it all up to one number. Required and optional are honestly separated, so sellers know exactly what stands
+        between them and submitting, and the grades show precisely where their report will be thin if they stop early.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="nester-img/nester-seller-dashboard.png">
+          <img src="nester-img/nester-seller-dashboard.png" alt="Nester seller dashboard — a listing card for 86720 Central Rd showing 16 new views and 38 total views, a STRONG 89% completion meter over the listing photo, a submit-details action, and add-a-listing slots" loading="lazy">
+        </button>
+        <span class="screen-tag">SELLER · LISTINGS DASHBOARD</span>
+        <h5>Views are the reason to come back</h5>
+        <p>The seller's home base mirrors the buyer's — same layout grammar, different verbs. Each listing card leads
+        with attention ("16 new views · 38 total") because that's what sellers actually check for, and wears its
+        completion meter directly on the photo: an 89% <em>Strong</em> listing is a listing buyers can trust. The one
+        unfinished step stays pinned as the card's single call to action.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="nester-img/nester-report.png">
+          <img src="nester-img/nester-report.png" alt="Nester Inventory report — a 15-year home expense timeline grouped into overdue, due soon, medium term, and long term with per-year items like roof and water heater, a $68,000 15-year total, projected monthly costs including a Nester Fund set-aside, a completion meter, and maintenance tips" loading="lazy">
+        </button>
+        <span class="screen-tag">THE DELIVERABLE · NESTER REPORT</span>
+        <h5>The thesis, as a timeline</h5>
+        <p>This is the screen the whole product exists to produce, and it's the brand's tagline made visual: most
+        unexpected home expenses aren't unexpected. Every major system is placed on a 15-year timeline — overdue, due
+        soon, medium, long-term — with a $68,000 total, and then translated into the number people can act on: a
+        monthly Nester Fund set-aside alongside the mortgage and utilities. A house becomes a cash-flow plan you can
+        print, download, or share.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="proj-gallery">
-    <div class="eyebrow"><span class="num">SAMPLE</span> DESIGN ATTACHED</div>
+    <div class="eyebrow"><span class="num">MARKETING SITE</span> &amp; REPORT COVERS</div>
     <div class="gallery-grid">
       <button class="gallery-item" data-src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9a2b6851-0c13-438d-b7f3-c06fff13c0ff/nester2.png"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9a2b6851-0c13-438d-b7f3-c06fff13c0ff/nester2.png" alt="Nester.app dashboard" loading="lazy"></button>
 <button class="gallery-item" data-src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9f9ef54d-cf11-4b46-afa8-c849e9623e23/file+cover+-+1.png"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/9f9ef54d-cf11-4b46-afa8-c849e9623e23/file+cover+-+1.png" alt="Nester.app marketing site" loading="lazy"></button>
