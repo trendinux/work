@@ -604,6 +604,28 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     letter-spacing:.08em; display:block; margin-bottom:8px;
   }
 
+  /* ============ SELECTED SCREENS WALKTHROUGH ============ */
+  .screen-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:var(--sp-6) var(--sp-5);
+    margin-top:var(--sp-6);
+  }
+  .screen-card{ min-width:0; }
+  .screen-card.screen-lede{ margin-top:var(--sp-5); }
+  .screen-card .artifact-frame{ margin-bottom:var(--sp-4); }
+  .screen-tag{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:6px;
+  }
+  .screen-tag em{ font-style:normal; color:var(--blue); }
+  .screen-card h5{
+    margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
+  }
+  .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:64ch; }
+  @media (max-width:900px){
+    .screen-grid{ grid-template-columns:1fr; }
+  }
+
   /* ============ LEAD CAPTURE FORM ============ */
   .lead-form-wrap{
     width:min(1180px, calc(100% - 128px));
@@ -1037,6 +1059,101 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <span><b>10</b>channels</span>
       <span><b>9</b>policies</span>
       <span><b>100%</b>sidebar coverage</span>
+    </div>
+  </div>
+
+  <div class="artifact-section" id="screens">
+    <div class="eyebrow"><span class="num">SELECTED SCREENS</span></div>
+    <h3>Seven screens, one path through the OS</h3>
+    <p class="artifact-cap">One screen from each lane of the flow map above, in the order a new team actually meets them —
+    through the front door, into Mission Control, down into a single agent, and out across the workspace surfaces where
+    the governance loop begins. Every screen here is built from the component system below; nothing on any of them is a
+    one-off.</p>
+
+    <div class="screen-card screen-lede">
+      <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-login.png">
+        <img src="img/loopwork-login.png" alt="Loopwork Agentic OS sign-in screen — 'Every agent in the company. One console.' with a live fleet-health preview beside the login form" loading="lazy">
+      </button>
+      <span class="screen-tag">ONBOARDING &amp; FIRST RUN</span>
+      <h5>The front door states the thesis</h5>
+      <p>"Every agent in the company. One console." The sign-in form is deliberately unremarkable — the left panel isn't.
+      It previews live fleet data (five agents running, fleet health 94%), so the product's pitch is the product itself.
+      And the mono strip at the bottom — <em>audit-ready · human-in-the-loop · per-agent permissions</em> — makes the
+      governance promise before you've even typed a password.</p>
+    </div>
+
+    <div class="screen-grid">
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-board.png">
+          <img src="img/loopwork-board.png" alt="Mission Control Board tab — the agent fleet as a kanban grouped by Running, Needs review, Idle, and Paused, with risk tags, confidence, and owner avatars on each card" loading="lazy">
+        </button>
+        <span class="screen-tag">MISSION CONTROL · BOARD</span>
+        <h5>Agents, managed like work</h5>
+        <p>The Board tab re-projects the fleet as a kanban: Running, Needs review, Idle, Paused — drag to reassign.
+        Every card carries the same fleet, risk, confidence, and owner columns as the Fleet table, just spatially.
+        Note where the two High-risk agents sit: in "Needs review," which is exactly where the OS routes human
+        attention by default.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-agent-claude.png">
+          <img src="img/loopwork-agent-claude.png" alt="Agent detail view for Claude — runs, confidence, uptime, and spend stats, active assignments, a timestamped activity feed, and a pinned permissions panel with allowed, warned, and denied capabilities" loading="lazy">
+        </button>
+        <span class="screen-tag">AGENTS · DETAIL VIEW</span>
+        <h5>Every agent gets a dossier</h5>
+        <p>Runs, confidence, uptime, and month-to-date spend up top; live assignments and a timestamped activity feed
+        below; identity and permissions pinned right. Permissions read as three explicit tiers — can, can-with-warning,
+        cannot — and the feed logs human intervention inline ("Incident-Responder paused by Jon after retries").
+        <em>Policy v12 · updated 2h ago</em> in the toolbar keeps the rules governing this agent one click away.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-goals.png">
+          <img src="img/loopwork-goals.png" alt="Workspace Goals view for Q3 2026 — goals owned by agents and humans side by side with progress bars, on-track/at-risk/behind statuses, and a footnote linking an at-risk cost goal to the Cost tab" loading="lazy">
+        </button>
+        <span class="screen-tag">WORKSPACE · GOALS</span>
+        <h5>Agents and humans, same table</h5>
+        <p>Quarterly goals with mixed ownership — gradient avatars for agents, flat-white JL for the human. That's
+        principle 01 doing real work: accountability is legible per row. And the at-risk cost-per-task goal doesn't
+        dead-end; its mono footnote names the cause (Antigravity runs at 2.4× the average) and points at the Cost tab.
+        Planning is wired into governance, not sealed off from it.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-chat.png">
+          <img src="img/loopwork-chat.png" alt="Chat view with Ask Loopwork — a spend question answered from live workspace data with a per-agent cost chart, then a policy set in plain language with a 'Policy change · logged to Audit Log' receipt" loading="lazy">
+        </button>
+        <span class="screen-tag">WORKSPACE · CHAT — <em>GOVERNANCE BADGE ①</em></span>
+        <h5>Where the closed loop begins</h5>
+        <p>This is badge ① from the flow map. "Why did spend jump this month?" gets an answer from live workspace data,
+        chart and sources included. Then policy is set in plain language — cap Antigravity at $200/day, route over-cap
+        for approval — and the confirmation carries its own receipt: <em>policy change · logged to Audit Log</em>.
+        Everything downstream — the Inbox warning, the audit entry, the Cost effect — traces back to this exchange.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-channel-marketing.png">
+          <img src="img/loopwork-channel-marketing.png" alt="Marketing Automation project channel — automations table with triggers, assigned agents, success rates and statuses, plus stat cards for active automations, runs today, success rate, and human handoffs" loading="lazy">
+        </button>
+        <span class="screen-tag">PROJECT CHANNELS · MARKETING AUTOMATION</span>
+        <h5>Every channel is a small console</h5>
+        <p>Each of the ten project channels shares Mission Control's anatomy — stat cards, a governed table, a mono
+        status line — scoped to one team's work. "Human handoffs" sits beside success rate as a first-class metric,
+        and the paused win-back series shows the system self-reporting: a deliverability dip, flagged by the channel
+        itself, with the pause visible in the table.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="img/loopwork-paperclip.png">
+          <img src="img/loopwork-paperclip.png" alt="Paperclip workspace surface — a board of clips including charts, run outputs, docs, approvals, links, and threads produced by the agent fleet, with a note that cited clips land in the Audit Log" loading="lazy">
+        </button>
+        <span class="screen-tag">WORKSPACE · PAPERCLIP</span>
+        <h5>The evidence layer</h5>
+        <p>Paperclip is where the fleet's output accumulates as citable clips — charts, run summaries, approval
+        receipts, rollback plans. The mono footer is the governance hook: <em>clips are citable — when an agent
+        references a clip, the link lands in the Audit Log</em>. Institutional memory that feeds the loop, instead
+        of a screenshot graveyard.</p>
+      </div>
     </div>
   </div>
 
