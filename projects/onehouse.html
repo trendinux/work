@@ -415,6 +415,40 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   .gallery-item:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
   .gallery-item img{ width:100%; height:240px; object-fit:cover; display:block; }
 
+  /* ============ SELECTED SCREENS WALKTHROUGH ============ */
+  .artifact-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .artifact-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .artifact-section h3{ font-size:30px; margin-top:0; max-width:36ch; }
+  .artifact-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:72ch; }
+  .artifact-frame{
+    display:block; width:100%; padding:0; margin:0;
+    font:inherit; text-align:left; appearance:none;
+    border:1px solid var(--line); border-radius:var(--r-m);
+    overflow:hidden; background:var(--panel); cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .artifact-frame:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .artifact-frame img{ width:100%; height:auto; object-fit:unset; display:block; }
+  .screen-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:var(--sp-6) var(--sp-5);
+    margin-top:var(--sp-6);
+  }
+  .screen-card{ min-width:0; }
+  .screen-card.screen-lede{ margin-top:var(--sp-5); }
+  .screen-card .artifact-frame{ margin-bottom:var(--sp-4); }
+  .screen-tag{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:6px;
+  }
+  .screen-card h5{
+    margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
+  }
+  .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:64ch; }
+  @media (max-width:900px){
+    .screen-grid{ grid-template-columns:1fr; }
+  }
+
   .lightbox{
     position:fixed; inset:0;
     background:rgba(15,17,21,.92);
@@ -650,7 +684,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
   @media (max-width:980px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
     .proj-head{ padding-top:56px; }
     .proj-head h1{ font-size:40px; line-height:1.08; }
     .proj-hero-visual{ margin:40px auto 0; }
@@ -663,7 +697,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     .lead-head h3{ font-size:30px; line-height:1.14; }
   }
   @media (max-width:640px){
-    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 40px); }
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 40px); }
     .proj-head h1{ font-size:34px; }
     .proj-nav{ display:grid; grid-template-columns:1fr; gap:var(--sp-3); }
     .proj-nav-link, .proj-nav-link.next{ justify-content:flex-start; text-align:left; }
@@ -672,6 +706,15 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
 
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P0R1QSTBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-0P0R1QSTBK");
+</script>
 </head>
 <body>
 
@@ -722,7 +765,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <div class="case-process">
       <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>With no live product to audit, discovery meant working backward from the team's own mental model: how a data engineer thinks about pipelines, jobs, schemas, and lineage. I ran working sessions with the founding team to pull that model out of their heads and onto a whiteboard.</p></div></div>
       <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>I structured the information architecture around that domain model rather than around generic SaaS dashboard conventions — pipelines as the primary object, with status, lineage, and automation rules nested underneath instead of buried in settings.</p></div></div>
-      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>Wireframes first, to get the navigation and hierarchy agreed on cheaply, then a full high-fidelity dashboard design in Figma — organizing a genuinely dense technical surface into something a data engineer could navigate without a manual.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>Wireframes first, to get the navigation and hierarchy agreed on cheaply, then a full high-fidelity dashboard design in Figma — organizing a genuinely dense technical surface into something a data engineer could navigate without a manual. The screens below are the shipped result.</p></div></div>
       </div>
       <div class="case-outcome">
         <div class="eyebrow"><span class="num">OUTCOME</span></div>
@@ -739,10 +782,74 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   </div>
 
 
-  <div class="proj-gallery">
-    <div class="eyebrow"><span class="num">SAMPLE</span> DESIGN ATTACHED</div>
-    <div class="gallery-grid">
-      <button class="gallery-item" data-src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png"><img src="https://images.squarespace-cdn.com/content/v1/5b4d054675f9ee9456bfdb06/e27b9270-ab85-46dc-94b6-a2ce23275e0e/House2.png" alt="OneHouse.ai dashboard design" loading="lazy"></button>
+  <div class="artifact-section" id="screens">
+    <div class="eyebrow"><span class="num">SELECTED SCREENS</span></div>
+    <h3>From first sign-in to a live pipeline</h3>
+    <p class="artifact-cap">Five screens covering the two journeys the design had to nail: a brand-new team's first run
+    through the platform, and the day-to-day anatomy of a single capture pipeline — status, logs, and configuration as
+    three tabs on one object. This is the "pipelines as the primary object" decision from the process above, made
+    visible.</p>
+
+    <div class="screen-card screen-lede">
+      <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-getting-started.png">
+        <img src="onehouse-img/onehouse-getting-started.png" alt="OneHouse.ai Getting Started home — a five-step lakehouse setup wizard with sequential cards, a tutorial video and resources row, an action items panel surfacing detected errors, and a recents list" loading="lazy">
+      </button>
+      <span class="screen-tag">HOME · GETTING STARTED</span>
+      <h5>The home screen is a to-do list</h5>
+      <p>A data platform with nothing connected is an empty room, so the home screen sells the path instead: five
+      sequential cards from linking a cloud account to querying the finished lakehouse, with only the current step
+      enabled — each stage unlocks the next. Below it, the platform is already earning trust before setup is even done:
+      the Action Items panel surfaces detected problems (columns that may contain sensitive data, tables missing SLAs)
+      rather than waiting to be asked.</p>
+    </div>
+
+    <div class="screen-grid">
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-signin.png">
+          <img src="onehouse-img/onehouse-signin.png" alt="OneHouse.ai sign-in page — a centered card with username and password fields, forgot-password link, and Google sign-in" loading="lazy">
+        </button>
+        <span class="screen-tag">ONBOARDING · SIGN IN</span>
+        <h5>A deliberately boring front door</h5>
+        <p>For a stealth-phase infrastructure product, the sign-in screen's job is credibility, not spectacle: one
+        centered card, username/password plus Google SSO, and nothing else competing for attention. The restraint here
+        buys the density budget that the console screens spend.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-capture-status.png">
+          <img src="onehouse-img/onehouse-capture-status.png" alt="Capture service status tab — sync cadence, an alerts panel, headline stats for total records, average batch size, and latency, plus records-captured and commit-history bar charts" loading="lazy">
+        </button>
+        <span class="screen-tag">CAPTURE SERVICE · STATUS</span>
+        <h5>One pipeline, one page</h5>
+        <p>Every capture service gets a persistent header — source, destination, owner, run state, pause/stop — and the
+        Status tab answers an engineer's first three questions above the fold: is it healthy (alerts), how much has it
+        moved (541K records, 2,412 per batch, 35-sec latency), and what does the trend look like. The commit-history
+        chart colors failures red inline, so a bad night is visible from across the room.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-capture-logs.png">
+          <img src="onehouse-img/onehouse-capture-logs.png" alt="Capture commit logs tab — a table of commits with records, duration, size, and result, with a failed commit expanded inline to show the raw stack trace and a download option" loading="lazy">
+        </button>
+        <span class="screen-tag">CAPTURE SERVICE · LOGS</span>
+        <h5>The stack trace lives in the table</h5>
+        <p>Commit logs read as a table — time, commit ID, records, duration, size, result — and the failed row expands
+        in place to the raw stack trace, downloadable, without bouncing the engineer out to a separate log aggregator.
+        Debugging stays inside the object being debugged; the successful commits collapse back to a single quiet line
+        each.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="onehouse-img/onehouse-capture-setup.png">
+          <img src="onehouse-img/onehouse-capture-setup.png" alt="Capture service setup tab — a read-back of the configuration: S3 source folder, file format, bootstrap choice, and destination lake, database, and table as links" loading="lazy">
+        </button>
+        <span class="screen-tag">CAPTURE SERVICE · SETUP</span>
+        <h5>Configuration as record</h5>
+        <p>The Setup tab isn't a form to fight with — it's a plain-language read-back of what this pipeline actually is:
+        the S3 folder it watches, the format it expects, whether it bootstrapped historical data, and where the output
+        lands, with lake, database, and table as clickable links into the data itself. Six months later, this page is
+        the documentation.</p>
+      </div>
     </div>
   </div>
 
