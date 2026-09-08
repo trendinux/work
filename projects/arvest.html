@@ -679,8 +679,8 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 .case-figure{margin:28px 0 8px}
 .case-figure img{width:100%;border:1px solid var(--line);border-radius:var(--r-m);display:block;background:#fff}
 .case-figure figcaption{margin-top:10px;font-size:14px;color:var(--ink-faint);line-height:1.5}
-.proto-card{display:grid;grid-template-columns:1.35fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;background:var(--panel);text-decoration:none;color:inherit;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.proto-card:hover{transform:translateY(-2px);box-shadow:0 18px 44px -28px rgba(0,0,0,.45)}
+.proto-card{display:grid;grid-template-columns:1.35fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;background:var(--panel);text-decoration:none;color:inherit;transition:transform .18s var(--ease),border-color .18s var(--ease)}
+.proto-card:hover{transform:translateY(-2px);border-color:#c8c8cd}
 .proto-shot{background:#f3f3f3;border-right:1px solid var(--line);overflow:hidden}
 .proto-shot img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block}
 .proto-body{padding:32px}
@@ -689,10 +689,6 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 .proto-go{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:600;color:var(--blue)}
 @media(max-width:900px){.proto-card{grid-template-columns:1fr}.proto-shot{border-right:0;border-bottom:1px solid var(--line)}.proto-body{padding:24px}}
 
-/* lift the sample graphics off the page */
-.proj-hero-visual img,
-.case-figure img,
-.gallery-item img{box-shadow:0 26px 56px -30px rgba(29,29,31,.55)}
 /* the screenshots are mostly white; without a border they bleed into the page */
 .proj-hero-visual img,
 .case-figure img,
@@ -703,13 +699,11 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 .gallery-item img{border-radius:var(--r-s)}
 .proto-shot{padding:0}
 .proto-shot img{border-radius:0;border-width:0 1px 0 0}
-.proto-card{box-shadow:0 26px 56px -30px rgba(29,29,31,.45)}
-.proto-card:hover{box-shadow:0 34px 70px -30px rgba(29,29,31,.55)}
 .gallery-item{background:none;border:0;padding:0;cursor:zoom-in}
 
 /* Screenshots are framed in browser chrome and labelled, so neither a person
    nor a visual classifier reads them as a live interface on this page. */
-.shot{border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:#fff;box-shadow:0 26px 56px -30px rgba(29,29,31,.55)}
+.shot{border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:#fff}
 .shot-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f2f2f4;border-bottom:1px solid var(--line)}
 .shot-bar i{width:10px;height:10px;border-radius:50%;background:#d2d2d7;flex:none}
 .shot-bar .shot-tag{margin-left:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
