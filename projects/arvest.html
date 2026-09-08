@@ -673,6 +673,19 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     .lead-form-inner{ padding:24px; }
   }
 
+
+.case-figure{margin:28px 0 8px}
+.case-figure img{width:100%;border:1px solid var(--line);border-radius:var(--r-m);display:block;background:#fff}
+.case-figure figcaption{margin-top:10px;font-size:14px;color:var(--ink-faint);line-height:1.5}
+.proto-card{display:grid;grid-template-columns:1.35fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;background:var(--panel);text-decoration:none;color:inherit;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.proto-card:hover{transform:translateY(-2px);box-shadow:0 18px 44px -28px rgba(0,0,0,.45)}
+.proto-shot{background:#f3f3f3;border-right:1px solid var(--line);overflow:hidden}
+.proto-shot img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block}
+.proto-body{padding:32px}
+.proto-body h3{font-size:26px;margin:10px 0 12px}
+.proto-body p{font-size:15px;color:var(--ink-soft);margin:0 0 10px}
+.proto-go{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:600;color:var(--blue)}
+@media(max-width:900px){.proto-card{grid-template-columns:1fr}.proto-shot{border-right:0;border-bottom:1px solid var(--line)}.proto-body{padding:24px}}
 </style>
 </head>
 <body>
@@ -711,6 +724,10 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 </div>
 </div>
 
+<div class="proj-hero-visual">
+<img src="img/arvest-record-home.png" alt="Account record home in Salesforce Lightning Design System: highlights panel, details, and an Activity rail">
+</div>
+
 <div class="proj-body">
 <div class="proj-main">
 
@@ -720,6 +737,9 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>Worked from Jira user stories and business requirements, with stakeholder interviews across relationship officers, credit, and compliance. Where requirements were ambiguous, I helped convert them back into stories the delivery teams could actually build against.</p></div></div>
 <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>Diagrammed user flows in Miro and built application maps in the Salesforce Lightning Design System. The work here was reduction: translating large, complex systems and data sets into models a person could hold in their head at the moment of a customer call.</p></div></div>
 <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>Wireframes and UI in Figma against SLDS components, following the Financial Services Cloud relationship-builder pattern: a root party, grouped branches for household, related accounts and related contacts, and a summary pop-out carrying opportunities and open service requests without leaving the map. Two views sit over one dataset — the builder for household structure and influence, an ownership hierarchy for control and liability — because forcing either audience into the other&rsquo;s model produces a screen neither trusts.</p></div></div>
+</div>
+<figure class="case-figure"><img src="img/arvest-builder.png" alt="Relationship builder showing the Hollis household with related accounts and contacts, and a summary pop-out open on Hollis Cabinetry LLC" loading="lazy"><figcaption>The relationship builder. Clicking any party opens its summary without leaving the map &mdash; total financial accounts, open opportunities with the Deal Slowing flag, and unresolved service requests. Roles are multi-value because one person is routinely several things at once.</figcaption></figure>
+<div class="case-process">
 <div class="process-row"><div class="process-num">04</div><div class="process-copy"><h5>Work inside compliance, not around it</h5><p>Designed under bank policy, applicable law and regulation, and the bank&rsquo;s BSA/AML program, completing required compliance training and internal controls. Beneficial-ownership thresholds and KYC review states are design constraints in this domain, not annotations added at the end.</p></div></div>
 </div>
 
@@ -729,6 +749,9 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 <div class="process-row"><div class="process-num">AB</div><div class="process-copy"><h5>Lightning App Builder</h5><p>Specified record pages as component compositions — regions, component order, and visibility rules by record type — so a commercial account and a consumer account could share one page architecture without one of them carrying dead fields.</p></div></div>
 <div class="process-row"><div class="process-num">FL</div><div class="process-copy"><h5>Flow</h5><p>Specified guided processes as screen flows: screen order, decision branches, and what the screen does when a record is incomplete or a review has lapsed. The unhappy paths are the design work — an origination step that stalls on a missing beneficial owner is the normal case, not the exception.</p></div></div>
 <div class="process-row"><div class="process-num">ARC</div><div class="process-copy"><h5>Actionable Relationship Center</h5><p>The relationship builder shows the household you already know about. ARC is for the household you don&rsquo;t — expanding one record at a time until a second household, a guarantor, or an unrecorded beneficial owner surfaces. Two components over the same objects, answering opposite questions, and the reason both belong on the page.</p></div></div>
+</div>
+<figure class="case-figure"><img src="img/arvest-arc.png" alt="Actionable Relationship Center expanding the Vance Household into a second column of related lists" loading="lazy"><figcaption>ARC walks outward one hop at a time. Expanding a record renders its related lists as a new column, so a second household or an unrecorded owner surfaces through navigation rather than a report.</figcaption></figure>
+<div class="case-process">
 <div class="process-row"><div class="process-num">AT</div><div class="process-copy"><h5>Activity &amp; Chatter</h5><p>The right rail is where a relationship actually gets serviced — logged calls, open tasks, and the internal thread where credit tells servicing that a guarantor&rsquo;s financials are stale. Designing the record page without it produces a screen that looks complete and cannot be worked from.</p></div></div>
 <div class="process-row"><div class="process-num">MC</div><div class="process-copy"><h5>Marketing Cloud</h5><p>Defined and prioritized opportunity areas and turned them into concepts that built a customer-relationship arc for the Marketing Cloud team — connecting what the servicing screens knew about a household to what the bank said to it.</p></div></div>
 </div>
@@ -750,11 +773,25 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 </div>
 
 <div class="proj-gallery">
-<div class="eyebrow"><span class="num">INTERACTIVE</span> SLDS PROTOTYPE</div>
-<div class="case-outcome" style="margin-top:16px">
-<p><b>Ten screens, built in Salesforce Lightning Design System 2.264.1</b> — account list view, a three-column account record home with a working Activity and Chatter rail, the Financial Services Cloud relationship builder with its summary pop-out, an ownership-hierarchy view, an Actionable Relationship Center that expands the graph one hop at a time, a household detail panel, and deposit servicing across Checking, Savings, Money Market, Certificates, and non-deposit records.</p>
-<p style="margin-top:12px">This is a <b>representative reconstruction</b> of the interaction patterns, rebuilt from scratch in SLDS with entirely synthetic customers, entities, account numbers and balances. It is not Arvest Bank software, data, or proprietary UI.</p>
-<p style="margin-top:20px"><a class="btn btn--p" href="arvest-prototype.html">Open the prototype →</a></p>
+<a class="proto-card" href="arvest-prototype.html">
+  <div class="proto-shot"><img src="img/arvest-arc.png" alt="Preview of the interactive SLDS prototype" loading="lazy"></div>
+  <div class="proto-body">
+    <div class="eyebrow"><span class="num">INTERACTIVE</span> SLDS PROTOTYPE</div>
+    <h3>Ten screens you can actually click</h3>
+    <p>Built in Salesforce Lightning Design System 2.264.1 &mdash; account list view, record home with a working Activity and Chatter rail, the relationship builder and its summary pop-out, an ownership hierarchy, the Actionable Relationship Center, and deposit servicing across five product types.</p>
+    <p><b>Representative reconstruction.</b> Every customer, entity, account number and balance is synthetic. Not Arvest Bank software, data, or proprietary UI.</p>
+    <span class="proto-go">Open the prototype &rarr;</span>
+  </div>
+</a>
+
+<div class="eyebrow" style="margin-top:40px"><span class="num">SCREENS</span> FROM THE PROTOTYPE</div>
+<div class="gallery-grid">
+<button class="gallery-item" data-src="img/arvest-accounts.png"><img src="img/arvest-accounts.png" alt="Account list view with relationship tier badges and total deposits" loading="lazy"></button>
+<button class="gallery-item" data-src="img/arvest-record-home.png"><img src="img/arvest-record-home.png" alt="Account record home with highlights panel and Activity rail" loading="lazy"></button>
+<button class="gallery-item" data-src="img/arvest-builder.png"><img src="img/arvest-builder.png" alt="Relationship builder with a summary pop-out open" loading="lazy"></button>
+<button class="gallery-item" data-src="img/arvest-hierarchy.png"><img src="img/arvest-hierarchy.png" alt="Ownership and control hierarchy showing beneficial ownership" loading="lazy"></button>
+<button class="gallery-item" data-src="img/arvest-arc.png"><img src="img/arvest-arc.png" alt="Actionable Relationship Center expanded to a second column" loading="lazy"></button>
+<button class="gallery-item" data-src="img/arvest-cd.png"><img src="img/arvest-cd.png" alt="Certificates of deposit with maturity countdown and retention task" loading="lazy"></button>
 </div>
 </div>
 
