@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relationship Manager — SLDS Prototype | Jonathan Lu</title>
+<meta name="description" content="Interactive Salesforce Lightning Design System prototype: household relationship mapping and deposit account management. Representative reconstruction, synthetic data.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system@2.264.1/assets/styles/salesforce-lightning-design-system.min.css">
+<style>
+  body{margin:0;background:#f3f3f3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+  /* portfolio chrome — deliberately outside .slds-scope so it never inherits SLDS */
+  .pf-bar{background:#1d1d1f;color:#f5f5f7;padding:10px 20px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;font-size:13px;line-height:1.4}
+  .pf-bar a{color:#f5f5f7}
+  .pf-bar .pf-note{color:#a1a1a6;max-width:76ch}
+  .pf-bar .pf-note b{color:#f5f5f7}
+  .pf-back{white-space:nowrap;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:8px}
+  .pf-back:hover{background:rgba(255,255,255,.1)}
+  /* SLDS fixes the global header to the viewport; this prototype sits under a portfolio bar, so let it flow */
+  .slds-scope .slds-global-header_container{position:relative;top:auto}
+  .view{display:none}
+  .view.is-on{display:block}
+  .dep{display:none}
+  .dep.is-on{display:block}
+  .app-frame{min-height:70vh}
+  /* relationship graph */
+  .graph-wrap{background:#fff;border:1px solid #e5e5e5;border-radius:.25rem;overflow-x:auto}
+  .rg-node rect{fill:#fff;stroke:#c9c9c9;stroke-width:1.5;rx:6}
+  .rg-node.is-primary rect{fill:#014486;stroke:#014486}
+  .rg-node.is-primary text{fill:#fff}
+  .rg-node.is-business rect{stroke:#0b827c}
+  .rg-node.is-trust rect{stroke:#8c4b02}
+  .rg-node text{font-size:12px;fill:#181818}
+  .rg-node .rg-sub{font-size:10.5px;fill:#5c5c5c}
+  .rg-node.is-primary .rg-sub{fill:#cfe3f7}
+  .rg-node{cursor:pointer}
+  .rg-node:hover rect{stroke-width:2.5}
+  .rg-edge{stroke:#a8a8a8;stroke-width:1.5;fill:none}
+  .rg-edge-label{font-size:10.5px;fill:#5c5c5c}
+  .legend-dot{display:inline-block;width:10px;height:10px;border-radius:2px;border:2px solid;margin-right:6px;vertical-align:-1px}
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<!-- Extracted from @salesforce-ux/design-system 2.264.1 (BSD-3-Clause). Same-origin copy: Chrome blocks cross-origin SVG <use>. -->
+<symbol viewBox="0 0 520 520"  id="u-down" xmlns="http://www.w3.org/2000/svg"><path d="M83 140h354c10 0 17 13 9 22L273 374c-6 8-19 8-25 0L73 162c-7-9-1-22 10-22"/></symbol>
+<symbol viewBox="0 0 520 520"  id="u-info" xmlns="http://www.w3.org/2000/svg"><path d="M260 20a240 240 0 100 480 240 240 0 100-480m0 121c17 0 30 13 30 30s-13 30-30 30-30-13-30-30 13-30 30-30m50 210c0 5-4 9-10 9h-80c-5 0-10-3-10-9v-20c0-5 4-11 10-11 5 0 10-3 10-9v-40c0-5-4-11-10-11-5 0-10-3-10-9v-20c0-5 4-11 10-11h60c5 0 10 5 10 11v80c0 5 4 9 10 9 5 0 10 5 10 11z"/></symbol>
+<symbol viewBox="0 0 520 520"  id="u-search" xmlns="http://www.w3.org/2000/svg"><path d="M496 453L362 320a189 189 0 10-340-92 190 190 0 00298 135l133 133a14 14 0 0021 0l21-21a17 17 0 001-22M210 338a129 129 0 11130-130 129 129 0 01-130 130"/></symbol>
+<symbol  viewBox="0 0 100 100" id="s-account" xmlns="http://www.w3.org/2000/svg"><path d="M79 51.1c.1-2.1-1.4-2.7-2-2.7H55.2c-1.9 0-2.2 2-2.2 2.2V74h26zM64 67.9a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm10 10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zM59 40.3V28.7c.1-2.1-1.4-2.7-2-2.7H23.2c-1.9 0-2.2 2-2.2 2.2V74h26V44.7s0-2.4 2.2-2.4h7.9c1.1 0 1.9-1.2 1.9-2M32 66.9a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.3a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm11 30.7a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.3a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm11 0a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2z"/></symbol>
+<symbol viewBox="0 0 1000 1000"  id="s-account_info" xmlns="http://www.w3.org/2000/svg"><path d="M639 559a121 121 0 10121 120 121 121 0 00-121-120m-1 55h1a18 18 0 11-1 0m31 126a5 5 0 01-6 5h-48a6 6 0 01-6-5v-12a7 7 0 016-7 6 6 0 006-5v-24a7 7 0 00-6-7 6 6 0 01-6-5v-12a7 7 0 016-7h36a7 7 0 016 7v48a5 5 0 006 5 7 7 0 016 7zm-33-224c10 0 27-1 27-16V224a24 24 0 00-24-24H264a24 24 0 00-24 24v497h221c14 0 18-10 17-24s-6-79 37-129 110-52 121-52M535 283a25 25 0 0121-24h31a25 25 0 0121 24v25a25 25 0 01-24 24h-25a25 25 0 01-24-24zm0 120a25 25 0 0124-24h25a25 25 0 0124 24v25a25 25 0 01-24 24h-25a25 25 0 01-24-24zM368 668a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0121-24h31a25 25 0 0121 24zm120 240a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0121-24h31a25 25 0 0121 24z"/></symbol>
+<symbol viewBox="0 0 1000 1000"  id="s-partners" xmlns="http://www.w3.org/2000/svg"><path d="M770 317h-60c-13 0-26-6-36-15l-48-41c-10-8-23-14-36-14H473c-15 0-29 6-40 17l-62 51c-5 4-5 12-1 17l19 18c13 10 30 12 43 3l55-33c7-5 17-3 23 3l173 168c4 4 7 10 7 16v45c0 12 9 25 20 25h60c11 0 20-9 20-21V337c0-12-9-20-20-20M600 497L492 392l-30 18c-15 9-32 14-49 14-21 0-43-8-60-22l-39-32c-9-7-14-15-15-26-2-11-10-17-20-17h-69c-11 0-20 6-20 18v182c0 12 9 20 20 20h40c3 0 7-11 11-16 15-20 37-31 61-34 24-2 47 6 66 23l125 114c11 10 19 21 24 35 3 7 11 9 16 4l47-47c24-24 42-80 20-106zm-251 74a28 28 0 00-42 4c-11 14-9 34 4 46l125 113c6 6 14 8 22 7s15-5 20-12c11-14 9-34-4-46z"/></symbol>
+</svg>
+
+
+<div class="pf-bar">
+  <div class="pf-note">
+    <b>Portfolio prototype.</b> Representative reconstruction of relationship-mapping and deposit-servicing patterns,
+    rebuilt in Salesforce Lightning Design System 2.264.1. All customers, entities, account numbers and balances are
+    synthetic. Not Arvest Bank software, data, or proprietary UI.
+  </div>
+  <a class="pf-back" href="arvest.html">← Back to case study</a>
+</div>
+
+<div class="slds-scope app-frame">
+
+  <!-- ── global header ─────────────────────────────────────────── -->
+  <header class="slds-global-header_container">
+    <div class="slds-global-header slds-grid slds-grid_align-spread">
+      <div class="slds-global-header__item">
+        <div class="slds-global-header__logo" style="background:#014486;display:flex;align-items:center;padding:0 12px">
+          <span style="color:#fff;font-weight:700;font-size:13px;letter-spacing:.04em">RELATIONSHIP MANAGER</span>
+        </div>
+      </div>
+      <div class="slds-global-header__item slds-global-header__item_search" role="search">
+        <div class="slds-form-element">
+          <label class="slds-assistive-text" for="global-search">Search accounts</label>
+          <div class="slds-search slds-input-has-icon slds-input-has-icon_left">
+            <svg class="slds-icon slds-input__icon slds-icon-text-default" aria-hidden="true">
+              <use xlink:href="#u-search"></use>
+            </svg>
+            <input type="search" id="global-search" class="slds-input" placeholder="Search accounts, parties, and deposit accounts">
+          </div>
+        </div>
+      </div>
+      <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center slds-list_horizontal">
+        <li class="slds-m-right_small slds-text-body_small slds-text-color_weak">Relationship Officer</li>
+        <li>
+          <span class="slds-avatar slds-avatar_circle slds-avatar_medium" style="background:#0b827c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">RO</span>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ── app nav ───────────────────────────────────────────────── -->
+  <div class="slds-context-bar">
+    <div class="slds-context-bar__primary">
+      <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-no-hover">
+        <span class="slds-context-bar__label-action slds-context-bar__app-name">
+          <span class="slds-truncate" title="Commercial Banking">Commercial Banking</span>
+        </span>
+      </div>
+    </div>
+    <nav class="slds-context-bar__secondary" role="navigation">
+      <ul class="slds-grid">
+        <li class="slds-context-bar__item slds-is-active" data-nav="accounts">
+          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Accounts</span></a>
+        </li>
+        <li class="slds-context-bar__item" data-nav="detail">
+          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Account Detail</span></a>
+        </li>
+        <li class="slds-context-bar__item" data-nav="relationships">
+          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Relationships</span></a>
+        </li>
+        <li class="slds-context-bar__item" data-nav="deposits">
+          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Deposit Accounts</span></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="slds-p-around_medium">
+
+  <!-- ══ VIEW 1 · ACCOUNTS OVERVIEW TABLE ═══════════════════════ -->
+  <section class="view is-on" id="view-accounts">
+    <div class="slds-page-header">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-standard-account">
+                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                  <use xlink:href="#s-account"></use>
+                </svg>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <div class="slds-page-header__name">
+                <div class="slds-page-header__name-title">
+                  <h1><span class="slds-page-header__title slds-truncate">Relationship Accounts</span></h1>
+                </div>
+                <div class="slds-page-header__name-switcher">
+                  <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+                    <button class="slds-button slds-button_icon slds-button_icon-small" title="Switch list view">
+                      <svg class="slds-button__icon" aria-hidden="true">
+                        <use xlink:href="#u-down"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <p class="slds-page-header__name-meta">My Book of Business &middot; Deposits &amp; Lending</p>
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__col-actions">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <button class="slds-button slds-button_neutral">Import</button>
+              <button class="slds-button slds-button_brand">New Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__row slds-page-header__row_gutters">
+        <div class="slds-page-header__col-meta">
+          <p class="slds-page-header__meta-text">6 items &middot; Sorted by Total Deposits &middot; Filtered by Relationship Tier &middot; Updated 4 minutes ago</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slds-box slds-box_x-small slds-theme_shade slds-m-bottom_small">
+      <div class="slds-grid slds-wrap slds-gutters_x-small slds-grid_vertical-align-end">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="f-search">Search this list</label>
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+              <svg class="slds-icon slds-input__icon slds-icon-text-default" aria-hidden="true">
+                <use xlink:href="#u-search"></use>
+              </svg>
+              <input type="search" id="f-search" class="slds-input" placeholder="Account or party name">
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-2 slds-medium-size_3-of-12">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="f-type">Account Type</label>
+            <div class="slds-form-element__control">
+              <div class="slds-select_container">
+                <select class="slds-select" id="f-type">
+                  <option>All types</option><option>Household</option><option>Individual</option>
+                  <option>Business</option><option>Trust</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-2 slds-medium-size_3-of-12">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="f-tier">Relationship Tier</label>
+            <div class="slds-form-element__control">
+              <div class="slds-select_container">
+                <select class="slds-select" id="f-tier">
+                  <option>All tiers</option><option>Tier 1 — Managed</option>
+                  <option>Tier 2 — Assigned</option><option>Tier 3 — Self-serve</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12">
+          <button class="slds-button slds-button_neutral slds-m-top_x-small">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slds-card">
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-table_fixed-layout">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th class="slds-text-title_caps" scope="col" style="width:3rem"><span class="slds-assistive-text">Select</span></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Account Name">Account Name</div></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Type">Type</div></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Relationship Role">Relationship Role</div></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Total Deposits">Total Deposits</div></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Products">Products</div></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Tier">Tier</div></th>
+            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Last Review">Last Review</div></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="slds-hint-parent">
+            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
+            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Hollis Household</a></div></th>
+            <td><div class="slds-truncate">Household</div></td>
+            <td><div class="slds-truncate">Relationship root</div></td>
+            <td><div class="slds-truncate">$1,284,905.42</div></td>
+            <td><div class="slds-truncate">9</div></td>
+            <td><span class="slds-badge slds-theme_success">Tier 1</span></td>
+            <td><div class="slds-truncate">12 May 2026</div></td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
+            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Hollis Cabinetry LLC</a></div></th>
+            <td><div class="slds-truncate">Business</div></td>
+            <td><div class="slds-truncate">Operating entity</div></td>
+            <td><div class="slds-truncate">$742,118.06</div></td>
+            <td><div class="slds-truncate">4</div></td>
+            <td><span class="slds-badge slds-theme_success">Tier 1</span></td>
+            <td><div class="slds-truncate">12 May 2026</div></td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
+            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Dana R. Hollis</a></div></th>
+            <td><div class="slds-truncate">Individual</div></td>
+            <td><div class="slds-truncate">Primary owner &middot; 60%</div></td>
+            <td><div class="slds-truncate">$318,470.11</div></td>
+            <td><div class="slds-truncate">3</div></td>
+            <td><span class="slds-badge slds-theme_success">Tier 1</span></td>
+            <td><div class="slds-truncate">12 May 2026</div></td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
+            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Hollis Family Trust</a></div></th>
+            <td><div class="slds-truncate">Trust</div></td>
+            <td><div class="slds-truncate">Beneficial owner</div></td>
+            <td><div class="slds-truncate">$186,220.00</div></td>
+            <td><div class="slds-truncate">2</div></td>
+            <td><span class="slds-badge">Tier 2</span></td>
+            <td><div class="slds-truncate">03 Mar 2026</div></td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
+            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Terrence Hollis</a></div></th>
+            <td><div class="slds-truncate">Individual</div></td>
+            <td><div class="slds-truncate">Joint owner &middot; spouse</div></td>
+            <td><div class="slds-truncate">$38,097.25</div></td>
+            <td><div class="slds-truncate">2</div></td>
+            <td><span class="slds-badge">Tier 2</span></td>
+            <td><div class="slds-truncate">03 Mar 2026</div></td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
+            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Ridgeline Supply Co.</a></div></th>
+            <td><div class="slds-truncate">Business</div></td>
+            <td><div class="slds-truncate">Guarantor</div></td>
+            <td><div class="slds-truncate">$0.00</div></td>
+            <td><div class="slds-truncate">1</div></td>
+            <td><span class="slds-badge">Tier 3</span></td>
+            <td><div class="slds-truncate">18 Jan 2026</div></td>
+          </tr>
+        </tbody>
+      </table>
+      <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+        6 of 6 items &middot; Balances as of 08 Sep 2026, 06:00 CT &middot; Synthetic data
+      </footer>
+    </div>
+  </section>
+
+  <!-- ══ VIEW 2 · ACCOUNT DETAIL (record home) ══════════════════ -->
+  <section class="view" id="view-detail">
+    <div class="slds-page-header slds-page-header_record-home">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-standard-account">
+                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                  <use xlink:href="#s-account"></use>
+                </svg>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-title_caps slds-line-height_reset">Business Account</p>
+              <h1><span class="slds-page-header__title slds-truncate">Hollis Cabinetry LLC</span></h1>
+              <p class="slds-text-body_small">Relationship root: <a href="javascript:void(0)" data-goto="relationships">Hollis Household</a> &middot; Officer: R. Okonkwo</p>
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__col-actions">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <button class="slds-button slds-button_neutral">Edit</button>
+              <button class="slds-button slds-button_neutral">New Deposit Account</button>
+              <button class="slds-button slds-button_brand" data-goto="relationships">View Relationship Map</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-page-header__row slds-page-header__row_gutters">
+        <div class="slds-page-header__col-details">
+          <ul class="slds-page-header__detail-row">
+            <li class="slds-page-header__detail-block">
+              <div class="slds-text-title slds-truncate">Total Deposits</div>
+              <div class="slds-truncate slds-text-body_regular"><strong>$742,118.06</strong></div>
+            </li>
+            <li class="slds-page-header__detail-block">
+              <div class="slds-text-title slds-truncate">Total Exposure</div>
+              <div class="slds-truncate slds-text-body_regular"><strong>$1,150,000.00</strong></div>
+            </li>
+            <li class="slds-page-header__detail-block">
+              <div class="slds-text-title slds-truncate">Relationship Tier</div>
+              <div class="slds-truncate"><span class="slds-badge slds-theme_success">Tier 1 — Managed</span></div>
+            </li>
+            <li class="slds-page-header__detail-block">
+              <div class="slds-text-title slds-truncate">CIF / Tax ID</div>
+              <div class="slds-truncate slds-text-body_regular">CIF 44-2098117 &middot; ••-•••4471</div>
+            </li>
+            <li class="slds-page-header__detail-block">
+              <div class="slds-text-title slds-truncate">KYC Review</div>
+              <div class="slds-truncate"><span class="slds-badge slds-theme_success">Current</span> &middot; due 12 Nov 2026</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-gutters slds-m-top_small">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+        <div class="slds-tabs_default">
+          <ul class="slds-tabs_default__nav" role="tablist">
+            <li class="slds-tabs_default__item slds-is-active" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Details</a></li>
+            <li class="slds-tabs_default__item" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab" data-goto="deposits">Deposit Accounts (4)</a></li>
+            <li class="slds-tabs_default__item" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab" data-goto="relationships">Relationships (5)</a></li>
+            <li class="slds-tabs_default__item" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Activity</a></li>
+          </ul>
+          <div class="slds-tabs_default__content slds-show" role="tabpanel">
+            <div class="slds-form slds-form_stacked slds-p-around_medium">
+              <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Legal Entity Name</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">Hollis Cabinetry LLC</div></div>
+                  </div>
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Entity Type</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">Limited Liability Company (AR)</div></div>
+                  </div>
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">NAICS</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">337110 — Wood Kitchen Cabinet Manufacturing</div></div>
+                  </div>
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Relationship Since</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">14 Aug 2019</div></div>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Beneficial Owners ≥ 25%</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">Dana R. Hollis (60%) &middot; Hollis Family Trust (40%)</div></div>
+                  </div>
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Authorized Signers</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">Dana R. Hollis &middot; Terrence Hollis</div></div>
+                  </div>
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Risk Rating</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">Moderate &middot; last scored 12 May 2026</div></div>
+                  </div>
+                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
+                    <span class="slds-form-element__label">Relationship Officer</span>
+                    <div class="slds-form-element__control"><div class="slds-form-element__static">R. Okonkwo — Commercial, NWA</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+        <article class="slds-card slds-m-bottom_small">
+          <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+              <div class="slds-media__body"><h2 class="slds-card__header-title">Deposit Summary</h2></div>
+            </header>
+          </div>
+          <div class="slds-card__body slds-card__body_inner">
+            <dl class="slds-list_horizontal slds-wrap">
+              <dt class="slds-item_label slds-text-color_weak slds-truncate">Checking</dt>
+              <dd class="slds-item_detail slds-truncate">$412,880.44 &middot; 2 accounts</dd>
+              <dt class="slds-item_label slds-text-color_weak slds-truncate">Savings</dt>
+              <dd class="slds-item_detail slds-truncate">$104,237.62 &middot; 1 account</dd>
+              <dt class="slds-item_label slds-text-color_weak slds-truncate">Money Market</dt>
+              <dd class="slds-item_detail slds-truncate">$225,000.00 &middot; 1 account</dd>
+              <dt class="slds-item_label slds-text-color_weak slds-truncate">Certificates</dt>
+              <dd class="slds-item_detail slds-truncate">$0.00 &middot; 0 accounts</dd>
+            </dl>
+          </div>
+          <footer class="slds-card__footer">
+            <a href="javascript:void(0)" data-goto="deposits">View all deposit accounts →</a>
+          </footer>
+        </article>
+
+        <article class="slds-card">
+          <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+              <div class="slds-media__body"><h2 class="slds-card__header-title">Related Parties</h2></div>
+            </header>
+          </div>
+          <div class="slds-card__body">
+            <ul class="slds-has-dividers_around-space">
+              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
+                <div class="slds-text-body_regular">Dana R. Hollis</div>
+                <div class="slds-text-body_small slds-text-color_weak">Member &middot; 60% &middot; Authorized signer</div>
+              </li>
+              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
+                <div class="slds-text-body_regular">Hollis Family Trust</div>
+                <div class="slds-text-body_small slds-text-color_weak">Member &middot; 40%</div>
+              </li>
+              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
+                <div class="slds-text-body_regular">Terrence Hollis</div>
+                <div class="slds-text-body_small slds-text-color_weak">Authorized signer &middot; spouse of member</div>
+              </li>
+              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
+                <div class="slds-text-body_regular">Ridgeline Supply Co.</div>
+                <div class="slds-text-body_small slds-text-color_weak">Guarantor &middot; term loan #LN-40912</div>
+              </li>
+            </ul>
+          </div>
+          <footer class="slds-card__footer">
+            <a href="javascript:void(0)" data-goto="relationships">Open relationship map →</a>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW 3 · RELATIONSHIP MAP (graph ⇄ hierarchy) ══════════ -->
+  <section class="view" id="view-relationships">
+    <div class="slds-page-header">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-standard-relationship">
+                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                  <use xlink:href="#s-partners"></use>
+                </svg>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-title_caps slds-line-height_reset">Relationship Map</p>
+              <h1><span class="slds-page-header__title slds-truncate">Hollis Household</span></h1>
+              <p class="slds-text-body_small">6 parties &middot; 9 deposit accounts &middot; 1 guaranteed facility</p>
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__col-actions">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <div class="slds-button-group" role="group">
+                <button class="slds-button slds-button_brand" id="btn-graph">Graph view</button>
+                <button class="slds-button slds-button_neutral" id="btn-tree">Hierarchy view</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_small" role="status">
+      <div class="slds-media__figure">
+        <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+          <use xlink:href="#u-info"></use>
+        </svg>
+      </div>
+      <div class="slds-media__body">
+        <p><strong>Two mental models, one dataset.</strong> Officers think in households and influence — who can bring
+        whom. Credit and compliance think in ownership and control — who is liable, who must be verified. The same
+        records drive both views.</p>
+      </div>
+    </div>
+
+    <!-- graph -->
+    <div id="pane-graph">
+      <div class="graph-wrap slds-p-around_medium">
+        <svg viewBox="0 0 1000 420" width="100%" style="min-width:860px" role="img"
+             aria-label="Relationship graph: Hollis Household with five related parties and their ownership, signing and guarantor links.">
+          <g class="rg-edges">
+            <line class="rg-edge" x1="500" y1="46"  x2="160" y2="198"></line>
+            <line class="rg-edge" x1="500" y1="46"  x2="840" y2="198"></line>
+            <line class="rg-edge" x1="500" y1="72"  x2="500" y2="230"></line>
+            <line class="rg-edge" x1="160" y1="198" x2="500" y2="260"></line>
+            <line class="rg-edge" x1="840" y1="198" x2="500" y2="260"></line>
+            <line class="rg-edge" x1="160" y1="338" x2="500" y2="260"></line>
+            <line class="rg-edge" x1="840" y1="338" x2="500" y2="260" stroke-dasharray="5 4"></line>
+            <line class="rg-edge" x1="160" y1="198" x2="160" y2="338"></line>
+          </g>
+          <g class="rg-labels" style="paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round">
+            <text class="rg-edge-label" x="330" y="118" text-anchor="middle">member</text>
+            <text class="rg-edge-label" x="670" y="118" text-anchor="middle">member</text>
+            <text class="rg-edge-label" x="508" y="155">primary operating entity</text>
+            <text class="rg-edge-label" x="326" y="236" text-anchor="middle">owner &middot; 60%</text>
+            <text class="rg-edge-label" x="674" y="236" text-anchor="middle">owner &middot; 40%</text>
+            <text class="rg-edge-label" x="326" y="304" text-anchor="middle">authorized signer</text>
+            <text class="rg-edge-label" x="676" y="304" text-anchor="middle">guarantor &middot; LN-40912</text>
+            <text class="rg-edge-label" x="152" y="272" text-anchor="end">spouse</text>
+          </g>
+
+          <g class="rg-node" data-goto="detail" transform="translate(395,20)">
+            <rect width="210" height="52"></rect>
+            <text x="16" y="24">Hollis Household</text>
+            <text class="rg-sub" x="16" y="40">Relationship root &middot; Tier 1</text>
+          </g>
+          <g class="rg-node is-primary" data-goto="detail" transform="translate(390,230)">
+            <rect width="220" height="60"></rect>
+            <text x="16" y="26">Hollis Cabinetry LLC</text>
+            <text class="rg-sub" x="16" y="44">Business &middot; $742,118.06</text>
+          </g>
+          <g class="rg-node" data-goto="detail" transform="translate(60,170)">
+            <rect width="200" height="56"></rect>
+            <text x="16" y="25">Dana R. Hollis</text>
+            <text class="rg-sub" x="16" y="42">Individual &middot; $318,470.11</text>
+          </g>
+          <g class="rg-node" data-goto="detail" transform="translate(60,310)">
+            <rect width="200" height="56"></rect>
+            <text x="16" y="25">Terrence Hollis</text>
+            <text class="rg-sub" x="16" y="42">Individual &middot; $38,097.25</text>
+          </g>
+          <g class="rg-node is-trust" data-goto="detail" transform="translate(740,170)">
+            <rect width="200" height="56"></rect>
+            <text x="16" y="25">Hollis Family Trust</text>
+            <text class="rg-sub" x="16" y="42">Trust &middot; $186,220.00</text>
+          </g>
+          <g class="rg-node is-business" data-goto="detail" transform="translate(740,310)">
+            <rect width="200" height="56"></rect>
+            <text x="16" y="25">Ridgeline Supply Co.</text>
+            <text class="rg-sub" x="16" y="42">Guarantor &middot; no deposits</text>
+          </g>
+        </svg>
+      </div>
+      <div class="slds-p-around_small slds-text-body_small slds-text-color_weak">
+        <span class="legend-dot" style="border-color:#014486;background:#014486"></span>Selected entity
+        <span class="slds-m-left_medium legend-dot" style="border-color:#0b827c"></span>Business
+        <span class="slds-m-left_medium legend-dot" style="border-color:#8c4b02"></span>Trust
+        <span class="slds-m-left_medium legend-dot" style="border-color:#c9c9c9"></span>Individual / household
+        <span class="slds-m-left_medium">Dashed edge = contingent liability, not ownership.</span>
+      </div>
+    </div>
+
+    <!-- hierarchy -->
+    <div id="pane-tree" style="display:none">
+      <div class="slds-card">
+        <div class="slds-card__body slds-card__body_inner slds-p-vertical_small">
+          <div class="slds-tree_container" role="application">
+            <h4 class="slds-tree__group-header" id="tree-heading">Ownership &amp; control hierarchy</h4>
+            <ul class="slds-tree" role="tree" aria-labelledby="tree-heading">
+              <li role="treeitem" aria-level="1" aria-expanded="true">
+                <div class="slds-tree__item">
+                  <span class="slds-p-right_x-small slds-text-color_weak">▾</span>
+                  <span class="slds-tree__item-label"><strong>Hollis Household</strong> — relationship root</span>
+                </div>
+                <ul role="group">
+                  <li role="treeitem" aria-level="2" aria-expanded="true">
+                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
+                      <span class="slds-tree__item-label">Hollis Cabinetry LLC — Business &middot; operating entity</span></div>
+                    <ul role="group">
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Checking ••7734 — $286,402.19</span></div></li>
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Operating ••7735 — $126,478.25</span></div></li>
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Reserve Savings ••9018 — $104,237.62</span></div></li>
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Money Market ••3390 — $225,000.00</span></div></li>
+                    </ul>
+                  </li>
+                  <li role="treeitem" aria-level="2" aria-expanded="true">
+                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
+                      <span class="slds-tree__item-label">Dana R. Hollis — Individual &middot; owner 60%</span></div>
+                    <ul role="group">
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Personal Checking ••4821 — $42,118.44</span></div></li>
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Personal Savings ••5502 — $91,351.67</span></div></li>
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">18-Month CD ••1147 — $185,000.00</span></div></li>
+                    </ul>
+                  </li>
+                  <li role="treeitem" aria-level="2" aria-expanded="true">
+                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
+                      <span class="slds-tree__item-label">Hollis Family Trust — Trust &middot; owner 40%</span></div>
+                    <ul role="group">
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">36-Month CD ••2260 — $186,220.00</span></div></li>
+                    </ul>
+                  </li>
+                  <li role="treeitem" aria-level="2" aria-expanded="true">
+                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
+                      <span class="slds-tree__item-label">Terrence Hollis — Individual &middot; authorized signer</span></div>
+                    <ul role="group">
+                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Joint Checking ••4822 — $38,097.25</span></div></li>
+                    </ul>
+                  </li>
+                  <li role="treeitem" aria-level="2">
+                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">&nbsp;&nbsp;</span>
+                      <span class="slds-tree__item-label">Ridgeline Supply Co. — Guarantor only &middot; no deposit accounts</span></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+          Hierarchy reflects ownership and control for KYC/beneficial-ownership review. Guarantor links appear as
+          contingent liability, not ownership.
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VIEW 4 · DEPOSIT ACCOUNTS (Checking/Savings/MMA/CD/Other) ══ -->
+  <section class="view" id="view-deposits">
+    <div class="slds-page-header">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-standard-product-item">
+                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+                  <use xlink:href="#s-account_info"></use>
+                </svg>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-title_caps slds-line-height_reset">Hollis Household</p>
+              <h1><span class="slds-page-header__title slds-truncate">Deposit Accounts</span></h1>
+              <p class="slds-text-body_small">9 accounts across 4 parties &middot; $1,284,905.42 total</p>
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__col-actions">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <button class="slds-button slds-button_neutral">Statements</button>
+              <button class="slds-button slds-button_brand">Open Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slds-grid slds-wrap slds-gutters">
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+        <nav class="slds-nav-vertical slds-box slds-box_x-small slds-theme_default" aria-label="Account types">
+          <div class="slds-nav-vertical__section">
+            <h2 class="slds-nav-vertical__title slds-text-title_caps">Account type</h2>
+            <ul>
+              <li class="slds-nav-vertical__item slds-is-active" data-dep="checking"><a href="javascript:void(0)" class="slds-nav-vertical__action">Checking <span class="slds-badge slds-m-left_x-small">3</span></a></li>
+              <li class="slds-nav-vertical__item" data-dep="savings"><a href="javascript:void(0)" class="slds-nav-vertical__action">Savings <span class="slds-badge slds-m-left_x-small">2</span></a></li>
+              <li class="slds-nav-vertical__item" data-dep="mma"><a href="javascript:void(0)" class="slds-nav-vertical__action">Money Market <span class="slds-badge slds-m-left_x-small">1</span></a></li>
+              <li class="slds-nav-vertical__item" data-dep="cd"><a href="javascript:void(0)" class="slds-nav-vertical__action">Certificates of Deposit <span class="slds-badge slds-m-left_x-small">2</span></a></li>
+              <li class="slds-nav-vertical__item" data-dep="other"><a href="javascript:void(0)" class="slds-nav-vertical__action">Other &amp; Non-deposit <span class="slds-badge slds-m-left_x-small">3</span></a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12">
+
+        <!-- CHECKING -->
+        <div class="dep is-on" id="dep-checking">
+          <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body"><h2 class="slds-card__header-title">Checking &middot; $453,617.88 across 3 accounts</h2></div>
+              </header>
+            </div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead><tr class="slds-line-height_reset">
+                  <th class="slds-text-title_caps">Account</th><th class="slds-text-title_caps">Owner</th>
+                  <th class="slds-text-title_caps">Product</th><th class="slds-text-title_caps">Available</th>
+                  <th class="slds-text-title_caps">Current</th><th class="slds-text-title_caps">Status</th>
+                </tr></thead>
+                <tbody>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Checking ••7734</a></th><td>Hollis Cabinetry LLC</td><td>Commercial Analysis</td><td>$284,902.19</td><td>$286,402.19</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Operating ••7735</a></th><td>Hollis Cabinetry LLC</td><td>Commercial Analysis</td><td>$126,478.25</td><td>$126,478.25</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Joint Checking ••4822</a></th><td>Terrence &amp; Dana Hollis</td><td>Consumer Interest</td><td>$38,097.25</td><td>$38,097.25</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="slds-card slds-m-top_small">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">Business Checking ••7734 — product terms</h2></div>
+            <div class="slds-card__body slds-card__body_inner">
+              <dl class="slds-list_horizontal slds-wrap">
+                <dt class="slds-item_label slds-text-color_weak">Earnings credit rate</dt><dd class="slds-item_detail">1.85% &middot; applied to analysis fees</dd>
+                <dt class="slds-item_label slds-text-color_weak">Monthly analysis fees</dt><dd class="slds-item_detail">$214.60 &middot; fully offset by credit</dd>
+                <dt class="slds-item_label slds-text-color_weak">Overdraft protection</dt><dd class="slds-item_detail">Linked to Business Reserve ••9018</dd>
+                <dt class="slds-item_label slds-text-color_weak">Signers</dt><dd class="slds-item_detail">Dana R. Hollis &middot; Terrence Hollis</dd>
+                <dt class="slds-item_label slds-text-color_weak">Positive pay</dt><dd class="slds-item_detail">Enabled &middot; exceptions reviewed daily 10:00 CT</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+
+        <!-- SAVINGS -->
+        <div class="dep" id="dep-savings">
+          <article class="slds-card">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">Savings &middot; $195,589.29 across 2 accounts</h2></div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead><tr class="slds-line-height_reset">
+                  <th class="slds-text-title_caps">Account</th><th class="slds-text-title_caps">Owner</th>
+                  <th class="slds-text-title_caps">APY</th><th class="slds-text-title_caps">Balance</th>
+                  <th class="slds-text-title_caps">Withdrawals this cycle</th><th class="slds-text-title_caps">Status</th>
+                </tr></thead>
+                <tbody>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Reserve ••9018</a></th><td>Hollis Cabinetry LLC</td><td>2.40%</td><td>$104,237.62</td><td>1 of 6</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Personal Savings ••5502</a></th><td>Dana R. Hollis</td><td>2.15%</td><td>$91,351.67</td><td>3 of 6</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+              Withdrawal counter reflects bank policy, not Regulation D — the Fed removed the six-transfer limit in
+              April 2020. Surfacing it as policy rather than regulation was a deliberate copy decision.
+            </footer>
+          </article>
+        </div>
+
+        <!-- MONEY MARKET -->
+        <div class="dep" id="dep-mma">
+          <article class="slds-card">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">Money Market &middot; $225,000.00 &middot; 1 account</h2></div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead><tr class="slds-line-height_reset">
+                  <th class="slds-text-title_caps">Account</th><th class="slds-text-title_caps">Owner</th>
+                  <th class="slds-text-title_caps">Blended APY</th><th class="slds-text-title_caps">Balance</th><th class="slds-text-title_caps">Status</th>
+                </tr></thead>
+                <tbody>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Money Market ••3390</a></th><td>Hollis Cabinetry LLC</td><td>3.42%</td><td>$225,000.00</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="slds-card slds-m-top_small">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">Rate tiers</h2></div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead><tr class="slds-line-height_reset">
+                  <th class="slds-text-title_caps">Tier</th><th class="slds-text-title_caps">Balance range</th>
+                  <th class="slds-text-title_caps">APY</th><th class="slds-text-title_caps">Applied to</th>
+                </tr></thead>
+                <tbody>
+                  <tr><th scope="row">1</th><td>$0 – $24,999.99</td><td>1.10%</td><td>—</td></tr>
+                  <tr><th scope="row">2</th><td>$25,000 – $99,999.99</td><td>2.65%</td><td>—</td></tr>
+                  <tr class="slds-is-selected"><th scope="row">3</th><td>$100,000 – $249,999.99</td><td>3.42%</td><td><strong>$225,000.00</strong></td></tr>
+                  <tr><th scope="row">4</th><td>$250,000+</td><td>3.75%</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+              Showing which tier the balance actually lands in was the single most requested change from officers —
+              the prior screen showed the rate card with no indication of where the customer sat.
+            </footer>
+          </article>
+        </div>
+
+        <!-- CD -->
+        <div class="dep" id="dep-cd">
+          <article class="slds-card">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">Certificates of Deposit &middot; $371,220.00 across 2 accounts</h2></div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead><tr class="slds-line-height_reset">
+                  <th class="slds-text-title_caps">Certificate</th><th class="slds-text-title_caps">Owner</th>
+                  <th class="slds-text-title_caps">Term</th><th class="slds-text-title_caps">APY</th>
+                  <th class="slds-text-title_caps">Balance</th><th class="slds-text-title_caps">Matures</th>
+                  <th class="slds-text-title_caps">Renewal</th>
+                </tr></thead>
+                <tbody>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">18-Month CD ••1147</a></th><td>Dana R. Hollis</td><td>18 mo</td><td>4.10%</td><td>$185,000.00</td><td><span class="slds-badge slds-theme_warning">02 Oct 2026 — 24 days</span></td><td>Auto-renew</td></tr>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">36-Month CD ••2260</a></th><td>Hollis Family Trust</td><td>36 mo</td><td>4.35%</td><td>$186,220.00</td><td>19 Jul 2028</td><td>Notify at maturity</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="slds-card slds-m-top_small">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">18-Month CD ••1147 — maturity handling</h2></div>
+            <div class="slds-card__body slds-card__body_inner">
+              <dl class="slds-list_horizontal slds-wrap">
+                <dt class="slds-item_label slds-text-color_weak">Grace period</dt><dd class="slds-item_detail">10 calendar days from maturity</dd>
+                <dt class="slds-item_label slds-text-color_weak">Early withdrawal penalty</dt><dd class="slds-item_detail">180 days simple interest on amount withdrawn</dd>
+                <dt class="slds-item_label slds-text-color_weak">Renewal rate (indicative)</dt><dd class="slds-item_detail">3.85% &middot; not guaranteed until maturity date</dd>
+                <dt class="slds-item_label slds-text-color_weak">Interest disposition</dt><dd class="slds-item_detail">Credit to Personal Checking ••4821</dd>
+                <dt class="slds-item_label slds-text-color_weak">Officer action</dt><dd class="slds-item_detail"><span class="slds-badge slds-theme_warning">Retention call due</span> — inside 30-day window</dd>
+              </dl>
+            </div>
+            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+              Maturity inside 30 days promotes the certificate into the officer's task list. Retention is the whole
+              reason this screen exists.
+            </footer>
+          </article>
+        </div>
+
+        <!-- OTHER -->
+        <div class="dep" id="dep-other">
+          <article class="slds-card">
+            <div class="slds-card__header"><h2 class="slds-card__header-title">Other &amp; non-deposit &middot; 3 records</h2></div>
+            <div class="slds-card__body">
+              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead><tr class="slds-line-height_reset">
+                  <th class="slds-text-title_caps">Record</th><th class="slds-text-title_caps">Owner</th>
+                  <th class="slds-text-title_caps">Type</th><th class="slds-text-title_caps">Balance / Limit</th>
+                  <th class="slds-text-title_caps">Status</th>
+                </tr></thead>
+                <tbody>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Term Loan #LN-40912</a></th><td>Hollis Cabinetry LLC</td><td>Commercial loan &middot; guaranteed</td><td>$1,150,000.00 outstanding</td><td><span class="slds-badge slds-theme_success">Current</span></td></tr>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">HELOC ••6604</a></th><td>Dana &amp; Terrence Hollis</td><td>Revolving line</td><td>$0.00 drawn of $150,000</td><td><span class="slds-badge slds-theme_success">Open</span></td></tr>
+                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Safe Deposit Box 214-B</a></th><td>Hollis Family Trust</td><td>Non-deposit service</td><td>—</td><td><span class="slds-badge">Annual fee due 01 Dec</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+              Non-deposit records sit here rather than in the deposit tabs so totals stay honest — a HELOC limit is not
+              a deposit, and a safe deposit box has no balance at all. Mixing them inflates the relationship number.
+            </footer>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /padding -->
+</div><!-- /slds-scope -->
+
+<script>
+(function(){
+  function show(view){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('is-on', v.id === 'view-' + view); });
+    document.querySelectorAll('.slds-context-bar__item').forEach(function(li){
+      li.classList.toggle('slds-is-active', li.getAttribute('data-nav') === view);
+    });
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll('[data-nav]').forEach(function(li){
+    li.addEventListener('click', function(e){ e.preventDefault(); show(li.getAttribute('data-nav')); });
+  });
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-goto]');
+    if(t){ e.preventDefault(); show(t.getAttribute('data-goto')); }
+  });
+
+  // relationship map: graph <-> hierarchy
+  var bg = document.getElementById('btn-graph'), bt = document.getElementById('btn-tree');
+  var pg = document.getElementById('pane-graph'), pt = document.getElementById('pane-tree');
+  function mode(graph){
+    pg.style.display = graph ? '' : 'none';
+    pt.style.display = graph ? 'none' : '';
+    bg.className = 'slds-button ' + (graph ? 'slds-button_brand' : 'slds-button_neutral');
+    bt.className = 'slds-button ' + (graph ? 'slds-button_neutral' : 'slds-button_brand');
+  }
+  bg.addEventListener('click', function(){ mode(true); });
+  bt.addEventListener('click', function(){ mode(false); });
+
+  // deposit sub-nav
+  document.querySelectorAll('[data-dep]').forEach(function(li){
+    li.addEventListener('click', function(e){
+      e.preventDefault();
+      var k = li.getAttribute('data-dep');
+      document.querySelectorAll('[data-dep]').forEach(function(x){ x.classList.toggle('slds-is-active', x === li); });
+      document.querySelectorAll('.dep').forEach(function(d){ d.classList.toggle('is-on', d.id === 'dep-' + k); });
+    });
+  });
+})();
+</script>
+</body>
+</html>
