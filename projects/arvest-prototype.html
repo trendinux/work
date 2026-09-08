@@ -45,6 +45,27 @@
   .arc-bc{display:flex;align-items:center;gap:8px;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:10px 0;margin:12px 0}
   .arc-bc .nm{font-size:12px;color:#0176d3}
   .arc-bc .rl{font-size:10.5px;color:#5c5c5c}
+  /* ownership hierarchy tree — connectors are borders on the li, so they cannot drift */
+  .oh{font-size:13px}
+  .oh ul{list-style:none;margin:0;padding-left:26px;position:relative}
+  .oh>ul{padding-left:0}
+  .oh li{position:relative;padding:8px 0 0 26px}
+  .oh>ul>li{padding-left:0}
+  .oh li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:1px solid #c9c9c9}
+  .oh li:last-child::before{height:26px}
+  .oh li::after{content:"";position:absolute;left:0;top:26px;width:26px;border-top:1px solid #c9c9c9}
+  .oh>ul>li::before,.oh>ul>li::after{display:none}
+  .oh-node{display:flex;align-items:center;gap:10px;border:1px solid #dddbda;border-left:3px solid #c9c9c9;border-radius:.25rem;background:#fff;padding:9px 12px}
+  .oh-node.is-root{border-left-color:#014486;background:#f7f9fb}
+  .oh-node.is-biz{border-left-color:#0b827c}
+  .oh-node.is-trust{border-left-color:#8c4b02}
+  .oh-node.is-person{border-left-color:#04844b}
+  .oh-node.is-guar{border-left-color:#0176d3;border-style:dashed}
+  .oh-node .oh-nm{font-weight:600;color:#080707}
+  .oh-node .oh-sub{color:#5c5c5c;font-size:11.5px}
+  .oh-amt{margin-left:auto;font-family:'SF Mono',SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#080707;white-space:nowrap}
+  .oh-acct{display:flex;align-items:center;gap:10px;padding:6px 12px;border:1px dashed #dddbda;border-radius:.25rem;background:#fafaf9;color:#3e3e3c}
+  .oh-acct .oh-amt{color:#5c5c5c}
   /* FSC-style relationship builder */
   .rb-wrap{background:#fff;border:1px solid #e5e5e5;border-radius:.25rem;padding:24px 24px 40px;position:relative}
   /* no overflow container here: a scroll context would clip the pop-out */
@@ -901,52 +922,51 @@
     <!-- hierarchy -->
     <div id="pane-tree" style="display:none">
       <div class="slds-card">
-        <div class="slds-card__body slds-card__body_inner slds-p-vertical_small">
-          <div class="slds-tree_container" role="application">
-            <h4 class="slds-tree__group-header" id="tree-heading">Ownership &amp; control hierarchy</h4>
-            <ul class="slds-tree" role="tree" aria-labelledby="tree-heading">
-              <li role="treeitem" aria-level="1" aria-expanded="true">
-                <div class="slds-tree__item">
-                  <span class="slds-p-right_x-small slds-text-color_weak">▾</span>
-                  <span class="slds-tree__item-label"><strong>Hollis Household</strong> — relationship root</span>
-                </div>
-                <ul role="group">
-                  <li role="treeitem" aria-level="2" aria-expanded="true">
-                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
-                      <span class="slds-tree__item-label">Hollis Cabinetry LLC — Business &middot; operating entity</span></div>
-                    <ul role="group">
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Checking ••7734 — $286,402.19</span></div></li>
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Operating ••7735 — $126,478.25</span></div></li>
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Reserve Savings ••9018 — $104,237.62</span></div></li>
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Business Money Market ••3390 — $225,000.00</span></div></li>
+        <div class="slds-card__header slds-grid">
+          <header class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-media__body">
+              <h2 class="slds-card__header-title">Ownership &amp; control hierarchy</h2>
+              <p class="slds-text-body_small slds-text-color_weak">Beneficial ownership as credit and compliance read it &mdash; who owns what, and who is liable</p>
+            </div>
+          </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+          <div class="oh">
+            <ul>
+              <li>
+                <div class="oh-node is-root"><div><span class="oh-nm">Hollis Household</span><div class="oh-sub">Relationship root &middot; 4 owning parties</div></div><span class="oh-amt">$1,284,905.42</span></div>
+                <ul>
+                  <li>
+                    <div class="oh-node is-biz"><div><span class="oh-nm">Hollis Cabinetry LLC</span><span class="slds-badge slds-m-left_x-small">ownership 100% recorded</span><div class="oh-sub">Business &middot; operating entity &middot; owned by Dana R. Hollis and the Hollis Family Trust</div></div><span class="oh-amt">$742,118.06</span></div>
+                    <ul>
+                      <li><div class="oh-acct"><span>Business Checking &bull;&bull;7734</span><span class="oh-amt">$286,402.19</span></div></li>
+                      <li><div class="oh-acct"><span>Business Operating &bull;&bull;7735</span><span class="oh-amt">$126,478.25</span></div></li>
+                      <li><div class="oh-acct"><span>Business Reserve Savings &bull;&bull;9018</span><span class="oh-amt">$104,237.62</span></div></li>
+                      <li><div class="oh-acct"><span>Business Money Market &bull;&bull;3390</span><span class="oh-amt">$225,000.00</span></div></li>
                     </ul>
                   </li>
-                  <li role="treeitem" aria-level="2" aria-expanded="true">
-                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
-                      <span class="slds-tree__item-label">Dana R. Hollis — Individual &middot; owner 60%</span></div>
-                    <ul role="group">
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Personal Checking ••4821 — $42,118.44</span></div></li>
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Personal Savings ••5502 — $91,351.67</span></div></li>
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">18-Month CD ••1147 — $185,000.00</span></div></li>
+                  <li>
+                    <div class="oh-node is-person"><div><span class="oh-nm">Dana R. Hollis</span><span class="slds-badge slds-m-left_x-small">owns 60% of Cabinetry</span><div class="oh-sub">Individual &middot; household member, authorized signer</div></div><span class="oh-amt">$318,470.11</span></div>
+                    <ul>
+                      <li><div class="oh-acct"><span>Personal Checking &bull;&bull;4821</span><span class="oh-amt">$42,118.44</span></div></li>
+                      <li><div class="oh-acct"><span>Personal Savings &bull;&bull;5502</span><span class="oh-amt">$91,351.67</span></div></li>
+                      <li><div class="oh-acct"><span>18-Month CD &bull;&bull;1147</span><span class="oh-amt">$185,000.00</span></div></li>
                     </ul>
                   </li>
-                  <li role="treeitem" aria-level="2" aria-expanded="true">
-                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
-                      <span class="slds-tree__item-label">Hollis Family Trust — Trust &middot; owner 40%</span></div>
-                    <ul role="group">
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">36-Month CD ••2260 — $186,220.00</span></div></li>
+                  <li>
+                    <div class="oh-node is-trust"><div><span class="oh-nm">Hollis Family Trust</span><span class="slds-badge slds-m-left_x-small">owns 40% of Cabinetry</span><div class="oh-sub">Trust &middot; household member</div></div><span class="oh-amt">$186,220.00</span></div>
+                    <ul>
+                      <li><div class="oh-acct"><span>36-Month CD &bull;&bull;2260</span><span class="oh-amt">$186,220.00</span></div></li>
                     </ul>
                   </li>
-                  <li role="treeitem" aria-level="2" aria-expanded="true">
-                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">▾</span>
-                      <span class="slds-tree__item-label">Terrence Hollis — Individual &middot; authorized signer</span></div>
-                    <ul role="group">
-                      <li role="treeitem" aria-level="3"><div class="slds-tree__item"><span class="slds-tree__item-label slds-p-left_large">Joint Checking ••4822 — $38,097.25</span></div></li>
+                  <li>
+                    <div class="oh-node is-person"><div><span class="oh-nm">Terrence Hollis</span><div class="oh-sub">Individual &middot; authorized signer on Cabinetry, no ownership</div></div><span class="oh-amt">$38,097.25</span></div>
+                    <ul>
+                      <li><div class="oh-acct"><span>Joint Checking &bull;&bull;4822</span><span class="oh-amt">$38,097.25</span></div></li>
                     </ul>
                   </li>
-                  <li role="treeitem" aria-level="2">
-                    <div class="slds-tree__item"><span class="slds-p-right_x-small slds-text-color_weak">&nbsp;&nbsp;</span>
-                      <span class="slds-tree__item-label">Ridgeline Supply Co. — Guarantor only &middot; no deposit accounts</span></div>
+                  <li>
+                    <div class="oh-node is-guar"><div><span class="oh-nm">Ridgeline Supply Co.</span><div class="oh-sub">Guarantor of LN-40912 &middot; contingent liability, not ownership</div></div><span class="oh-amt">$0.00</span></div>
                   </li>
                 </ul>
               </li>
@@ -954,8 +974,9 @@
           </div>
         </div>
         <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-          Hierarchy reflects ownership and control for KYC/beneficial-ownership review. Guarantor links appear as
-          contingent liability, not ownership.
+          Percentages are ownership <em>of Hollis Cabinetry LLC</em>, not of the household &mdash; a household has members, not owners. Those two shares sum to 100%, which is what closes the beneficial-ownership record. The
+          guarantor sits at the same level but carries no percentage &mdash; a dashed border, because folding contingent
+          liability into an ownership tree is how a relationship total quietly becomes wrong.
         </footer>
       </div>
     </div>
