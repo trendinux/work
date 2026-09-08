@@ -24,6 +24,27 @@
   .dep.is-on{display:block}
   .app-frame{min-height:70vh}
   /* relationship graph */
+  /* ARC — Actionable Relationship Center */
+  .arc-shell{display:grid;grid-template-columns:minmax(0,1fr) 320px;border:1px solid #e5e5e5;border-radius:.25rem;background:#fff}
+  .arc-canvas{padding:16px;overflow-x:auto;position:relative;min-height:520px}
+  .arc-cols{display:flex;gap:78px;align-items:flex-start;position:relative;min-width:640px}
+  .arc-col{width:262px;flex:none}
+  .arc-list{border:1px solid #dddbda;border-radius:.25rem;margin-bottom:14px;background:#fff}
+  .arc-list-head{display:flex;align-items:center;gap:6px;padding:8px 10px}
+  .arc-list-head .arc-ttl{font-size:13px;color:#080707;flex:1;min-width:0}
+  .arc-node{border:1px solid #dddbda;border-radius:.25rem;margin:0 10px 10px;padding:8px 10px;cursor:pointer;background:#fff;position:relative}
+  .arc-node:hover{background:#f3f3f3}
+  .arc-node.is-sel{border-color:#0176d3;box-shadow:0 0 0 1px #0176d3}
+  .arc-node .arc-nm{color:#0176d3;font-size:13px;line-height:1.3;padding-right:18px}
+  .arc-kv{display:grid;grid-template-columns:64px 1fr;gap:2px 8px;font-size:11px;margin-top:6px;color:#3e3e3c}
+  .arc-kv .k{color:#5c5c5c}
+  .arc-caret{position:absolute;top:6px;right:6px;color:#706e6b;font-size:10px}
+  .arc-expand{position:absolute;bottom:6px;right:6px;border:0;background:none;cursor:pointer;padding:2px;line-height:0}
+  .arc-link{position:absolute;background:#1589ee;pointer-events:none}
+  .arc-side{border-left:1px solid #e5e5e5;padding:14px}
+  .arc-bc{display:flex;align-items:center;gap:8px;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:10px 0;margin:12px 0}
+  .arc-bc .nm{font-size:12px;color:#0176d3}
+  .arc-bc .rl{font-size:10.5px;color:#5c5c5c}
   /* FSC-style relationship builder */
   .rb-wrap{background:#fff;border:1px solid #e5e5e5;border-radius:.25rem;padding:24px 24px 40px;position:relative}
   /* no overflow container here: a scroll context would clip the pop-out */
@@ -76,6 +97,12 @@
 <symbol viewBox="0 0 520 520"  id="u-chevronright" xmlns="http://www.w3.org/2000/svg"><path d="M179 44l207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 6-16 0-22L136 88c-6-6-6-16 0-22l22-22c6-5 15-5 21 0"/></symbol>
 <symbol viewBox="0 0 520 520"  id="u-filter" xmlns="http://www.w3.org/2000/svg"><path d="M244 318c-6-6-15-6-21 0l-36 36c-6 6-17 2-17-7V215c0-8-7-15-15-15h-30c-8 0-15 7-15 15v132c0 9-11 13-17 7l-36-36c-6-6-15-6-21 0l-22 22c-6 6-6 15 0 21l115 115c6 6 15 6 21 0l116-116c6-6 6-15 0-21zM510 95c0-8-7-15-15-15H125c-8 0-15 7-15 15v30c0 8 7 15 15 15h370c8 0 15-7 15-15zm0 120c0-8-7-15-15-15H225c-8 0-15 7-15 15v30c0 8 7 15 15 15h270c8 0 15-7 15-15zm0 120c0-8-7-15-15-15H325c-8 0-15 7-15 15v30c0 8 7 15 15 15h170c8 0 15-7 15-15z"/></symbol>
 <symbol viewBox="0 0 520 520"  id="u-refresh" xmlns="http://www.w3.org/2000/svg"><path d="M465 40h-30c-8 0-15 7-15 15v70c0 9-5 13-12 7l-10-10a210 210 0 10-12 309c7-6 7-16 1-22l-21-21c-5-5-14-6-20-1a152 152 0 01-172 14 152 152 0 0177-281 150 150 0 01118 58c3 8-4 12-13 12h-70c-8 0-15 7-15 15v31c0 8 6 14 14 14h183c7 0 13-6 13-13V55c-1-8-8-15-16-15"/></symbol>
+<symbol viewBox="0 0 1000 1000"  id="s-contact" xmlns="http://www.w3.org/2000/svg"><path d="M740 290H260c-33 0-60 27-60 60v290c0 33 27 60 60 60h480c33 0 60-27 60-60V350c0-33-27-60-60-60M486 630H314c-19 0-34-21-34-41 1-30 32-48 65-63 23-10 26-19 26-29s-6-19-14-26a68 68 0 01-21-50c0-38 23-70 63-70s63 32 63 70c0 20-7 38-21 50-8 7-14 16-14 26s3 19 26 28c33 14 64 34 65 64 2 20-13 41-32 41m234-70c0 11-9 20-20 20h-90c-11 0-20-9-20-20v-30c0-11 9-20 20-20h90c11 0 20 9 20 20zm0-110c0 11-9 20-20 20H550c-11 0-20-9-20-20v-30c0-11 9-20 20-20h150c11 0 20 9 20 20z"/></symbol>
+<symbol viewBox="0 0 1000 1000"  id="s-household" xmlns="http://www.w3.org/2000/svg"><path d="M515 206c-9-8-22-8-30 0L207 462c-15 14-5 38 15 38h38v240c0 33 27 60 60 60h360c33 0 60-27 60-60V500h38c20 0 30-24 15-38zM369 639c-2 3-6 1-10 1h-24c-15 0-25-8-25-24 1-24 25-36 51-47 18-8 21-15 21-23s-5-15-11-21a52 52 0 01-16-40c0-30 18-56 50-56 19 0 33 9 42 23a97 97 0 00-37 79c0 19 5 37 15 52 4 6 2 11-5 14-17 9-39 21-51 42m207 71H424c-17 0-30-16-30-34 1-27 29-41 58-54 20-9 23-16 23-25s-6-17-12-23a57 57 0 01-18-44c0-33 20-62 56-62s56 29 56 62c0 18-6 33-18 44-7 6-12 14-12 23 0 8 3 16 23 25 29 13 57 27 58 54-2 18-15 34-32 34m89-70h-24c-4 0-8 2-10-1-12-21-34-30-52-39-6-3-8-10-4-16 10-15 15-33 15-52 0-33-14-61-36-78 8-14 22-23 42-23 33 0 50 26 50 56 0 16-5 30-16 40-6 6-11 13-11 21s3 15 21 23c26 12 51 23 51 47-1 14-11 22-26 22"/></symbol>
+<symbol viewBox="0 0 520 520"  id="u-add" xmlns="http://www.w3.org/2000/svg"><path d="M300 290h165c8 0 15-7 15-15v-30c0-8-7-15-15-15H300c-6 0-10-4-10-10V55c0-8-7-15-15-15h-30c-8 0-15 7-15 15v165c0 6-4 10-10 10H55c-8 0-15 7-15 15v30c0 8 7 15 15 15h165c6 0 10 4 10 10v165c0 8 7 15 15 15h30c8 0 15-7 15-15V300c0-6 4-10 10-10"/></symbol>
+<symbol viewBox="0 0 520 520"  id="u-adduser" xmlns="http://www.w3.org/2000/svg"><path d="M219 370c0-27 9-58 23-82 17-30 36-42 51-64 25-37 30-90 14-130-16-41-54-65-98-64s-80 28-94 69c-16 45-9 99 27 133 15 14 29 36 21 57-7 20-31 29-48 37-39 17-86 41-94 87-8 38 18 77 59 77h170c8 0 13-10 8-16a160 160 0 01-39-104m160-120c-66 0-120 54-120 120s54 120 120 120 120-54 120-120-54-120-120-120m61 130c0 6-5 10-11 10h-29v30c0 6-5 10-11 10h-20c-6 0-9-4-9-10v-30h-31c-6 0-9-4-9-10v-20c0-6 3-10 9-10h31v-30c0-6 3-10 9-10h20c6 0 11 4 11 10v30h29c6 0 11 4 11 10z"/></symbol>
+<symbol viewBox="0 0 520 520"  id="u-chevrondown" xmlns="http://www.w3.org/2000/svg"><path d="M476 178L271 385c-6 6-16 6-22 0L44 178c-6-6-6-16 0-22l22-22c6-6 16-6 22 0l161 163c6 6 16 6 22 0l161-162c6-6 16-6 22 0l22 22c5 6 5 15 0 21"/></symbol>
+<symbol viewBox="0 0 520 520"  id="u-expand_alt" xmlns="http://www.w3.org/2000/svg"><path d="M488 20H333c-10 0-13 9-5 17l49 49-90 90c-5 5-5 13 0 19l37 37c5 5 13 5 19 0l91-91 49 49c8 8 17 5 17-5V31c0-6-6-11-12-11M35 500h154c10 0 13-11 5-19l-49-50 90-91c5-5 5-14 0-19l-37-37c-5-5-13-5-19 0l-90 90-50-49c-9-8-19-5-19 5v154c0 7 8 16 15 16"/></symbol>
 </svg>
 
 
@@ -137,6 +164,9 @@
         </li>
         <li class="slds-context-bar__item" data-nav="relationships">
           <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Relationships</span></a>
+        </li>
+        <li class="slds-context-bar__item" data-nav="arc">
+          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">ARC</span></a>
         </li>
         <li class="slds-context-bar__item" data-nav="deposits">
           <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Deposit Accounts</span></a>
@@ -1011,6 +1041,98 @@
     </article>
   </section>
 
+
+  <!-- ══ VIEW · ARC (Actionable Relationship Center) ════════════ -->
+  <section class="view" id="view-arc">
+    <div class="slds-page-header">
+      <div class="slds-page-header__row">
+        <div class="slds-page-header__col-title">
+          <div class="slds-media">
+            <div class="slds-media__figure">
+              <span class="slds-icon_container slds-icon-standard-household">
+                <svg class="slds-icon slds-page-header__icon" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
+              </span>
+            </div>
+            <div class="slds-media__body">
+              <p class="slds-text-title_caps slds-line-height_reset">Actionable Relationship Center</p>
+              <h1><span class="slds-page-header__title slds-truncate">Hollis Household</span></h1>
+              <p class="slds-text-body_small">Expand any record to walk the relationship one hop at a time</p>
+            </div>
+          </div>
+        </div>
+        <div class="slds-page-header__col-actions">
+          <div class="slds-page-header__controls">
+            <div class="slds-page-header__control">
+              <div class="slds-form-element">
+                <label class="slds-checkbox_toggle slds-grid">
+                  <span class="slds-form-element__label slds-m-bottom_none">Show Related Lists</span>
+                  <input type="checkbox" id="arc-toggle" checked>
+                  <span class="slds-checkbox_faux_container" aria-live="assertive">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-checkbox_on">On</span><span class="slds-checkbox_off">Off</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arc-shell">
+      <div class="arc-canvas">
+        <div class="slds-m-bottom_small">
+          <span class="slds-icon_container slds-icon-standard-household" style="vertical-align:middle">
+            <svg class="slds-icon slds-icon_x-small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
+          </span>
+          <a href="javascript:void(0)" class="slds-text-body_regular slds-m-left_xx-small" id="arc-root-name">Hollis Household</a>
+        </div>
+        <div class="arc-cols" id="arc-cols"></div>
+      </div>
+
+      <aside class="arc-side">
+        <div class="slds-media slds-media_center">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-household">
+              <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
+            </span>
+          </div>
+          <div class="slds-media__body"><h2 class="slds-text-heading_small" id="arc-sel-name">—</h2></div>
+        </div>
+        <button class="slds-button slds-button_neutral slds-m-top_x-small">+ Follow</button>
+
+        <div class="arc-bc" id="arc-bc">
+          <div style="flex:1;min-width:0">
+            <div class="nm slds-truncate" id="arc-bc-a">Hollis Household</div>
+            <div class="rl" id="arc-bc-ar">—</div>
+          </div>
+          <svg class="slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true"><use xlink:href="#s-partners"></use></svg>
+          <div style="flex:1;min-width:0">
+            <div class="nm slds-truncate" id="arc-bc-b">—</div>
+            <div class="rl" id="arc-bc-br">—</div>
+          </div>
+        </div>
+
+        <div class="slds-tabs_default">
+          <ul class="slds-tabs_default__nav" role="tablist">
+            <li class="slds-tabs_default__item slds-is-active" role="presentation" data-arctab="details"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Details</a></li>
+            <li class="slds-tabs_default__item" role="presentation" data-arctab="participants"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Participants</a></li>
+            <li class="slds-tabs_default__item" role="presentation" data-arctab="insights"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Insights</a></li>
+          </ul>
+          <div class="slds-tabs_default__content slds-show" id="arctab-details" role="tabpanel"></div>
+          <div class="slds-tabs_default__content slds-hide" id="arctab-participants" role="tabpanel"></div>
+          <div class="slds-tabs_default__content slds-hide" id="arctab-insights" role="tabpanel"></div>
+        </div>
+      </aside>
+    </div>
+
+    <p class="slds-text-body_small slds-text-color_weak slds-p-around_small">
+      ARC answers a different question from the relationship builder. The builder shows the household you already
+      know about; ARC is for walking outward one hop at a time when you don&rsquo;t — which is how a second household,
+      a guarantor, or an unrecorded beneficial owner actually surfaces.
+    </p>
+  </section>
+
   <!-- ══ VIEW 4 · DEPOSIT ACCOUNTS (Checking/Savings/MMA/CD/Other) ══ -->
   <section class="view" id="view-deposits">
     <div class="slds-page-header">
@@ -1347,6 +1469,154 @@
       document.getElementById('compose-input').placeholder = PLACE[k];
     });
   });
+
+
+  // ── ARC (Actionable Relationship Center) ───────────────────────────
+  var ARCN = {
+    'hollis-hh':{n:'Hollis Household',ic:'s-household',rel:'Primary household',tfa:'$1,284,905.42',aum:'$412,880.00',next:'02 Oct 2026',last:'27 Aug 2026',
+      parts:['Dana R. Hollis — Client','Terrence Hollis — Client;Spouse','Marisol Hollis — Dependent'],
+      ins:['CD ••1147 matures in 24 days — $185,000 at risk','Wallet share 38% (estimate) — deposit concentration in one entity'],
+      lists:[{t:'Group Relationships',ic:'s-household',items:['vance-hh']},
+             {t:'Related Accounts',ic:'s-account_info',items:['cabinetry','ridgeline']},
+             {t:'Member Relationships',ic:'s-account',items:['trust']},
+             {t:'Members',ic:'s-contact',items:['dana','terrence','marisol']},
+             {t:'Household Insurance',ic:'s-account',items:[]}]},
+    'vance-hh':{n:'Vance Household',ic:'s-household',rel:'Extended family',tfa:'$412,300.00',aum:'$0.00',next:'—',last:'19 Feb 2026',
+      parts:['Ruth Vance — Client','Ellis Vance — Client;Spouse'],
+      ins:['No assigned relationship officer','Referral source: Dana R. Hollis (parent household)'],
+      lists:[{t:'Group Relationships',ic:'s-household',items:['hollis-hh']},
+             {t:'Related Accounts',ic:'s-account_info',items:[]},
+             {t:'Member Relationships',ic:'s-account',items:[]},
+             {t:'Members',ic:'s-contact',items:['ruth','ellis']},
+             {t:'Household Insurance',ic:'s-account',items:[]}]},
+    'cabinetry':{n:'Hollis Cabinetry LLC',ic:'s-account_info',rel:'Operating entity',tfa:'$742,118.06',aum:'$0.00',next:'19 Sep 2026',last:'27 Aug 2026',ph:'(479) 555-0110',
+      parts:['Dana R. Hollis — Owner;Signer 60%','Hollis Family Trust — Owner 40%','Terrence Hollis — Authorized signer'],
+      ins:['Equipment finance proposal flagged Deal Slowing','Guarantor financials stale — blocks re-underwrite of LN-40912'],
+      lists:[{t:'Group Relationships',ic:'s-household',items:[]},
+             {t:'Related Accounts',ic:'s-account_info',items:['ridgeline']},
+             {t:'Member Relationships',ic:'s-account',items:['trust']},
+             {t:'Members',ic:'s-contact',items:['dana','terrence']},
+             {t:'Household Insurance',ic:'s-account',items:[]}]},
+    'ridgeline':{n:'Ridgeline Supply Co.',ic:'s-account_info',rel:'Guarantor',tfa:'$0.00',aum:'$0.00',next:'—',last:'18 Jan 2026',ph:'(479) 555-0164',
+      parts:['Guarantor of LN-40912 — $1,150,000 outstanding'],
+      ins:['Contingent liability only — no deposit relationship','2026 financials outstanding since 18 Jan'],
+      lists:[{t:'Group Relationships',ic:'s-household',items:[]},
+             {t:'Related Accounts',ic:'s-account_info',items:['cabinetry']},
+             {t:'Member Relationships',ic:'s-account',items:[]},
+             {t:'Members',ic:'s-contact',items:[]},
+             {t:'Household Insurance',ic:'s-account',items:[]}]},
+    'trust':{n:'Hollis Family Trust',ic:'s-account',rel:'Beneficial owner',tfa:'$186,220.00',aum:'$186,220.00',next:'—',last:'03 Mar 2026',
+      parts:['Alan Whitfield — Trust counsel','Marisol Hollis — Beneficiary'],
+      ins:['Successor trustee documentation incomplete','36-month CD ••2260 matures 19 Jul 2028'],
+      lists:[{t:'Group Relationships',ic:'s-household',items:[]},
+             {t:'Related Accounts',ic:'s-account_info',items:['cabinetry']},
+             {t:'Member Relationships',ic:'s-account',items:[]},
+             {t:'Members',ic:'s-contact',items:['marisol']},
+             {t:'Household Insurance',ic:'s-account',items:[]}]},
+    'dana':{n:'Dana R. Hollis',ic:'s-contact',rel:'Client',tfa:'$318,470.11',aum:'$318,470.11',next:'02 Oct 2026',last:'27 Aug 2026',ph:'(479) 555-0142',pri:1,
+      parts:['Primary member of Hollis Household'],ins:['Asked about CD rates twice this quarter'],lists:[]},
+    'terrence':{n:'Terrence Hollis',ic:'s-contact',rel:'Client;Spouse',tfa:'$38,097.25',aum:'$38,097.25',next:'—',last:'14 Jun 2026',ph:'(479) 555-0143',
+      parts:['Authorized signer on Hollis Cabinetry LLC'],ins:['No interaction in 12 weeks'],lists:[]},
+    'marisol':{n:'Marisol Hollis',ic:'s-contact',rel:'Dependent',tfa:'$0.00',aum:'$0.00',next:'—',last:'—',
+      parts:['Beneficiary of Hollis Family Trust'],ins:['Age 19 — student account eligibility'],lists:[]},
+    'ruth':{n:'Ruth Vance',ic:'s-contact',rel:'Client',tfa:'$286,300.00',aum:'$0.00',next:'—',last:'19 Feb 2026',ph:'(479) 555-0198',pri:1,
+      parts:['Primary member of Vance Household'],ins:['Mother of Dana R. Hollis'],lists:[]},
+    'ellis':{n:'Ellis Vance',ic:'s-contact',rel:'Client;Spouse',tfa:'$126,000.00',aum:'$0.00',next:'—',last:'19 Feb 2026',
+      parts:['Joint owner, Vance Household'],ins:['No digital banking enrollment'],lists:[]}
+  };
+  var arcRoot='hollis-hh', arcExpanded=null, arcSel='hollis-hh';
+
+  function arcListHTML(key, colIdx){
+    var d=ARCN[key]; if(!d || !d.lists.length) return '';
+    var showEmpty=document.getElementById('arc-toggle').checked, h='';
+    d.lists.forEach(function(L){
+      if(!L.items.length && !showEmpty) return;
+      h += '<div class="arc-list"><div class="arc-list-head">'+
+           '<svg class="slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true"><use xlink:href="#u-chevrondown"></use></svg>'+
+           '<span class="slds-icon_container slds-icon-standard-account"><svg class="slds-icon slds-icon_xx-small" aria-hidden="true"><use xlink:href="#'+L.ic+'"></use></svg></span>'+
+           '<span class="arc-ttl slds-truncate">'+L.t+' ('+L.items.length+')</span>'+
+           '<button class="slds-button slds-button_neutral slds-button_stretch" style="width:auto;padding:2px 10px;font-size:12px">New</button></div>';
+      L.items.forEach(function(k){
+        var it=ARCN[k]; if(!it) return;
+        h += '<div class="arc-node'+(arcSel===k?' is-sel':'')+'" data-arc="'+k+'" data-col="'+colIdx+'">'+
+             '<span class="arc-caret">▾</span>'+
+             '<div class="arc-nm slds-truncate">'+it.n+'</div>'+
+             (it.pri?'<span class="slds-badge slds-m-top_xxx-small">Primary Member</span>':'')+
+             '<div class="arc-kv"><span class="k">Account</span><span class="slds-truncate">'+it.n+'</span>'+
+             (it.ph ? '<span class="k">Phone</span><span>'+it.ph+'</span>'
+                    : '<span class="k">Total Fin.</span><span>'+it.tfa+'</span>')+'</div>'+
+             (ARCN[k].lists.length ? '<button class="arc-expand" data-arcx="'+k+'" title="Expand"><svg class="slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true"><use xlink:href="#u-expand_alt"></use></svg></button>' : '')+
+             '</div>';
+      });
+      h += '</div>';
+    });
+    return h;
+  }
+
+  function arcSide(){
+    var d=ARCN[arcSel]; if(!d) return;
+    document.getElementById('arc-sel-name').textContent=d.n;
+    document.getElementById('arc-bc-a').textContent=ARCN[arcRoot].n;
+    document.getElementById('arc-bc-ar').textContent=ARCN[arcRoot].rel;
+    document.getElementById('arc-bc-b').textContent=d.n;
+    document.getElementById('arc-bc-br').textContent=d.rel;
+    document.getElementById('arctab-details').innerHTML =
+      '<div class="slds-p-around_small">'+
+      [['Account Name',d.n],['Relationship',d.rel],['Total Financial Accounts',d.tfa],['AUM',d.aum],
+       ['Next Interaction',d.next],['Last Interaction',d.last]].map(function(r){
+        return '<div class="slds-form-element slds-form-element_readonly slds-m-bottom_x-small">'+
+               '<span class="slds-form-element__label">'+r[0]+'</span>'+
+               '<div class="slds-form-element__control"><div class="slds-form-element__static">'+r[1]+'</div></div></div>';
+      }).join('')+'</div>';
+    document.getElementById('arctab-participants').innerHTML =
+      '<ul class="slds-has-dividers_bottom-space slds-p-around_small">'+
+      d.parts.map(function(x){return '<li class="slds-item slds-text-body_small slds-p-vertical_xx-small">'+x+'</li>';}).join('')+'</ul>';
+    document.getElementById('arctab-insights').innerHTML =
+      '<ul class="slds-has-dividers_bottom-space slds-p-around_small">'+
+      d.ins.map(function(x){return '<li class="slds-item slds-text-body_small slds-p-vertical_xx-small">'+x+'</li>';}).join('')+'</ul>';
+  }
+
+  function arcDraw(){
+    var cols=document.getElementById('arc-cols');
+    cols.innerHTML='<div class="arc-col">'+arcListHTML(arcRoot,0)+'</div>'+
+                   (arcExpanded ? '<div class="arc-col">'+arcListHTML(arcExpanded,1)+'</div>' : '');
+    arcSide();
+    // elbow connector from the expanded node to the second column
+    var old=document.querySelectorAll('.arc-link'); old.forEach(function(o){o.remove();});
+    if(!arcExpanded) return;
+    var src=cols.querySelector('.arc-node[data-arc="'+arcExpanded+'"][data-col="0"]');
+    var tgt=cols.children[1];
+    if(!src||!tgt) return;
+    var cr=cols.getBoundingClientRect(), sr=src.getBoundingClientRect(), tr=tgt.getBoundingClientRect();
+    var x1=sr.right-cr.left, y1=sr.top-cr.top+sr.height/2;
+    var x2=tr.left-cr.left,  y2=tr.top-cr.top+24;
+    var mid=x1+(x2-x1)/2;
+    function seg(l,t,w,h){var d=document.createElement('div');d.className='arc-link';
+      d.style.left=l+'px';d.style.top=t+'px';d.style.width=w+'px';d.style.height=h+'px';cols.appendChild(d);}
+    seg(x1, y1, mid-x1, 1);
+    seg(mid, Math.min(y1,y2), 1, Math.abs(y2-y1)||1);
+    seg(mid, y2, x2-mid, 1);
+  }
+
+  document.addEventListener('click', function(e){
+    var x=e.target.closest('[data-arcx]');
+    if(x){ e.stopPropagation(); arcExpanded=x.getAttribute('data-arcx'); arcSel=arcExpanded; arcDraw(); return; }
+    var n=e.target.closest('[data-arc]');
+    if(n){ arcSel=n.getAttribute('data-arc'); arcDraw(); }
+  });
+  document.getElementById('arc-toggle').addEventListener('change', arcDraw);
+  document.querySelectorAll('[data-arctab]').forEach(function(li){
+    li.addEventListener('click', function(ev){
+      ev.preventDefault();
+      var k=li.getAttribute('data-arctab');
+      document.querySelectorAll('[data-arctab]').forEach(function(x){x.classList.toggle('slds-is-active',x===li);});
+      ['details','participants','insights'].forEach(function(t){
+        var el=document.getElementById('arctab-'+t);
+        el.classList.toggle('slds-show', t===k); el.classList.toggle('slds-hide', t!==k);
+      });
+    });
+  });
+  arcDraw();
 
   // deposit sub-nav
   document.querySelectorAll('[data-dep]').forEach(function(li){
