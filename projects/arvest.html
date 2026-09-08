@@ -693,6 +693,16 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 .proj-hero-visual img,
 .case-figure img,
 .gallery-item img{box-shadow:0 26px 56px -30px rgba(29,29,31,.55)}
+/* the screenshots are mostly white; without a border they bleed into the page */
+.proj-hero-visual img,
+.case-figure img,
+.gallery-item img,
+.proto-shot img{border:1px solid var(--line);background:#fff}
+.proj-hero-visual img,
+.case-figure img{border-radius:var(--r-m)}
+.gallery-item img{border-radius:var(--r-s)}
+.proto-shot{padding:0}
+.proto-shot img{border-radius:0;border-width:0 1px 0 0}
 .proto-card{box-shadow:0 26px 56px -30px rgba(29,29,31,.45)}
 .proto-card:hover{box-shadow:0 34px 70px -30px rgba(29,29,31,.55)}
 .gallery-item{background:none;border:0;padding:0;cursor:zoom-in}
