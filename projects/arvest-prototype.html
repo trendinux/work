@@ -24,7 +24,40 @@
   .dep.is-on{display:block}
   .app-frame{min-height:70vh}
   /* relationship graph */
-  .graph-wrap{background:#fff;border:1px solid #e5e5e5;border-radius:.25rem;overflow-x:auto}
+  /* FSC-style relationship builder */
+  .rb-wrap{background:#fff;border:1px solid #e5e5e5;border-radius:.25rem;padding:24px 24px 40px;position:relative}
+  /* no overflow container here: a scroll context would clip the pop-out */
+  .rb{min-width:820px;position:relative}
+  .rb-card{border:1px solid #dddbda;border-radius:.25rem;background:#fff}
+  .rb-root{width:210px;padding:16px;text-align:center}
+  .rb-stem{width:1px;height:22px;background:#c9c9c9;margin-left:105px}
+  .rb-addgroup{width:210px;text-align:center;padding:8px;border:1px solid #dddbda;border-radius:.25rem;background:#fff;color:#0176d3;font-size:13px;cursor:pointer}
+  .rb-addgroup:hover{background:#f3f3f3}
+  .rb-branch{display:flex;gap:18px;position:relative;padding-top:24px;margin-top:22px}
+  .rb-branch::before{content:"";position:absolute;top:0;left:16.6%;right:16.6%;height:1px;background:#c9c9c9}
+  .rb-col{position:relative;flex:1 1 0;min-width:0}
+  .rb-col::before{content:"";position:absolute;top:-24px;left:50%;width:1px;height:24px;background:#c9c9c9}
+  .rb-grp{padding:14px}
+  .rb-grp-head{text-align:center;padding-bottom:10px}
+  .rb-member{display:flex;align-items:flex-start;gap:8px;border:1px solid #dddbda;border-left:3px solid #04844b;border-radius:.25rem;padding:8px 10px;margin-bottom:8px;background:#fff;cursor:pointer}
+  .rb-member:hover{background:#f3f3f3}
+  .rb-member.is-acct{border-left-color:#0176d3}
+  .rb-member.is-contact{border-left-color:#8c4b02}
+  .rb-member .rb-nm{color:#0176d3;font-size:13px;line-height:1.3}
+  .rb-member .rb-role{font-size:11.5px;color:#5c5c5c}
+  .rb-caret{margin-left:auto;color:#706e6b;font-size:10px;padding-left:6px}
+  .rb-add{display:block;width:100%;text-align:center;border:1px solid #dddbda;border-radius:.25rem;background:#fff;color:#0176d3;font-size:12.5px;padding:7px;cursor:pointer}
+  .rb-add:hover{background:#f3f3f3}
+  /* pop-out */
+  .rb-pop{position:absolute;z-index:20;width:310px;background:#fff;border:1px solid #dddbda;border-radius:.25rem;box-shadow:0 4px 16px rgba(0,0,0,.22);display:none}
+  .rb-pop.is-on{display:block}
+  .rb-pop-head{padding:14px 16px;border-bottom:1px solid #e5e5e5}
+  .rb-pop-sec{padding:12px 16px;border-bottom:1px solid #e5e5e5}
+  .rb-pop-sec:last-child{border-bottom:0}
+  .rb-pop h4{font-size:13px;margin:0 0 8px;color:#080707}
+  .rb-pop .kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:11.5px}
+  .rb-pop .kv .k{color:#5c5c5c}
+  .rb-pop-close{position:absolute;top:8px;right:10px;border:0;background:none;font-size:16px;color:#706e6b;cursor:pointer;line-height:1}
   .rg-node rect{fill:#fff;stroke:#c9c9c9;stroke-width:1.5;rx:6}
   .rg-node.is-primary rect{fill:#014486;stroke:#014486}
   .rg-node.is-primary text{fill:#fff}
@@ -491,8 +524,8 @@
           <div class="slds-page-header__controls">
             <div class="slds-page-header__control">
               <div class="slds-button-group" role="group">
-                <button class="slds-button slds-button_brand" id="btn-graph">Graph view</button>
-                <button class="slds-button slds-button_neutral" id="btn-tree">Hierarchy view</button>
+                <button class="slds-button slds-button_brand" id="btn-graph">Relationship builder</button>
+                <button class="slds-button slds-button_neutral" id="btn-tree">Ownership hierarchy</button>
               </div>
             </div>
           </div>
@@ -515,68 +548,131 @@
 
     <!-- graph -->
     <div id="pane-graph">
-      <div class="graph-wrap slds-p-around_medium">
-        <svg viewBox="0 0 1000 420" width="100%" style="min-width:860px" role="img"
-             aria-label="Relationship graph: Hollis Household with five related parties and their ownership, signing and guarantor links.">
-          <g class="rg-edges">
-            <line class="rg-edge" x1="500" y1="46"  x2="160" y2="198"></line>
-            <line class="rg-edge" x1="500" y1="46"  x2="840" y2="198"></line>
-            <line class="rg-edge" x1="500" y1="72"  x2="500" y2="230"></line>
-            <line class="rg-edge" x1="160" y1="198" x2="500" y2="260"></line>
-            <line class="rg-edge" x1="840" y1="198" x2="500" y2="260"></line>
-            <line class="rg-edge" x1="160" y1="338" x2="500" y2="260"></line>
-            <line class="rg-edge" x1="840" y1="338" x2="500" y2="260" stroke-dasharray="5 4"></line>
-            <line class="rg-edge" x1="160" y1="198" x2="160" y2="338"></line>
-          </g>
-          <g class="rg-labels" style="paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round">
-            <text class="rg-edge-label" x="330" y="118" text-anchor="middle">member</text>
-            <text class="rg-edge-label" x="670" y="118" text-anchor="middle">member</text>
-            <text class="rg-edge-label" x="508" y="155">primary operating entity</text>
-            <text class="rg-edge-label" x="326" y="236" text-anchor="middle">owner &middot; 60%</text>
-            <text class="rg-edge-label" x="674" y="236" text-anchor="middle">owner &middot; 40%</text>
-            <text class="rg-edge-label" x="326" y="304" text-anchor="middle">authorized signer</text>
-            <text class="rg-edge-label" x="676" y="304" text-anchor="middle">guarantor &middot; LN-40912</text>
-            <text class="rg-edge-label" x="152" y="272" text-anchor="end">spouse</text>
-          </g>
+      <div class="rb-wrap">
+        <div class="rb">
 
-          <g class="rg-node" data-goto="detail" transform="translate(395,20)">
-            <rect width="210" height="52"></rect>
-            <text x="16" y="24">Hollis Household</text>
-            <text class="rg-sub" x="16" y="40">Relationship root &middot; Tier 1</text>
-          </g>
-          <g class="rg-node is-primary" data-goto="detail" transform="translate(390,230)">
-            <rect width="220" height="60"></rect>
-            <text x="16" y="26">Hollis Cabinetry LLC</text>
-            <text class="rg-sub" x="16" y="44">Business &middot; $742,118.06</text>
-          </g>
-          <g class="rg-node" data-goto="detail" transform="translate(60,170)">
-            <rect width="200" height="56"></rect>
-            <text x="16" y="25">Dana R. Hollis</text>
-            <text class="rg-sub" x="16" y="42">Individual &middot; $318,470.11</text>
-          </g>
-          <g class="rg-node" data-goto="detail" transform="translate(60,310)">
-            <rect width="200" height="56"></rect>
-            <text x="16" y="25">Terrence Hollis</text>
-            <text class="rg-sub" x="16" y="42">Individual &middot; $38,097.25</text>
-          </g>
-          <g class="rg-node is-trust" data-goto="detail" transform="translate(740,170)">
-            <rect width="200" height="56"></rect>
-            <text x="16" y="25">Hollis Family Trust</text>
-            <text class="rg-sub" x="16" y="42">Trust &middot; $186,220.00</text>
-          </g>
-          <g class="rg-node is-business" data-goto="detail" transform="translate(740,310)">
-            <rect width="200" height="56"></rect>
-            <text x="16" y="25">Ridgeline Supply Co.</text>
-            <text class="rg-sub" x="16" y="42">Guarantor &middot; no deposits</text>
-          </g>
-        </svg>
+          <div class="rb-card rb-root">
+            <span class="slds-icon_container slds-icon-standard-account" style="display:inline-block">
+              <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
+            </span>
+            <div class="slds-text-body_regular slds-m-top_xx-small">Dana R. Hollis</div>
+          </div>
+          <div class="rb-stem"></div>
+          <div class="rb-addgroup">+ Add Group</div>
+          <div class="rb-stem"></div>
+
+          <div class="rb-branch">
+
+            <div class="rb-col">
+              <div class="rb-card rb-grp">
+                <div class="rb-grp-head">
+                  <span class="slds-icon_container slds-icon-standard-household" style="display:inline-block">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
+                  </span>
+                  <div><a href="javascript:void(0)" class="slds-text-body_regular">Hollis Household (3)</a></div>
+                  <div class="slds-text-body_small slds-text-color_weak">Household</div>
+                  <span class="slds-badge slds-m-top_xx-small">PRIMARY GROUP</span>
+                </div>
+                <div class="rb-member" data-pop="dana">
+                  <div><div class="rb-nm">Dana R. Hollis</div><div class="rb-role">Client</div>
+                    <span class="slds-badge slds-m-top_xx-small">PRIMARY MEMBER</span></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <div class="rb-member" data-pop="terrence">
+                  <div><div class="rb-nm">Terrence Hollis</div><div class="rb-role">Client;Spouse</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <div class="rb-member" data-pop="marisol">
+                  <div><div class="rb-nm">Marisol Hollis</div><div class="rb-role">Dependent</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <button class="rb-add">+ Add Relationship</button>
+              </div>
+            </div>
+
+            <div class="rb-col">
+              <div class="rb-card rb-grp">
+                <div class="rb-grp-head">
+                  <span class="slds-icon_container slds-icon-standard-account" style="display:inline-block">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account_info"></use></svg>
+                  </span>
+                  <div class="slds-text-body_regular">Related Accounts (3)</div>
+                </div>
+                <div class="rb-member is-acct" data-pop="cabinetry">
+                  <div><div class="rb-nm">Hollis Cabinetry LLC</div><div class="rb-role">Owner;Signer &middot; 60%</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <div class="rb-member is-acct" data-pop="trust">
+                  <div><div class="rb-nm">Hollis Family Trust</div><div class="rb-role">Trustee;Beneficiary &middot; 40%</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <div class="rb-member is-acct" data-pop="ridgeline">
+                  <div><div class="rb-nm">Ridgeline Supply Co.</div><div class="rb-role">Guarantor</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <button class="rb-add">+ Add Account</button>
+              </div>
+            </div>
+
+            <div class="rb-col">
+              <div class="rb-card rb-grp">
+                <div class="rb-grp-head">
+                  <span class="slds-icon_container slds-icon-standard-contact" style="display:inline-block">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-partners"></use></svg>
+                  </span>
+                  <div class="slds-text-body_regular">Related Contacts (2)</div>
+                </div>
+                <div class="rb-member is-contact" data-pop="cpa">
+                  <div><div class="rb-nm">Priya Raman</div><div class="rb-role">CPA</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <div class="rb-member is-contact" data-pop="atty">
+                  <div><div class="rb-nm">Alan Whitfield</div><div class="rb-role">Attorney &middot; trust counsel</div></div>
+                  <span class="rb-caret">▾</span>
+                </div>
+                <button class="rb-add">+ Add Contact</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- pop-out -->
+          <div class="rb-pop" id="rb-pop">
+            <button class="rb-pop-close" aria-label="Close">&times;</button>
+            <div class="rb-pop-head">
+              <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                  <span class="slds-icon_container slds-icon-standard-account">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
+                  </span>
+                </div>
+                <div class="slds-media__body"><a href="javascript:void(0)" class="slds-text-heading_small" id="pop-name">—</a></div>
+              </div>
+              <div class="kv slds-m-top_x-small">
+                <div><div class="k">Total Financial Accounts</div><div id="pop-tfa">—</div></div>
+                <div><div class="k">Category</div><div id="pop-cat">—</div></div>
+                <div><div class="k">Next Interaction</div><div id="pop-next">—</div></div>
+                <div><div class="k">Last Interaction</div><div id="pop-last">—</div></div>
+              </div>
+            </div>
+            <div class="rb-pop-sec" id="pop-opps-wrap">
+              <h4>Opportunities (<span id="pop-opp-n">0</span>)</h4>
+              <div id="pop-opps"></div>
+              <a href="javascript:void(0)" class="slds-text-body_small">View All</a>
+            </div>
+            <div class="rb-pop-sec" id="pop-sr-wrap">
+              <h4>Service Requests (<span id="pop-sr-n">0</span>)</h4>
+              <div id="pop-sr"></div>
+              <a href="javascript:void(0)" class="slds-text-body_small">View All</a>
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="slds-p-around_small slds-text-body_small slds-text-color_weak">
-        <span class="legend-dot" style="border-color:#014486;background:#014486"></span>Selected entity
-        <span class="slds-m-left_medium legend-dot" style="border-color:#0b827c"></span>Business
-        <span class="slds-m-left_medium legend-dot" style="border-color:#8c4b02"></span>Trust
-        <span class="slds-m-left_medium legend-dot" style="border-color:#c9c9c9"></span>Individual / household
-        <span class="slds-m-left_medium">Dashed edge = contingent liability, not ownership.</span>
+        Click any party to open its summary. Roles are multi-value because one person is routinely several things at
+        once — <em>Client;Spouse</em>, <em>Trustee;Beneficiary</em> — and collapsing them to a single role is what
+        breaks beneficial-ownership review later.
       </div>
     </div>
 
@@ -641,6 +737,75 @@
         </footer>
       </div>
     </div>
+
+    <!-- household detail panel -->
+    <article class="slds-card slds-m-top_medium" id="hh-panel">
+      <div class="slds-card__header slds-grid">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-account">
+              <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
+            </span>
+          </div>
+          <div class="slds-media__body"><h2 class="slds-card__header-title">Hollis Household</h2></div>
+        </header>
+        <div class="slds-no-flex"><button class="slds-button slds-button_neutral">Edit</button></div>
+      </div>
+      <div class="slds-card__body slds-card__body_inner">
+        <ul class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+            <div class="slds-text-title_caps">Total Financial Accounts</div><div class="slds-text-body_regular">$1,284,905</div></li>
+          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+            <div class="slds-text-title_caps">Wallet Share</div><div class="slds-text-body_regular">38%</div></li>
+          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+            <div class="slds-text-title_caps">Last Interaction</div><div class="slds-text-body_regular">27 Aug 2026</div></li>
+          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+            <div class="slds-text-title_caps">Next Interaction</div><div class="slds-text-body_regular">02 Oct 2026 — CD maturity</div></li>
+        </ul>
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+          <thead><tr class="slds-line-height_reset">
+            <th class="slds-text-title_caps">Member</th>
+            <th class="slds-text-title_caps">Contact</th>
+            <th class="slds-text-title_caps">Interactions</th>
+            <th class="slds-text-title_caps">Activity</th>
+          </tr></thead>
+          <tbody>
+            <tr class="slds-hint-parent">
+              <th scope="row">
+                <div><a href="javascript:void(0)">Dana R. Hollis</a> <span class="slds-badge">PRIMARY</span></div>
+                <div class="slds-text-body_small slds-text-color_weak">Roles Client &middot; Age 51</div>
+              </th>
+              <td><div class="slds-text-body_small">(479) 555-0142 &middot; mobile (479) 555-0188<br>d.hollis@example.com</div></td>
+              <td><div class="slds-text-body_small">Last 27 Aug 2026<br>Next 02 Oct 2026</div></td>
+              <td><div class="slds-text-body_small">Events 2 &middot; Tasks 1 &middot; Calls 4 &middot; Emails 3</div></td>
+            </tr>
+            <tr class="slds-hint-parent">
+              <th scope="row">
+                <div><a href="javascript:void(0)">Terrence Hollis</a></div>
+                <div class="slds-text-body_small slds-text-color_weak">Roles Client;Spouse &middot; Age 49</div>
+              </th>
+              <td><div class="slds-text-body_small">(479) 555-0143<br>t.hollis@example.com</div></td>
+              <td><div class="slds-text-body_small">Last 14 Jun 2026<br>Next —</div></td>
+              <td><div class="slds-text-body_small">Events 0 &middot; Tasks 0 &middot; Calls 1 &middot; Emails 0</div></td>
+            </tr>
+            <tr class="slds-hint-parent">
+              <th scope="row">
+                <div><a href="javascript:void(0)">Marisol Hollis</a></div>
+                <div class="slds-text-body_small slds-text-color_weak">Roles Dependent &middot; Age 19</div>
+              </th>
+              <td><div class="slds-text-body_small">—</div></td>
+              <td><div class="slds-text-body_small">Last —<br>Next —</div></td>
+              <td><div class="slds-text-body_small">Events 0 &middot; Tasks 0 &middot; Calls 0 &middot; Emails 0</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
+        Wallet share is an estimate against reported outside holdings, not a measured figure — labelled as such so
+        nobody quotes it in a credit memo.
+      </footer>
+    </article>
   </section>
 
   <!-- ══ VIEW 4 · DEPOSIT ACCOUNTS (Checking/Savings/MMA/CD/Other) ══ -->
@@ -889,6 +1054,72 @@
   }
   bg.addEventListener('click', function(){ mode(true); });
   bt.addEventListener('click', function(){ mode(false); });
+
+
+  // relationship pop-out (FSC-style summary card)
+  var POP = {
+    dana:      {n:'Dana R. Hollis', tfa:'$318,470.11', cat:'Gold', next:'02 Oct 2026', last:'27 Aug 2026',
+                opps:[['Wealth transfer review','Prospecting','$0',false]], sr:[]},
+    terrence:  {n:'Terrence Hollis', tfa:'$38,097.25', cat:'Silver', next:'—', last:'14 Jun 2026', opps:[], sr:[]},
+    marisol:   {n:'Marisol Hollis', tfa:'$0.00', cat:'—', next:'—', last:'—', opps:[], sr:[]},
+    cabinetry: {n:'Hollis Cabinetry LLC', tfa:'$742,118.06', cat:'Platinum', next:'19 Sep 2026', last:'27 Aug 2026',
+                opps:[['Equipment finance — line increase','Proposal','$400,000',true],
+                      ['Treasury management upgrade','Prospecting','$18,000',false]],
+                sr:[['00041182','Dana R. Hollis','Positive pay exception workflow','Medium']]},
+    trust:     {n:'Hollis Family Trust', tfa:'$186,220.00', cat:'Gold', next:'—', last:'03 Mar 2026',
+                opps:[['Successor trustee documentation','Qualification','$0',false]],
+                sr:[['00041044','Alan Whitfield','Beneficiary designation update','High']]},
+    ridgeline: {n:'Ridgeline Supply Co.', tfa:'$0.00', cat:'—', next:'—', last:'18 Jan 2026',
+                opps:[], sr:[['00040911','Priya Raman','Annual guarantor financials due','Low']]},
+    cpa:       {n:'Priya Raman', tfa:'—', cat:'CPA', next:'—', last:'11 Aug 2026', opps:[], sr:[]},
+    atty:      {n:'Alan Whitfield', tfa:'—', cat:'Attorney', next:'—', last:'03 Mar 2026', opps:[], sr:[]}
+  };
+  var pop = document.getElementById('rb-pop');
+  function fill(k){
+    var d = POP[k]; if(!d) return;
+    document.getElementById('pop-name').textContent = d.n;
+    document.getElementById('pop-tfa').textContent  = d.tfa;
+    document.getElementById('pop-cat').textContent  = d.cat;
+    document.getElementById('pop-next').textContent = d.next;
+    document.getElementById('pop-last').textContent = d.last;
+    var oc = document.getElementById('pop-opps'); oc.innerHTML = '';
+    d.opps.forEach(function(o){
+      oc.insertAdjacentHTML('beforeend',
+        '<div class="slds-m-bottom_x-small"><a href="javascript:void(0)" class="slds-text-body_small">' + o[0] + '</a>' +
+        '<div class="kv slds-m-top_xxx-small"><div><span class="k">Deal Slowing:</span> ' + (o[3] ? '&#9745;' : '&#9744;') + '</div>' +
+        '<div><span class="k">Stage:</span> ' + o[1] + '</div>' +
+        '<div><span class="k">Amount:</span> ' + o[2] + '</div></div></div>');
+    });
+    document.getElementById('pop-opp-n').textContent = d.opps.length + (d.opps.length ? '+' : '');
+    document.getElementById('pop-opps-wrap').style.display = d.opps.length ? '' : 'none';
+    var sc = document.getElementById('pop-sr'); sc.innerHTML = '';
+    d.sr.forEach(function(r){
+      sc.insertAdjacentHTML('beforeend',
+        '<div class="slds-m-bottom_x-small"><a href="javascript:void(0)" class="slds-text-body_small">' + r[0] + '</a>' +
+        '<div class="kv slds-m-top_xxx-small"><div><span class="k">Contact:</span> ' + r[1] + '</div>' +
+        '<div><span class="k">Priority:</span> ' + r[3] + '</div></div>' +
+        '<div class="slds-text-body_small"><span class="k">Subject:</span> ' + r[2] + '</div></div>');
+    });
+    document.getElementById('pop-sr-n').textContent = d.sr.length;
+    document.getElementById('pop-sr-wrap').style.display = d.sr.length ? '' : 'none';
+  }
+  document.querySelectorAll('[data-pop]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      fill(el.getAttribute('data-pop'));
+      pop.classList.add('is-on');           // show first so it can be measured
+      var host = document.querySelector('.rb');
+      var hr = host.getBoundingClientRect(), er = el.getBoundingClientRect();
+      var left = er.left - hr.left + er.width / 2 - 40;
+      left = Math.max(0, Math.min(left, host.offsetWidth - pop.offsetWidth));
+      var top = er.top - hr.top - 8;
+      top = Math.max(0, Math.min(top, host.offsetHeight - pop.offsetHeight));
+      pop.style.left = left + 'px';
+      pop.style.top  = top + 'px';
+    });
+  });
+  pop.querySelector('.rb-pop-close').addEventListener('click', function(){ pop.classList.remove('is-on'); });
+  document.addEventListener('click', function(e){ if(!pop.contains(e.target)) pop.classList.remove('is-on'); });
 
   // deposit sub-nav
   document.querySelectorAll('[data-dep]').forEach(function(li){
