@@ -54,10 +54,9 @@
   .rb-stem{width:1px;height:22px;background:#c9c9c9;margin-left:105px}
   .rb-addgroup{width:210px;text-align:center;padding:8px;border:1px solid #dddbda;border-radius:.25rem;background:#fff;color:#0176d3;font-size:13px;cursor:pointer}
   .rb-addgroup:hover{background:#f3f3f3}
-  .rb-branch{display:flex;gap:18px;position:relative;padding-top:24px;margin-top:22px}
-  .rb-branch::before{content:"";position:absolute;top:0;left:16.6%;right:16.6%;height:1px;background:#c9c9c9}
-  .rb-col{position:relative;flex:1 1 0;min-width:0}
-  .rb-col::before{content:"";position:absolute;top:-24px;left:50%;width:1px;height:24px;background:#c9c9c9}
+  .rb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+  .rb-links{position:relative;height:46px}
+  .rb-seg{position:absolute;background:#c9c9c9}
   .rb-grp{padding:14px}
   .rb-grp-head{text-align:center;padding-bottom:10px}
   .rb-member{display:flex;align-items:flex-start;gap:8px;border:1px solid #dddbda;border-left:3px solid #04844b;border-radius:.25rem;padding:8px 10px;margin-bottom:8px;background:#fff;cursor:pointer}
@@ -412,15 +411,15 @@
     </div>
 
     <div class="slds-grid slds-wrap slds-gutters slds-m-top_small">
-      <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
         <div class="slds-tabs_default">
           <ul class="slds-tabs_default__nav" role="tablist">
-            <li class="slds-tabs_default__item slds-is-active" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Details</a></li>
+            <li class="slds-tabs_default__item slds-is-active" role="presentation" data-dtab="details"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Details</a></li>
             <li class="slds-tabs_default__item" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab" data-goto="deposits">Deposit Accounts (4)</a></li>
             <li class="slds-tabs_default__item" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab" data-goto="relationships">Relationships (5)</a></li>
-            <li class="slds-tabs_default__item" role="presentation"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Activity</a></li>
+            <li class="slds-tabs_default__item" role="presentation" data-dtab="parties"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Related Parties (4)</a></li>
           </ul>
-          <div class="slds-tabs_default__content slds-show" role="tabpanel">
+          <div class="slds-tabs_default__content slds-show" id="dtab-details" role="tabpanel">
             <div class="slds-form slds-form_stacked slds-p-around_medium">
               <div class="slds-grid slds-wrap slds-gutters">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
@@ -462,63 +461,52 @@
               </div>
             </div>
           </div>
+          <div class="slds-tabs_default__content slds-hide" id="dtab-parties" role="tabpanel">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+              <thead><tr class="slds-line-height_reset">
+                <th class="slds-text-title_caps" scope="col">Party</th>
+                <th class="slds-text-title_caps" scope="col">Type</th>
+                <th class="slds-text-title_caps" scope="col">Role</th>
+                <th class="slds-text-title_caps" scope="col">Ownership</th>
+                <th class="slds-text-title_caps" scope="col">Verification</th>
+              </tr></thead>
+              <tbody>
+                <tr class="slds-hint-parent">
+                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="relationships">Dana R. Hollis</a></div></th>
+                  <td><div class="slds-truncate">Individual</div></td>
+                  <td><div class="slds-truncate">Member &middot; Authorized signer</div></td>
+                  <td><div class="slds-truncate">60%</div></td>
+                  <td><span class="slds-badge slds-theme_success">CIP verified</span></td>
+                </tr>
+                <tr class="slds-hint-parent">
+                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="relationships">Hollis Family Trust</a></div></th>
+                  <td><div class="slds-truncate">Trust</div></td>
+                  <td><div class="slds-truncate">Member</div></td>
+                  <td><div class="slds-truncate">40%</div></td>
+                  <td><span class="slds-badge slds-theme_success">CIP verified</span></td>
+                </tr>
+                <tr class="slds-hint-parent">
+                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="relationships">Terrence Hollis</a></div></th>
+                  <td><div class="slds-truncate">Individual</div></td>
+                  <td><div class="slds-truncate">Authorized signer &middot; spouse of member</div></td>
+                  <td><div class="slds-truncate">&mdash;</div></td>
+                  <td><span class="slds-badge slds-theme_success">CIP verified</span></td>
+                </tr>
+                <tr class="slds-hint-parent">
+                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="arc">Ridgeline Supply Co.</a></div></th>
+                  <td><div class="slds-truncate">Business</div></td>
+                  <td><div class="slds-truncate">Guarantor &middot; LN-40912</div></td>
+                  <td><div class="slds-truncate">&mdash;</div></td>
+                  <td><span class="slds-badge slds-theme_warning">Financials stale</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="slds-p-around_small slds-text-body_small slds-text-color_weak">
+              Ownership totals 100% across two members, which is what makes the beneficial-ownership record complete.
+              A guarantor carries no ownership and is listed separately so the percentages still reconcile.
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
-        <article class="slds-card slds-m-bottom_small">
-          <div class="slds-card__header slds-grid">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-              <div class="slds-media__body"><h2 class="slds-card__header-title">Deposit Summary</h2></div>
-            </header>
-          </div>
-          <div class="slds-card__body slds-card__body_inner">
-            <dl class="slds-list_horizontal slds-wrap">
-              <dt class="slds-item_label slds-text-color_weak slds-truncate">Checking</dt>
-              <dd class="slds-item_detail slds-truncate">$412,880.44 &middot; 2 accounts</dd>
-              <dt class="slds-item_label slds-text-color_weak slds-truncate">Savings</dt>
-              <dd class="slds-item_detail slds-truncate">$104,237.62 &middot; 1 account</dd>
-              <dt class="slds-item_label slds-text-color_weak slds-truncate">Money Market</dt>
-              <dd class="slds-item_detail slds-truncate">$225,000.00 &middot; 1 account</dd>
-              <dt class="slds-item_label slds-text-color_weak slds-truncate">Certificates</dt>
-              <dd class="slds-item_detail slds-truncate">$0.00 &middot; 0 accounts</dd>
-            </dl>
-          </div>
-          <footer class="slds-card__footer">
-            <a href="javascript:void(0)" data-goto="deposits">View all deposit accounts →</a>
-          </footer>
-        </article>
-
-        <article class="slds-card">
-          <div class="slds-card__header slds-grid">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-              <div class="slds-media__body"><h2 class="slds-card__header-title">Related Parties</h2></div>
-            </header>
-          </div>
-          <div class="slds-card__body">
-            <ul class="slds-has-dividers_around-space">
-              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
-                <div class="slds-text-body_regular">Dana R. Hollis</div>
-                <div class="slds-text-body_small slds-text-color_weak">Member &middot; 60% &middot; Authorized signer</div>
-              </li>
-              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
-                <div class="slds-text-body_regular">Hollis Family Trust</div>
-                <div class="slds-text-body_small slds-text-color_weak">Member &middot; 40%</div>
-              </li>
-              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
-                <div class="slds-text-body_regular">Terrence Hollis</div>
-                <div class="slds-text-body_small slds-text-color_weak">Authorized signer &middot; spouse of member</div>
-              </li>
-              <li class="slds-item slds-p-horizontal_medium slds-p-vertical_x-small">
-                <div class="slds-text-body_regular">Ridgeline Supply Co.</div>
-                <div class="slds-text-body_small slds-text-color_weak">Guarantor &middot; term loan #LN-40912</div>
-              </li>
-            </ul>
-          </div>
-          <footer class="slds-card__footer">
-            <a href="javascript:void(0)" data-goto="relationships">Open relationship map →</a>
-          </footer>
-        </article>
       </div>
 
       <!-- activity / chatter rail -->
@@ -784,89 +772,90 @@
       <div class="rb-wrap">
         <div class="rb">
 
-          <div class="rb-card rb-root">
-            <span class="slds-icon_container slds-icon-standard-account" style="display:inline-block">
-              <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
-            </span>
-            <div class="slds-text-body_regular slds-m-top_xx-small">Dana R. Hollis</div>
+          <div class="rb-grid">
+            <div class="rb-card rb-grp" id="rb-root">
+              <div class="rb-grp-head">
+                <span class="slds-icon_container slds-icon-standard-household" style="display:inline-block">
+                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
+                </span>
+                <div><a href="javascript:void(0)" class="slds-text-body_regular">Hollis Household</a></div>
+                <div class="slds-text-body_small slds-text-color_weak">Household</div>
+                <span class="slds-badge slds-m-top_xx-small">PRIMARY GROUP</span>
+              </div>
+              <div class="rb-member" data-pop="dana">
+                <div><div class="rb-nm">Dana R. Hollis</div><div class="rb-role">Head of household &middot; Client</div>
+                  <span class="slds-badge slds-m-top_xx-small">PRIMARY MEMBER</span></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <div class="rb-member" data-pop="terrence">
+                <div><div class="rb-nm">Terrence Hollis</div><div class="rb-role">Client;Spouse</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <div class="rb-member" data-pop="marisol">
+                <div><div class="rb-nm">Marisol Hollis</div><div class="rb-role">Dependent</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <button class="rb-add">+ Add Relationship</button>
+            </div>
+            <div></div><div></div>
           </div>
-          <div class="rb-stem"></div>
-          <div class="rb-addgroup">+ Add Group</div>
-          <div class="rb-stem"></div>
 
-          <div class="rb-branch">
+          <div class="rb-links" id="rb-links"></div>
 
-            <div class="rb-col">
-              <div class="rb-card rb-grp">
-                <div class="rb-grp-head">
-                  <span class="slds-icon_container slds-icon-standard-household" style="display:inline-block">
-                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
-                  </span>
-                  <div><a href="javascript:void(0)" class="slds-text-body_regular">Hollis Household (3)</a></div>
-                  <div class="slds-text-body_small slds-text-color_weak">Household</div>
-                  <span class="slds-badge slds-m-top_xx-small">PRIMARY GROUP</span>
-                </div>
-                <div class="rb-member" data-pop="dana">
-                  <div><div class="rb-nm">Dana R. Hollis</div><div class="rb-role">Client</div>
-                    <span class="slds-badge slds-m-top_xx-small">PRIMARY MEMBER</span></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <div class="rb-member" data-pop="terrence">
-                  <div><div class="rb-nm">Terrence Hollis</div><div class="rb-role">Client;Spouse</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <div class="rb-member" data-pop="marisol">
-                  <div><div class="rb-nm">Marisol Hollis</div><div class="rb-role">Dependent</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <button class="rb-add">+ Add Relationship</button>
+          <div class="rb-grid" id="rb-branch">
+            <div class="rb-card rb-grp">
+              <div class="rb-grp-head">
+                <span class="slds-icon_container slds-icon-standard-household" style="display:inline-block">
+                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
+                </span>
+                <div class="slds-text-body_regular">Related Groups (1)</div>
               </div>
+              <div class="rb-member" data-pop="vance">
+                <div><div class="rb-nm">Vance Household</div><div class="rb-role">Extended family</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <button class="rb-add">+ Add Group</button>
             </div>
 
-            <div class="rb-col">
-              <div class="rb-card rb-grp">
-                <div class="rb-grp-head">
-                  <span class="slds-icon_container slds-icon-standard-account" style="display:inline-block">
-                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account_info"></use></svg>
-                  </span>
-                  <div class="slds-text-body_regular">Related Accounts (3)</div>
-                </div>
-                <div class="rb-member is-acct" data-pop="cabinetry">
-                  <div><div class="rb-nm">Hollis Cabinetry LLC</div><div class="rb-role">Owner;Signer &middot; 60%</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <div class="rb-member is-acct" data-pop="trust">
-                  <div><div class="rb-nm">Hollis Family Trust</div><div class="rb-role">Trustee;Beneficiary &middot; 40%</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <div class="rb-member is-acct" data-pop="ridgeline">
-                  <div><div class="rb-nm">Ridgeline Supply Co.</div><div class="rb-role">Guarantor</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <button class="rb-add">+ Add Account</button>
+            <div class="rb-card rb-grp">
+              <div class="rb-grp-head">
+                <span class="slds-icon_container slds-icon-standard-account" style="display:inline-block">
+                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account_info"></use></svg>
+                </span>
+                <div class="slds-text-body_regular">Related Accounts (3)</div>
               </div>
+              <div class="rb-member is-acct" data-pop="cabinetry">
+                <div><div class="rb-nm">Hollis Cabinetry LLC</div><div class="rb-role">Owner;Signer &middot; 60%</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <div class="rb-member is-acct" data-pop="trust">
+                <div><div class="rb-nm">Hollis Family Trust</div><div class="rb-role">Trustee;Beneficiary &middot; 40%</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <div class="rb-member is-acct" data-pop="ridgeline">
+                <div><div class="rb-nm">Ridgeline Supply Co.</div><div class="rb-role">Guarantor</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <button class="rb-add">+ Add Account</button>
             </div>
 
-            <div class="rb-col">
-              <div class="rb-card rb-grp">
-                <div class="rb-grp-head">
-                  <span class="slds-icon_container slds-icon-standard-contact" style="display:inline-block">
-                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-partners"></use></svg>
-                  </span>
-                  <div class="slds-text-body_regular">Related Contacts (2)</div>
-                </div>
-                <div class="rb-member is-contact" data-pop="cpa">
-                  <div><div class="rb-nm">Priya Raman</div><div class="rb-role">CPA</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <div class="rb-member is-contact" data-pop="atty">
-                  <div><div class="rb-nm">Alan Whitfield</div><div class="rb-role">Attorney &middot; trust counsel</div></div>
-                  <span class="rb-caret">▾</span>
-                </div>
-                <button class="rb-add">+ Add Contact</button>
+            <div class="rb-card rb-grp">
+              <div class="rb-grp-head">
+                <span class="slds-icon_container slds-icon-standard-contact" style="display:inline-block">
+                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-contact"></use></svg>
+                </span>
+                <div class="slds-text-body_regular">Related Contacts (2)</div>
               </div>
+              <div class="rb-member is-contact" data-pop="cpa">
+                <div><div class="rb-nm">Priya Raman</div><div class="rb-role">CPA</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <div class="rb-member is-contact" data-pop="atty">
+                <div><div class="rb-nm">Alan Whitfield</div><div class="rb-role">Attorney &middot; trust counsel</div></div>
+                <span class="rb-caret">&#9662;</span>
+              </div>
+              <button class="rb-add">+ Add Contact</button>
             </div>
-
           </div>
 
           <!-- pop-out -->
@@ -1359,6 +1348,7 @@
       li.classList.toggle('slds-is-active', li.getAttribute('data-nav') === view);
     });
     window.scrollTo(0,0);
+    if(view === 'relationships') rbLinks();
   }
   document.querySelectorAll('[data-nav]').forEach(function(li){
     li.addEventListener('click', function(e){ e.preventDefault(); show(li.getAttribute('data-nav')); });
@@ -1367,6 +1357,37 @@
     var t = e.target.closest('[data-goto]');
     if(t){ e.preventDefault(); show(t.getAttribute('data-goto')); }
   });
+
+
+  // relationship builder — connectors drawn from live geometry so they always meet
+  function rbLinks(){
+    var host = document.getElementById('rb-links');
+    var root = document.getElementById('rb-root');
+    var branch = document.getElementById('rb-branch');
+    if(!host || !root || !branch || !host.offsetParent) return;   // not laid out yet
+    host.innerHTML = '';
+    var hr = host.getBoundingClientRect();
+    if(!hr.width) return;
+    var railY = Math.round(hr.height / 2);
+    var rootX = Math.round(root.getBoundingClientRect().left + root.offsetWidth / 2 - hr.left);
+    var xs = Array.prototype.map.call(branch.children, function(c){
+      var r = c.getBoundingClientRect();
+      return Math.round(r.left + r.width / 2 - hr.left);
+    });
+    function seg(l,t,w,h){
+      var d = document.createElement('div');
+      d.className = 'rb-seg';
+      d.style.left = l + 'px'; d.style.top = t + 'px';
+      d.style.width = w + 'px'; d.style.height = h + 'px';
+      host.appendChild(d);
+    }
+    seg(rootX, 0, 1, railY + 1);                                   // stem down from the root card
+    var lo = Math.min.apply(null, xs.concat([rootX]));
+    var hi = Math.max.apply(null, xs.concat([rootX]));
+    seg(lo, railY, hi - lo, 1);                                    // horizontal rail
+    xs.forEach(function(x){ seg(x, railY, 1, hr.height - railY); });// drops into each column
+  }
+  window.addEventListener('resize', rbLinks);
 
   // relationship map: graph <-> hierarchy
   var bg = document.getElementById('btn-graph'), bt = document.getElementById('btn-tree');
@@ -1377,7 +1398,7 @@
     bg.className = 'slds-button ' + (graph ? 'slds-button_brand' : 'slds-button_neutral');
     bt.className = 'slds-button ' + (graph ? 'slds-button_neutral' : 'slds-button_brand');
   }
-  bg.addEventListener('click', function(){ mode(true); });
+  bg.addEventListener('click', function(){ mode(true); rbLinks(); });
   bt.addEventListener('click', function(){ mode(false); });
 
 
@@ -1396,6 +1417,8 @@
                 sr:[['00041044','Alan Whitfield','Beneficiary designation update','High']]},
     ridgeline: {n:'Ridgeline Supply Co.', tfa:'$0.00', cat:'—', next:'—', last:'18 Jan 2026',
                 opps:[], sr:[['00040911','Priya Raman','Annual guarantor financials due','Low']]},
+    vance:     {n:'Vance Household', tfa:'$412,300.00', cat:'Silver', next:'—', last:'19 Feb 2026',
+                opps:[['Household consolidation review','Qualification','$0',false]], sr:[]},
     cpa:       {n:'Priya Raman', tfa:'—', cat:'CPA', next:'—', last:'11 Aug 2026', opps:[], sr:[]},
     atty:      {n:'Alan Whitfield', tfa:'—', cat:'Attorney', next:'—', last:'03 Mar 2026', opps:[], sr:[]}
   };
@@ -1446,6 +1469,21 @@
   pop.querySelector('.rb-pop-close').addEventListener('click', function(){ pop.classList.remove('is-on'); });
   document.addEventListener('click', function(e){ if(!pop.contains(e.target)) pop.classList.remove('is-on'); });
 
+
+
+  // account-detail tabs (Details / Related Parties)
+  document.querySelectorAll('[data-dtab]').forEach(function(li){
+    li.addEventListener('click', function(e){
+      e.preventDefault();
+      var k = li.getAttribute('data-dtab');
+      document.querySelectorAll('[data-dtab]').forEach(function(x){ x.classList.toggle('slds-is-active', x === li); });
+      ['details','parties'].forEach(function(t){
+        var el = document.getElementById('dtab-' + t);
+        el.classList.toggle('slds-show', t === k);
+        el.classList.toggle('slds-hide', t !== k);
+      });
+    });
+  });
 
   // activity / chatter rail
   document.querySelectorAll('[data-rail]').forEach(function(li){
