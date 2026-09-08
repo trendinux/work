@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /projects/slds-relationship-prototype
+
+Sitemap: https://jonludesign.com/sitemap.xml
