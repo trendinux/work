@@ -125,6 +125,8 @@ section{padding:96px 64px;max-width:1240px;border-top:1px solid var(--line)}
 .lead-form input::placeholder,.lead-form textarea::placeholder{color:rgba(255,255,255,.35)}
 .lead-form input:focus,.lead-form textarea:focus{border-color:var(--blue)}
 .lead-btn{font-family:var(--f-body);font-size:15px;font-weight:600;padding:14px 24px;border-radius:var(--r-s);border:none;background:var(--blue);color:#fff;cursor:pointer;transition:background .18s,transform .18s;align-self:flex-start}
+a.lead-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.lead-form-inner a.lead-btn{align-self:center}
 .lead-btn:hover{background:#005bb5;transform:translateY(-1px)}.lead-btn:active{transform:scale(.97)}
 
 /* contact */
@@ -142,7 +144,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
 @media(max-width:980px){
   .rail{position:relative;width:100%;height:auto;flex-direction:row;align-items:center;padding:16px 20px;gap:20px;overflow-x:auto}
-  .brand{margin-bottom:0}.rail-status{border:none;padding:0;margin-bottom:0;flex:none}
+  .brand{margin-bottom:0;flex:none}.brand-mark{font-size:20px;white-space:nowrap}.brand-sub{margin-top:3px;font-size:9.5px;letter-spacing:.08em;white-space:nowrap}.rail-status{border:none;padding:0;margin-bottom:0;flex:none}
   .rail-nav{display:flex;gap:8px;flex:none}.rail-nav li+li{margin-top:0}
   .rail-foot{display:none}.canvas{margin-left:0}
   .hero{padding:72px 24px 40px}
@@ -677,12 +679,12 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
 <nav class="rail">
   <div class="brand">
-    <div class="brand-mark">J<span>L</span>.</div>
-    <div class="brand-sub">betayard.com</div>
+    <div class="brand-mark">Jonathan <span>Lu</span></div>
+    <div class="brand-sub">Senior Product Designer</div>
   </div>
   <div class="rail-status">
     <span class="dot" aria-hidden="true"></span>
-    OPEN FOR Q3 ENGAGEMENTS
+    OPEN TO NEW ROLES
   </div>
   <ul class="rail-nav">
     <li><a class="rail-link" href="../index.html#overview"><span class="n">01</span>Overview</a></li>
@@ -690,10 +692,8 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     <li><a class="rail-link" href="../index.html#process"><span class="n">03</span>Process</a></li>
     <li><a class="rail-link" href="../index.html#stack"><span class="n">04</span>Stack</a></li>
     <li><a class="rail-link" href="../index.html#contact"><span class="n">05</span>Contact</a></li>
-    <li><a class="rail-link" href="../tools.html"><span class="n">06</span>AI Tools</a></li>
   </ul>
   <div class="rail-foot">
-    PRODUCT &amp; UX DESIGN<br>
     REMOTE · US HOURS<br>
     &copy; 2026
   </div>
@@ -755,18 +755,10 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     <div class="lead-form-inner">
       <div class="lead-head">
         <div class="eyebrow"><span class="num">GET IN TOUCH</span></div>
-        <h3>Have a project in mind?</h3>
-        <p>Drop me a note and I'll get back to you within 24 hours.</p>
+        <h3>Open to senior product design roles</h3>
+        <p>Remote, US hours — full-time or contract. Happy to walk through the decisions behind any case study here.</p>
       </div>
-      <form class="lead-form" action="https://formsubmit.co/betayards@gmail.com" method="POST">
-        <input type="hidden" name="_next" value="https://www.betayard.com">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="New inquiry from Betayard portfolio">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <textarea name="message" rows="4" placeholder="Tell me about your project..." required></textarea>
-        <button type="submit" class="lead-btn">Send message →</button>
-      </form>
+      <a class="lead-btn" href="mailto:betayards@gmail.com?subject=Senior%20Product%20Designer%20role">Email betayards@gmail.com →</a>
     </div>
   </div>
 </main>

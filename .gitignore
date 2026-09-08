@@ -1,0 +1,3 @@
+
+# gstack browse daemon runtime state (contains local auth token)
+.gstack/
