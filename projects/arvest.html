@@ -706,6 +706,15 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 .proto-card{box-shadow:0 26px 56px -30px rgba(29,29,31,.45)}
 .proto-card:hover{box-shadow:0 34px 70px -30px rgba(29,29,31,.55)}
 .gallery-item{background:none;border:0;padding:0;cursor:zoom-in}
+
+/* Screenshots are framed in browser chrome and labelled, so neither a person
+   nor a visual classifier reads them as a live interface on this page. */
+.shot{border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:#fff;box-shadow:0 26px 56px -30px rgba(29,29,31,.55)}
+.shot-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f2f2f4;border-bottom:1px solid var(--line)}
+.shot-bar i{width:10px;height:10px;border-radius:50%;background:#d2d2d7;flex:none}
+.shot-bar .shot-tag{margin-left:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+.shot img{width:100%;display:block;border:0;border-radius:0;box-shadow:none}
+.case-figure .shot{margin:0}
 </style>
 </head>
 <body>
@@ -744,10 +753,6 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 </div>
 </div>
 
-<div class="proj-hero-visual">
-<img src="img/arvest-record-home.png" alt="Account record home in Salesforce Lightning Design System: highlights panel, details, and an Activity rail">
-</div>
-
 <div class="proj-body">
 <div class="proj-main">
 
@@ -758,7 +763,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>Diagrammed user flows in Miro and built application maps in the Salesforce Lightning Design System. The work here was reduction: translating large, complex systems and data sets into models a person could hold in their head at the moment of a customer call.</p></div></div>
 <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>Wireframes and UI in Figma against SLDS components, following the Financial Services Cloud relationship-builder pattern: a root party, grouped branches for household, related accounts and related contacts, and a summary pop-out carrying opportunities and open service requests without leaving the map. Two views sit over one dataset — the builder for household structure and influence, an ownership hierarchy for control and liability — because forcing either audience into the other&rsquo;s model produces a screen neither trusts.</p></div></div>
 </div>
-<figure class="case-figure"><img src="img/arvest-builder.png" alt="Relationship builder showing the Hollis household with related accounts and contacts, and a summary pop-out open on Hollis Cabinetry LLC" loading="lazy"><figcaption>The relationship builder. Clicking any party opens its summary without leaving the map &mdash; total financial accounts, open opportunities with the Deal Slowing flag, and unresolved service requests. Roles are multi-value because one person is routinely several things at once.</figcaption></figure>
+<figure class="case-figure"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design prototype &middot; demo data</span></div><img src="img/arvest-builder.png" alt="Relationship builder showing the Hollis household with related accounts and contacts, and a summary pop-out open on Hollis Cabinetry LLC" loading="lazy"></div><figcaption>The relationship builder. Clicking any party opens its summary without leaving the map &mdash; total financial accounts, open opportunities with the Deal Slowing flag, and unresolved service requests. Roles are multi-value because one person is routinely several things at once.</figcaption></figure>
 <div class="case-process">
 <div class="process-row"><div class="process-num">04</div><div class="process-copy"><h5>Work inside compliance, not around it</h5><p>Designed under bank policy, applicable law and regulation, and the bank&rsquo;s BSA/AML program, completing required compliance training and internal controls. Beneficial-ownership thresholds and KYC review states are design constraints in this domain, not annotations added at the end.</p></div></div>
 </div>
@@ -770,7 +775,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 <div class="process-row"><div class="process-num">FL</div><div class="process-copy"><h5>Flow</h5><p>Specified guided processes as screen flows: screen order, decision branches, and what the screen does when a record is incomplete or a review has lapsed. The unhappy paths are the design work — an origination step that stalls on a missing beneficial owner is the normal case, not the exception.</p></div></div>
 <div class="process-row"><div class="process-num">ARC</div><div class="process-copy"><h5>Actionable Relationship Center</h5><p>The relationship builder shows the household you already know about. ARC is for the household you don&rsquo;t — expanding one record at a time until a second household, a guarantor, or an unrecorded beneficial owner surfaces. Two components over the same objects, answering opposite questions, and the reason both belong on the page.</p></div></div>
 </div>
-<figure class="case-figure"><img src="img/arvest-arc.png" alt="Actionable Relationship Center expanding the Vance Household into a second column of related lists" loading="lazy"><figcaption>ARC walks outward one hop at a time. Expanding a record renders its related lists as a new column, so a second household or an unrecorded owner surfaces through navigation rather than a report.</figcaption></figure>
+<figure class="case-figure"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design prototype &middot; demo data</span></div><img src="img/arvest-arc.png" alt="Actionable Relationship Center expanding the Vance Household into a second column of related lists" loading="lazy"></div><figcaption>ARC walks outward one hop at a time. Expanding a record renders its related lists as a new column, so a second household or an unrecorded owner surfaces through navigation rather than a report.</figcaption></figure>
 <div class="case-process">
 <div class="process-row"><div class="process-num">AT</div><div class="process-copy"><h5>Activity &amp; Chatter</h5><p>The right rail is where a relationship actually gets serviced — logged calls, open tasks, and the internal thread where credit tells servicing that a guarantor&rsquo;s financials are stale. Designing the record page without it produces a screen that looks complete and cannot be worked from.</p></div></div>
 <div class="process-row"><div class="process-num">MC</div><div class="process-copy"><h5>Marketing Cloud</h5><p>Defined and prioritized opportunity areas and turned them into concepts that built a customer-relationship arc for the Marketing Cloud team — connecting what the servicing screens knew about a household to what the bank said to it.</p></div></div>
@@ -806,12 +811,12 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
 <div class="eyebrow" style="margin-top:40px"><span class="num">SCREENS</span> FROM THE PROTOTYPE</div>
 <div class="gallery-grid">
-<button class="gallery-item" data-src="img/arvest-accounts.png"><img src="img/arvest-accounts.png" alt="Account list view with relationship tier badges and total deposits" loading="lazy"></button>
-<button class="gallery-item" data-src="img/arvest-record-home.png"><img src="img/arvest-record-home.png" alt="Account record home with highlights panel and Activity rail" loading="lazy"></button>
-<button class="gallery-item" data-src="img/arvest-builder.png"><img src="img/arvest-builder.png" alt="Relationship builder with a summary pop-out open" loading="lazy"></button>
-<button class="gallery-item" data-src="img/arvest-hierarchy.png"><img src="img/arvest-hierarchy.png" alt="Ownership and control hierarchy showing beneficial ownership" loading="lazy"></button>
-<button class="gallery-item" data-src="img/arvest-arc.png"><img src="img/arvest-arc.png" alt="Actionable Relationship Center expanded to a second column" loading="lazy"></button>
-<button class="gallery-item" data-src="img/arvest-cd.png"><img src="img/arvest-cd.png" alt="Certificates of deposit with maturity countdown and retention task" loading="lazy"></button>
+<button class="gallery-item" data-src="img/arvest-accounts.png"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Prototype</span></div><img src="img/arvest-accounts.png" alt="Account list view with relationship tier badges and total deposits" loading="lazy"></div></button>
+<button class="gallery-item" data-src="img/arvest-record-home.png"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Prototype</span></div><img src="img/arvest-record-home.png" alt="Account record home with highlights panel and Activity rail" loading="lazy"></div></button>
+<button class="gallery-item" data-src="img/arvest-builder.png"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Prototype</span></div><img src="img/arvest-builder.png" alt="Relationship builder with a summary pop-out open" loading="lazy"></div></button>
+<button class="gallery-item" data-src="img/arvest-hierarchy.png"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Prototype</span></div><img src="img/arvest-hierarchy.png" alt="Ownership and control hierarchy showing beneficial ownership" loading="lazy"></div></button>
+<button class="gallery-item" data-src="img/arvest-arc.png"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Prototype</span></div><img src="img/arvest-arc.png" alt="Actionable Relationship Center expanded to a second column" loading="lazy"></div></button>
+<button class="gallery-item" data-src="img/arvest-cd.png"><div class="shot"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Prototype</span></div><img src="img/arvest-cd.png" alt="Certificates of deposit with maturity countdown and retention task" loading="lazy"></div></button>
 </div>
 </div>
 
