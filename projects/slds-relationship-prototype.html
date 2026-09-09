@@ -1,1694 +1,860 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="canonical" href="https://jonludesign.com/projects/slds-relationship-prototype">
 <script>(function(){if(location.hostname==='trendinux.github.io'){var p=location.pathname.replace(/^\/work/,'')||'/';location.replace('https://jonludesign.com'+p+location.search+location.hash);}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UX Design Prototype (Demo Data) — Jonathan Lu Portfolio</title>
-<meta name="description" content="A non-functional user-interface design prototype from a design portfolio. Demonstrates layout and interaction patterns only. All names, numbers and figures are invented. Collects no data and is not a real application.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system@2.264.1/assets/styles/salesforce-lightning-design-system.min.css">
+<title>Relationship mapping — design screens (demo data) | Jonathan Lu</title>
+<meta name="description" content="Static design screens from a portfolio case study. Flattened images of a user-interface mock-up built with invented demonstration data. Not a live application and not a banking service.">
 <style>
-  body{margin:0;background:#f3f3f3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
-  /* portfolio chrome — deliberately outside .slds-scope so it never inherits SLDS */
-  .pf-bar{background:#1d1d1f;color:#f5f5f7;padding:10px 20px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;font-size:13px;line-height:1.4}
-  .pf-bar a{color:#f5f5f7}
-  .pf-bar .pf-note{color:#a1a1a6;max-width:76ch}
-  .pf-bar .pf-note b{color:#f5f5f7}
-  .pf-back{white-space:nowrap;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:8px}
-  .pf-back:hover{background:rgba(255,255,255,.1)}
-  /* SLDS fixes the global header to the viewport; this prototype sits under a portfolio bar, so let it flow */
-  .slds-scope .slds-global-header_container{position:relative;top:auto}
-  .view{display:none}
-  .view.is-on{display:block}
-  .dep{display:none}
-  .dep.is-on{display:block}
-  .app-frame{min-height:70vh}
-  /* relationship graph */
-  /* ARC — Actionable Relationship Center */
-  .arc-shell{display:grid;grid-template-columns:minmax(0,1fr) 320px;border:1px solid #e5e5e5;border-radius:.25rem;background:#fff}
-  .arc-canvas{padding:16px;overflow-x:auto;position:relative;min-height:520px}
-  .arc-cols{display:flex;gap:78px;align-items:flex-start;position:relative;min-width:640px}
-  .arc-col{width:262px;flex:none}
-  .arc-list{border:1px solid #dddbda;border-radius:.25rem;margin-bottom:14px;background:#fff}
-  .arc-list-head{display:flex;align-items:center;gap:6px;padding:8px 10px}
-  .arc-list-head .arc-ttl{font-size:13px;color:#080707;flex:1;min-width:0}
-  .arc-node{border:1px solid #dddbda;border-radius:.25rem;margin:0 10px 10px;padding:8px 10px;cursor:pointer;background:#fff;position:relative}
-  .arc-node:hover{background:#f3f3f3}
-  .arc-node.is-sel{border-color:#0176d3;box-shadow:0 0 0 1px #0176d3}
-  .arc-node .arc-nm{color:#0176d3;font-size:13px;line-height:1.3;padding-right:18px}
-  .arc-kv{display:grid;grid-template-columns:64px 1fr;gap:2px 8px;font-size:11px;margin-top:6px;color:#3e3e3c}
-  .arc-kv .k{color:#5c5c5c}
-  .arc-caret{position:absolute;top:6px;right:6px;color:#706e6b;font-size:10px}
-  .arc-expand{position:absolute;bottom:6px;right:6px;border:0;background:none;cursor:pointer;padding:2px;line-height:0}
-  .arc-link{position:absolute;background:#1589ee;pointer-events:none}
-  .arc-side{border-left:1px solid #e5e5e5;padding:14px}
-  .arc-bc{display:flex;align-items:center;gap:8px;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;padding:10px 0;margin:12px 0}
-  .arc-bc .nm{font-size:12px;color:#0176d3}
-  .arc-bc .rl{font-size:10.5px;color:#5c5c5c}
-  /* ownership hierarchy tree — connectors are borders on the li, so they cannot drift */
-  .oh{font-size:13px}
-  .oh ul{list-style:none;margin:0;padding-left:26px;position:relative}
-  .oh>ul{padding-left:0}
-  .oh li{position:relative;padding:8px 0 0 26px}
-  .oh>ul>li{padding-left:0}
-  .oh li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:1px solid #c9c9c9}
-  .oh li:last-child::before{height:26px}
-  .oh li::after{content:"";position:absolute;left:0;top:26px;width:26px;border-top:1px solid #c9c9c9}
-  .oh>ul>li::before,.oh>ul>li::after{display:none}
-  .oh-node{display:flex;align-items:center;gap:10px;border:1px solid #dddbda;border-left:3px solid #c9c9c9;border-radius:.25rem;background:#fff;padding:9px 12px}
-  .oh-node.is-root{border-left-color:#014486;background:#f7f9fb}
-  .oh-node.is-biz{border-left-color:#0b827c}
-  .oh-node.is-trust{border-left-color:#8c4b02}
-  .oh-node.is-person{border-left-color:#04844b}
-  .oh-node.is-guar{border-left-color:#0176d3;border-style:dashed}
-  .oh-node .oh-nm{font-weight:600;color:#080707}
-  .oh-node .oh-sub{color:#5c5c5c;font-size:11.5px}
-  .oh-amt{margin-left:auto;font-family:'SF Mono',SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#080707;white-space:nowrap}
-  .oh-acct{display:flex;align-items:center;gap:10px;padding:6px 12px;border:1px dashed #dddbda;border-radius:.25rem;background:#fafaf9;color:#3e3e3c}
-  .oh-acct .oh-amt{color:#5c5c5c}
-  /* FSC-style relationship builder */
-  .rb-wrap{background:#fff;border:1px solid #e5e5e5;border-radius:.25rem;padding:24px 24px 40px;position:relative}
-  /* no overflow container here: a scroll context would clip the pop-out */
-  .rb{min-width:820px;position:relative}
-  .rb-card{border:1px solid #dddbda;border-radius:.25rem;background:#fff}
-  .rb-root{width:210px;padding:16px;text-align:center}
-  .rb-stem{width:1px;height:22px;background:#c9c9c9;margin-left:105px}
-  .rb-addgroup{width:210px;text-align:center;padding:8px;border:1px solid #dddbda;border-radius:.25rem;background:#fff;color:#0176d3;font-size:13px;cursor:pointer}
-  .rb-addgroup:hover{background:#f3f3f3}
-  .rb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
-  .rb-links{position:relative;height:46px}
-  .rb-seg{position:absolute;background:#c9c9c9}
-  .rb-grp{padding:14px}
-  .rb-grp-head{text-align:center;padding-bottom:10px}
-  .rb-member{display:flex;align-items:flex-start;gap:8px;border:1px solid #dddbda;border-left:3px solid #04844b;border-radius:.25rem;padding:8px 10px;margin-bottom:8px;background:#fff;cursor:pointer}
-  .rb-member:hover{background:#f3f3f3}
-  .rb-member.is-acct{border-left-color:#0176d3}
-  .rb-member.is-contact{border-left-color:#8c4b02}
-  .rb-member .rb-nm{color:#0176d3;font-size:13px;line-height:1.3}
-  .rb-member .rb-role{font-size:11.5px;color:#5c5c5c}
-  .rb-caret{margin-left:auto;color:#706e6b;font-size:10px;padding-left:6px}
-  .rb-add{display:block;width:100%;text-align:center;border:1px solid #dddbda;border-radius:.25rem;background:#fff;color:#0176d3;font-size:12.5px;padding:7px;cursor:pointer}
-  .rb-add:hover{background:#f3f3f3}
-  /* pop-out */
-  .rb-pop{position:absolute;z-index:20;width:310px;background:#fff;border:1px solid #dddbda;border-radius:.25rem;box-shadow:0 4px 16px rgba(0,0,0,.22);display:none}
-  .rb-pop.is-on{display:block}
-  .rb-pop-head{padding:14px 16px;border-bottom:1px solid #e5e5e5}
-  .rb-pop-sec{padding:12px 16px;border-bottom:1px solid #e5e5e5}
-  .rb-pop-sec:last-child{border-bottom:0}
-  .rb-pop h4{font-size:13px;margin:0 0 8px;color:#080707}
-  .rb-pop .kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:11.5px}
-  .rb-pop .kv .k{color:#5c5c5c}
-  .rb-pop-close{position:absolute;top:8px;right:10px;border:0;background:none;font-size:16px;color:#706e6b;cursor:pointer;line-height:1}
+
+:root{
+  --rail-bg:#1d1d1f;--rail-ink:#f5f5f7;--rail-muted:#a1a1a6;--rail-line:rgba(255,255,255,.1);
+  --bg:#f8f7f4;--panel:#fff;--ink:#1d1d1f;--ink-soft:#48484a;--ink-faint:#6e6e73;
+  --line:#d2d2d7;--line-s:#c9c4b6;--line-strong:#aeb0b5;
+  --blue:#0071e3;--blue-dim:#e8f0fe;--teal:#007a6e;--teal-dim:#e0f2ef;--amber:#8a6d00;--amber-dim:#fef3d7;
+  --r-s:8px;--r-m:12px;--r-l:20px;
+  --sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:88px;
+  --f-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'SF Mono',SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
+  --rail-w:268px;--ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.58;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}a{color:inherit;overflow-wrap:break-word}::selection{background:var(--blue);color:#fff}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:0;margin:0;text-wrap:balance;overflow-wrap:break-word}
+p,li,.proj-main,.proj-meta,.process-copy,.lead-head,.lead-form,.mock-card,.scenario-card,.dash-section,.proj-nav-link{min-width:0;overflow-wrap:break-word}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:8px}
+.eyebrow .num{color:var(--blue)}
+
+/* rail */
+.rail{position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);background:var(--rail-bg);color:var(--rail-ink);display:flex;flex-direction:column;padding:32px 24px;z-index:40;border-right:1px solid var(--rail-line)}
+.canvas{margin-left:var(--rail-w);min-height:100vh}
+.brand{margin-bottom:48px}
+.brand-mark{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1}
+.brand-mark span{color:var(--amber)}
+.brand-sub{margin-top:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rail-muted)}
+.rail-status{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--rail-muted);padding:12px 0;border-top:1px solid var(--rail-line);border-bottom:1px solid var(--rail-line);margin-bottom:32px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,122,110,.5)}70%{box-shadow:0 0 0 7px rgba(0,122,110,0)}100%{box-shadow:0 0 0 0 rgba(0,122,110,0)}}
+.rail-nav{list-style:none;margin:0;padding:0;flex:1}
+.rail-nav li+li{margin-top:4px}
+.rail-link{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--rail-muted);font-size:15px;font-weight:500;padding:8px;border-radius:var(--r-s);transition:color .2s var(--ease),background .2s var(--ease)}
+.rail-link .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint)}
+.rail-link:hover,.rail-link.is-active{color:var(--rail-ink);background:rgba(255,255,255,.08)}
+.rail-link.is-active .n{color:var(--amber)}
+.rail-foot{font-family:var(--f-mono);font-size:11px;color:var(--rail-muted);padding-top:24px;border-top:1px solid var(--rail-line);line-height:1.7}
+
+/* hero */
+.hero{padding:112px 64px 56px;max-width:1080px}
+.hero h1{font-size:60px;line-height:1.05;margin-top:12px;max-width:18ch;overflow-wrap:break-word}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-lede{margin-top:24px;max-width:62ch;font-size:18px;color:var(--ink-soft)}
+.hero-lede b{color:var(--ink);font-weight:600}
+.hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{font-family:var(--f-body);font-weight:600;font-size:15px;line-height:1.25;padding:13px 24px;border-radius:var(--r-m);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;cursor:pointer;text-align:center;white-space:normal;transition:transform .18s var(--ease),background .18s var(--ease)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
+.btn--p{background:var(--ink);color:#fff}.btn--p:hover{background:var(--blue)}
+.btn--g{background:transparent;color:var(--ink);border-color:var(--line-s)}.btn--g:hover{border-color:var(--ink)}
+
+/* stat ticker */
+.ticker{margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap}
+.stat{flex:1 1 220px;padding:24px 24px 24px 0;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:none}.stat:first-child{padding-left:0}
+.stat-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+.stat-val{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
+
+/* section */
+section{padding:96px 64px;max-width:1240px;border-top:1px solid var(--line)}
+.sec-head{margin-bottom:56px;max-width:760px}
+.sec-head h2{font-size:38px;margin-top:12px}
+.sec-head p{margin-top:16px;color:var(--ink-soft);font-size:16px;max-width:60ch}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;text-decoration:none;color:var(--ink);transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .24s var(--ease)}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -18px rgba(0,0,0,.12);border-color:#c8c8cd}
+.thumb{height:160px;position:relative;overflow:hidden;background:var(--bg)}
+.thumb .chrome{display:flex;align-items:center;gap:5px;position:absolute;top:0;left:0;right:0;padding:8px 12px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.04);z-index:2}
+.chrome i{width:7px;height:7px;border-radius:50%;background:#d2d2d7}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.85) contrast(.95);transition:transform .35s var(--ease)}
+.card:hover .thumb img{transform:scale(1.03)}
+.card-body{padding:22px 24px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pill{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.pill--live{background:var(--teal-dim);color:var(--teal)}
+.pill--ship{background:var(--blue-dim);color:var(--blue)}
+.pill--acq{background:var(--amber-dim);color:var(--amber)}
+.pill--new{background:var(--ink);color:#fff}
+.card-cat{font-family:var(--f-mono);font-size:10px;color:var(--ink-faint)}
+.card-body h3{font-size:18px;letter-spacing:0;margin-bottom:6px}
+.card-body .desc{font-size:14px;color:var(--ink-soft);line-height:1.5}
+.card-metric{font-family:var(--f-mono);font-size:12px;color:var(--teal);margin-top:10px}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.card-go{font-family:var(--f-mono);font-size:12px;color:var(--blue);text-align:right}
+
+/* compact cards */
+.grid-sm{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:32px}
+.card-sm{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-m);padding:16px;text-decoration:none;color:var(--ink);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.card-sm:hover{transform:translateY(-3px);box-shadow:0 12px 24px -12px rgba(0,0,0,.1)}
+.card-sm h4{font-size:15px;margin:0 0 4px}.card-sm p{font-size:13px;color:var(--ink-soft);margin:0}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:56px}
+.steps::before{content:'';position:absolute;top:24px;left:0;right:0;height:1px;background:var(--line)}
+.step{padding-right:24px;position:relative}
+.step-n{width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--f-mono);font-size:12px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;margin-bottom:16px}
+.step h4{font-size:16px;margin:0 0 6px}.step p{margin:0;font-size:14px;color:var(--ink-soft)}
+
+/* stack */
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin-top:56px}
+.stack-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-s);padding:24px}
+.stack-box h4{font-size:13px;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:13px;color:var(--ink-soft);border:1px solid var(--line);padding:6px 12px;border-radius:8px;background:var(--bg)}
+.tag-ai{color:var(--blue);border-color:var(--blue-dim);background:var(--blue-dim)}
+
+/* lead form */
+.lead-wrap{padding:96px 64px 64px;max-width:1240px;border-top:1px solid var(--line)}
+.lead-inner{background:var(--rail-bg);color:var(--rail-ink);border-radius:var(--r-l);padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.lead-head h3{font-size:34px;color:#fff;margin-top:12px}
+.lead-head p{margin-top:12px;font-size:15px;color:var(--rail-muted);max-width:36ch}
+.lead-form{display:flex;flex-direction:column;gap:12px}
+.lead-form input,.lead-form textarea{font-family:var(--f-body);font-size:15px;padding:14px 16px;border-radius:var(--r-s);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none;transition:border-color .18s;resize:vertical}
+.lead-form input::placeholder,.lead-form textarea::placeholder{color:rgba(255,255,255,.35)}
+.lead-form input:focus,.lead-form textarea:focus{border-color:var(--blue)}
+.lead-btn{font-family:var(--f-body);font-size:15px;font-weight:600;padding:14px 24px;border-radius:var(--r-s);border:none;background:var(--blue);color:#fff;cursor:pointer;transition:background .18s,transform .18s;align-self:flex-start}
+a.lead-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.lead-form-inner a.lead-btn{align-self:center}
+.lead-btn:hover{background:#005bb5;transform:translateY(-1px)}.lead-btn:active{transform:scale(.97)}
+
+/* contact */
+.contact{padding:80px 64px;max-width:1240px}
+.contact-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-l);padding:56px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:32px}
+.contact-panel h2{font-size:34px;max-width:18ch}
+.contact-status{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--teal);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+
+footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--f-mono);font-size:12px;color:var(--ink-faint)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.is-v{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+@media(max-width:980px){
+  .rail{position:relative;width:100%;height:auto;flex-direction:row;align-items:center;padding:16px 20px;gap:20px;overflow-x:auto}
+  .brand{margin-bottom:0;flex:none}.brand-mark{font-size:20px;white-space:nowrap}.brand-sub{margin-top:3px;font-size:9.5px;letter-spacing:.08em;white-space:nowrap}.rail-status{border:none;padding:0;margin-bottom:0;flex:none}
+  .rail-nav{display:flex;gap:8px;flex:none}.rail-nav li+li{margin-top:0}
+  .rail-foot{display:none}.canvas{margin-left:0}
+  .hero{padding:72px 24px 40px}
+  section,.contact{padding:72px 24px}
+  .lead-wrap{padding:72px 24px 48px}
+  .ticker{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--line);padding:16px 0}
+  .steps{grid-template-columns:1fr;gap:24px}.steps::before{display:none}
+  .lead-inner{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+}
+
+  /* ============ DETAILED AGENT-OS DASHBOARD MOCKUP ============ */
+  .dash-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .dash-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .dash-section h3{ font-size:30px; margin-top:0; max-width:34ch; }
+  .dash-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:64ch; }
+
+  .dash{
+    --d-bg:#16181d;
+    --d-panel:#1c1f26;
+    --d-line:#2a2e37;
+    --d-ink:#e9eaec;
+    --d-mut:#878d99;
+    --d-faint:#5d636e;
+    background:var(--d-bg);
+    border:1px solid var(--d-line);
+    border-radius:14px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:212px 1fr;
+    font-family:var(--f-body);
+    color:var(--d-ink);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+
+  /* sidebar */
+  .dash-side{ background:var(--d-panel); border-right:1px solid var(--d-line); padding:14px 10px; min-width:0; }
+  .dash-ws{
+    display:flex; align-items:center; gap:8px; padding:6px 8px 12px; border-bottom:1px solid var(--d-line); margin-bottom:10px;
+  }
+  .dash-ws .ws-logo{ width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#6366f1,#a855f7); flex:none; }
+  .dash-ws .ws-meta{ min-width:0; }
+  .dash-ws .ws-ey{ font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--d-faint); }
+  .dash-ws .ws-name{ font-size:13.5px; font-weight:600; color:var(--d-ink); font-family:var(--f-display); }
+  .dash-ws .ws-name em{ font-style:italic; color:#dca455; font-weight:500; }
+  .dash-nav{ display:flex; flex-direction:column; gap:1px; }
+  .dash-nav-item{
+    display:flex; align-items:center; gap:9px;
+    font-size:12px; color:var(--d-mut);
+    padding:6px 8px; border-radius:6px; cursor:default;
+  }
+  .dash-nav-item .ic{ width:13px; height:13px; border-radius:3px; background:var(--d-faint); flex:none; opacity:.7; }
+  .dash-nav-item.is-active{ background:rgba(255,255,255,.07); color:var(--d-ink); }
+  .dash-nav-item.is-active .ic{ background:#a855f7; opacity:1; }
+  .dash-nav-badge{ margin-left:auto; font-family:var(--f-mono); font-size:9px; color:var(--d-faint); }
+  .dash-nav-sec{
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--d-faint); padding:12px 8px 5px;
+  }
+  .dash-sub{ display:flex; flex-direction:column; gap:1px; }
+  .dash-sub-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:11.5px; color:var(--d-mut); padding:5px 8px 5px 10px; border-radius:6px; cursor:default;
+  }
+  .dash-sub-item .dot{ width:7px; height:7px; border-radius:2px; flex:none; box-shadow:none; animation:none; }
+  .dash-sub-item.is-active{ background:rgba(255,255,255,.07); color:var(--d-ink); }
+  .dash-sub-badge{ margin-left:auto; font-family:var(--f-mono); font-size:9px; color:var(--d-faint); }
+
+  /* main */
+  .dash-main{ min-width:0; display:flex; flex-direction:column; }
+  .dash-top{
+    display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--d-line);
+  }
+  .dash-title{ font-size:15px; font-weight:600; }
+  .dash-chip{
+    font-family:var(--f-mono); font-size:9px; padding:3px 8px; border-radius:5px;
+    background:rgba(34,197,94,.14); color:#4ade80;
+  }
+  .dash-top-right{ margin-left:auto; display:flex; align-items:center; gap:7px; }
+  .dash-pill{
+    font-size:10px; padding:5px 10px; border-radius:6px; border:1px solid var(--d-line); color:var(--d-mut);
+    display:flex; align-items:center; gap:5px;
+  }
+  .dash-pill.accent{ background:#6366f1; border-color:#6366f1; color:#fff; }
+  .dash-pill.ai{ color:#c4b5fd; border-color:#3b3160; background:rgba(139,92,246,.12); }
+
+  .dash-tabs{
+    display:flex; gap:2px; padding:0 16px; border-bottom:1px solid var(--d-line); overflow-x:auto; scrollbar-width:none;
+  }
+  .dash-tabs::-webkit-scrollbar{ display:none; }
+  .dash-tab{
+    font-size:11.5px; color:var(--d-mut); padding:10px 10px; white-space:nowrap; border-bottom:2px solid transparent;
+  }
+  .dash-tab.is-active{ color:var(--d-ink); border-bottom-color:#a855f7; }
+
+  .dash-toolbar{
+    display:flex; align-items:center; gap:8px; padding:10px 16px; flex-wrap:wrap;
+  }
+  .dash-tool{
+    font-size:10.5px; color:var(--d-mut); border:1px solid var(--d-line); border-radius:6px; padding:5px 10px;
+    display:flex; align-items:center; gap:5px;
+  }
+  .dash-tool.accent{ background:#6366f1; border-color:#6366f1; color:#fff; }
+  .dash-prog{ margin-left:auto; display:flex; align-items:center; gap:8px; font-size:10px; color:var(--d-mut); }
+  .dash-prog-bar{ width:90px; height:5px; border-radius:3px; background:var(--d-line); overflow:hidden; }
+  .dash-prog-bar i{ display:block; height:100%; width:62%; background:linear-gradient(90deg,#6366f1,#a855f7); }
+
+  /* sidebar agent avatars */
+  .dash-sub-item .ava{
+    width:18px; height:18px; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--f-mono); font-size:8px; color:#fff; font-weight:600;
+  }
+
+  /* fleet list view */
+  .dash-list{ padding:0 16px 16px; }
+  .dash-group{ display:flex; align-items:center; gap:8px; padding:12px 0 8px; }
+  .dash-group .g-label{ font-size:10px; font-weight:600; padding:3px 9px; border-radius:5px; }
+  .g-run{ background:rgba(34,197,94,.16); color:#4ade80; }
+  .g-rev{ background:rgba(220,154,50,.16); color:#fbbf24; }
+  .g-idle{ background:rgba(255,255,255,.08); color:var(--d-mut); }
+  .g-paused{ background:rgba(248,113,113,.14); color:#f87171; }
+  .dash-group .g-count{ font-family:var(--f-mono); font-size:9.5px; color:var(--d-faint); }
+
+  .dash-head-row, .dash-task{
+    display:grid;
+    grid-template-columns:24px 2.3fr .8fr .9fr .8fr .7fr 60px;
+    align-items:center; gap:10px;
+    padding:8px 6px; font-size:11.5px;
+  }
+  .dash-head-row{
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--d-faint);
+    border-bottom:1px solid var(--d-line);
+  }
+  .dash-task{ border-bottom:1px solid var(--d-line); color:var(--d-ink); }
+  .dash-task .t-name{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .dash-task .t-check{ width:13px; height:13px; border-radius:50%; border:1.5px solid var(--d-faint); flex:none; }
+  .dash-task .t-check.done{ border-color:#4ade80; background:#4ade80; }
+  .dash-task .t-name span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .t-tag{ font-size:9.5px; padding:3px 8px; border-radius:5px; white-space:nowrap; width:fit-content; }
+  .ts-run{ background:rgba(34,197,94,.14); color:#4ade80; }
+  .ts-rev{ background:rgba(220,154,50,.14); color:#fbbf24; }
+  .ts-idle{ background:rgba(255,255,255,.06); color:var(--d-mut); }
+  .ts-paused{ background:rgba(248,113,113,.14); color:#f87171; }
+  .t-risk{ font-size:9.5px; padding:3px 8px; border-radius:5px; width:fit-content; }
+  .tr-low{ background:rgba(34,197,94,.12); color:#4ade80; }
+  .tr-med{ background:rgba(220,154,50,.14); color:#fbbf24; }
+  .tr-high{ background:rgba(248,113,113,.14); color:#f87171; }
+  .t-mut{ color:var(--d-mut); }
+  .t-conf{ font-family:var(--f-mono); font-size:10.5px; }
+  .t-ava{
+    width:18px; height:18px; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--f-mono); font-size:7.5px; color:#fff; font-weight:600;
+  }
+
+  @media (max-width:760px){
+    .dash{ grid-template-columns:1fr; }
+    .dash-side{ display:none; }
+    .dash-head-row, .dash-task{ grid-template-columns:20px 2fr .9fr .8fr; }
+    .dash-head-row span:nth-child(n+5), .dash-task > :nth-child(n+5){ display:none; }
+  }
+
+  /* ============ PROJECT DETAIL PAGE ============ */
+  .back-link{
+    font-family:var(--f-mono);
+    font-size:12px;
+    letter-spacing:.04em;
+    text-decoration:none;
+    color:var(--ink-faint);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:var(--sp-5);
+    transition:color .18s var(--ease);
+  }
+  .back-link:hover{ color:var(--blue); }
+
+  .proj-head{ width:min(1180px, calc(100% - 128px)); padding:var(--sp-9) 0 0; margin:0 auto; }
+  .proj-head h1{ font-size:52px; line-height:1.05; margin-top:var(--sp-3); max-width:18ch; }
+  .proj-lede{ margin-top:var(--sp-5); font-size:18px; line-height:1.62; color:var(--ink-soft); max-width:64ch; }
+  .proj-head .tagrow{ margin-top:var(--sp-6); }
+  .proj-head .tag{ color:var(--ink-soft); border-color:var(--line); }
+
+  .proj-hero-visual{
+    width:min(1180px, calc(100% - 128px));
+    margin:var(--sp-8) auto 0;
+    border-radius:var(--r-l);
+    overflow:hidden;
+    background:#0f1216;
+  }
+  .proj-hero-visual img{ width:100%; display:block; }
+  .proj-hero-abstract{
+    position:relative;
+    min-height:320px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .proj-hero-note{
+    position:relative; z-index:2;
+    font-family:var(--f-mono);
+    font-size:12px;
+    color:var(--rail-muted);
+    background:rgba(0,0,0,.35);
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid var(--rail-line);
+  }
+
+  .proj-body{
+    width:min(1180px, calc(100% - 128px));
+    padding:var(--sp-9) 0;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:minmax(0,1.55fr) minmax(280px,.82fr);
+    gap:var(--sp-9);
+    align-items:start;
+  }
+  .proj-main p{ font-size:16.5px; line-height:1.72; color:var(--ink-soft); margin:0 0 var(--sp-5); max-width:66ch; }
+  .proj-main p:last-child{ margin-bottom:0; }
+  .proj-metric{
+    margin-top:var(--sp-2);
+    margin-bottom:var(--sp-5);
+    display:inline-flex;
+    font-family:var(--f-mono);
+    font-size:13px;
+    color:var(--teal);
+    background:var(--teal-dim);
+    padding:7px 14px;
+    border-radius:var(--r-s);
+  }
+  .proj-meta{
+    border:1px solid var(--line);
+    border-radius:var(--r-l);
+    padding:var(--sp-6);
+    background:var(--panel);
+    position:sticky;
+    top:var(--sp-6);
+  }
+  .meta-row{ padding:var(--sp-3) 0; border-bottom:1px solid var(--line); }
+  .meta-row:last-child{ border-bottom:none; padding-bottom:0; }
+  .meta-row span{
+    display:block;
+    font-family:var(--f-mono);
+    font-size:10.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:6px;
+  }
+  .meta-row b{ font-family:var(--f-body); font-weight:600; font-size:14px; display:block; line-height:1.5; overflow-wrap:break-word; }
+
+  .proj-gallery{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .proj-gallery .eyebrow{ margin-bottom:var(--sp-5); }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+    gap:var(--sp-5);
+  }
+  .gallery-item{
+    border:1px solid var(--line);
+    border-radius:var(--r-m);
+    overflow:hidden;
+    padding:0;
+    background:var(--panel);
+    cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .gallery-item:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .gallery-item img{ width:100%; height:240px; object-fit:cover; display:block; }
+
+  .lightbox{
+    position:fixed; inset:0;
+    background:rgba(15,17,21,.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:var(--sp-6);
+  }
+  .lightbox.is-open{ display:flex; }
+  .lightbox img{ max-width:min(1100px,92vw); max-height:88vh; border-radius:var(--r-s); }
+  .lightbox-close{
+    position:absolute; top:var(--sp-5); right:var(--sp-6);
+    background:none; border:1px solid rgba(255,255,255,.3); color:#fff;
+    width:40px; height:40px; border-radius:50%;
+    font-size:20px; cursor:pointer; line-height:1;
+  }
+
+  .proj-nav{
+    width:min(1180px, calc(100% - 128px));
+    padding:var(--sp-7) 0 var(--sp-9);
+    border-top:1px solid var(--line);
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:stretch;
+    flex-wrap:wrap;
+    gap:var(--sp-4);
+  }
+  .proj-nav-link{
+    font-family:var(--f-mono);
+    font-size:12.5px;
+    line-height:1.45;
+    text-decoration:none;
+    color:var(--ink-soft);
+    padding:10px 16px;
+    border:1px solid var(--line);
+    border-radius:var(--r-m);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:44px;
+    flex:1 1 240px;
+    max-width:100%;
+    text-align:center;
+    white-space:normal;
+    transition:border-color .18s var(--ease), color .18s var(--ease);
+  }
+  .proj-nav-link:hover{ border-color:var(--ink); color:var(--ink); }
+  .proj-nav-link.prev{ justify-content:flex-start; text-align:left; }
+  .proj-nav-link.next{ justify-content:flex-end; text-align:right; }
+  .proj-nav-link.all{ color:var(--blue); border-color:var(--blue-dim); background:var(--blue-dim); flex:0 0 auto; }
+
+  /* loopwork concept mockups */
+  .mockset{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); margin-top:var(--sp-2); }
+  .mock-card{
+    border:1px solid var(--line); border-radius:var(--r-m); background:var(--panel); padding:var(--sp-4);
+  }
+  .mock-card h5{
+    font-family:var(--f-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); margin:0 0 var(--sp-3);
+  }
+  .feed-row{ display:flex; justify-content:space-between; gap:8px; padding:9px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+  .feed-row:last-child{ border-bottom:none; }
+  .feed-row .who{ font-weight:600; }
+  .feed-row .conf{ font-family:var(--f-mono); font-size:10.5px; padding:2px 7px; border-radius:4px; }
+  .conf--high{ background:var(--teal-dim); color:var(--teal); }
+  .conf--mid{ background:var(--amber-dim); color:#8a5d10; }
+  .queue-row{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+  .queue-row:last-child{ border-bottom:none; }
+  .queue-actions button{
+    font-family:var(--f-mono); font-size:10.5px; border-radius:5px; padding:5px 9px; border:1px solid var(--line-strong);
+    background:var(--panel); cursor:pointer; margin-left:6px;
+  }
+  .queue-actions button.approve:hover{ border-color:var(--teal); color:var(--teal); }
+  .queue-actions button.escalate:hover{ border-color:var(--amber); color:#8a5d10; }
+  .queue-row.is-done{ opacity:.45; }
+  .queue-row.is-done .queue-actions{ display:none; }
+  .queue-row .status-note{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); display:none; }
+  .queue-row.is-done .status-note{ display:inline; }
+
+  /* ============ PROCESS-DRIVEN CASE BODY ============ */
+  .case-brief{ font-size:17px; line-height:1.7; color:var(--ink); margin:0 0 var(--sp-7); max-width:66ch; }
+  .case-brief b{ font-weight:600; }
+  .case-process{ display:flex; flex-direction:column; }
+  .process-row{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:var(--sp-5);
+    padding:var(--sp-6) 0;
+    border-top:1px solid var(--line);
+  }
+  .case-process .process-row:first-child{ border-top:1px solid var(--line); }
+  .process-num{
+    font-family:var(--f-mono);
+    font-size:11px;
+    color:var(--bg);
+    background:var(--ink);
+    width:30px; height:30px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .process-copy h5{
+    font-family:var(--f-display);
+    font-size:15.5px;
+    margin:0 0 8px;
+    letter-spacing:.01em;
+  }
+  .process-copy p{ margin:0; font-size:15px; line-height:1.68; color:var(--ink-soft); max-width:64ch; }
+  .case-outcome{
+    margin-top:var(--sp-6);
+    padding-top:var(--sp-6);
+    border-top:1px solid var(--line);
+  }
+  .case-outcome .eyebrow{ margin-bottom:var(--sp-3); }
+  .case-outcome p{ margin:0; font-size:15.5px; line-height:1.68; color:var(--ink-soft); max-width:64ch; }
+
+  /* ============ EXAMPLE-USE-CASE SCENARIOS (Loopwork) ============ */
+  .proj-scenarios{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .proj-scenarios h3{ font-size:30px; margin-top:var(--sp-3); max-width:36ch; }
+  .scenarios-note{
+    margin-top:var(--sp-3); margin-bottom:var(--sp-5);
+    font-size:13.5px; color:var(--ink-faint); max-width:62ch;
+  }
+  .scenario-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:var(--sp-5);
+  }
+  .scenario-card{
+    border:1px solid var(--line);
+    border-radius:var(--r-l);
+    background:var(--panel);
+    padding:var(--sp-5);
+  }
+  .scenario-card h5{
+    font-family:var(--f-display);
+    font-size:16px;
+    margin:0 0 var(--sp-3);
+  }
+  .scenario-card p{ margin:0 0 var(--sp-4); font-size:14px; color:var(--ink-soft); }
+  .scenario-card ul{ margin:0; padding:0; list-style:none; display:grid; gap:9px; }
+  .scenario-card li{
+    font-size:12.5px; color:var(--ink-soft); padding-left:16px; position:relative;
+  }
+  .scenario-card li::before{
+    content:''; position:absolute; left:0; top:6px; width:6px; height:6px; background:var(--amber);
+  }
+
+  /* ============ LEAD CAPTURE FORM ============ */
+  .lead-form-wrap{
+    width:min(1180px, calc(100% - 128px));
+    padding:0 0 var(--sp-9);
+    margin:0 auto;
+  }
+  .lead-form-inner{
+    background:var(--rail-bg);
+    color:var(--rail-ink);
+    border-radius:var(--r-l);
+    padding:var(--sp-7);
+    box-shadow:0 30px 70px -46px rgba(0,0,0,.55);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:var(--sp-7);
+    align-items:start;
+  }
+  .lead-head h3{
+    font-family:var(--f-display);
+    font-size:34px;
+    color:#fff;
+    margin-top:var(--sp-3);
+  }
+  .lead-head p{
+    margin-top:var(--sp-3);
+    font-size:15px;
+    color:var(--rail-muted);
+    max-width:36ch;
+  }
+  .lead-form{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-3);
+  }
+  .lead-form input,
+  .lead-form textarea{
+    font-family:var(--f-body);
+    font-size:15px;
+    padding:14px 16px;
+    border-radius:var(--r-s);
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    outline:none;
+    transition:border-color .18s;
+    resize:vertical;
+  }
+  .lead-form input::placeholder,
+  .lead-form textarea::placeholder{
+    color:rgba(255,255,255,.35);
+  }
+  .lead-form input:focus,
+  .lead-form textarea:focus{
+    border-color:var(--blue);
+  }
+  .lead-btn{
+    font-family:var(--f-body);
+    font-size:15px;
+    font-weight:600;
+    line-height:1.25;
+    padding:14px 24px;
+    border-radius:var(--r-s);
+    border:none;
+    background:var(--blue);
+    color:#fff;
+    cursor:pointer;
+    text-align:center;
+    white-space:normal;
+    transition:background .18s, transform .18s;
+    align-self:flex-start;
+  }
+  .lead-btn:hover{
+    background:#005bb5;
+    transform:translateY(-1px);
+  }
+  .lead-btn:active{
+    transform:scale(.97);
+  }
+
+  @media (max-width:640px){
+    .process-row{ grid-template-columns:1fr; }
+    .process-num{ margin-bottom:4px; }
+  }
+
+  @media (max-width:980px){
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
+    .proj-head{ padding-top:56px; }
+    .proj-head h1{ font-size:40px; line-height:1.08; }
+    .proj-hero-visual{ margin:40px auto 0; }
+    .proj-body{ padding-top:56px; padding-bottom:56px; gap:40px; }
+    .gallery-item img{ height:220px; }
+    .proj-body{ grid-template-columns:1fr; }
+    .proj-meta{ position:static; }
+    .mockset{ grid-template-columns:1fr; }
+    .lead-form-inner{ grid-template-columns:1fr; padding:32px; }
+    .lead-head h3{ font-size:30px; line-height:1.14; }
+  }
+  @media (max-width:640px){
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .lead-form-wrap{ width:calc(100% - 40px); }
+    .proj-head h1{ font-size:34px; }
+    .proj-nav{ display:grid; grid-template-columns:1fr; gap:var(--sp-3); }
+    .proj-nav-link, .proj-nav-link.next{ justify-content:flex-start; text-align:left; }
+    .proj-nav-link.all{ width:fit-content; }
+    .lead-form-inner{ padding:24px; }
+  }
+
+
+.case-figure{margin:28px 0 8px}
+.case-figure img{width:100%;border:1px solid var(--line);border-radius:var(--r-m);display:block;background:#fff}
+.case-figure figcaption{margin-top:10px;font-size:14px;color:var(--ink-faint);line-height:1.5}
+.proto-card{display:grid;grid-template-columns:1.35fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;background:var(--panel);text-decoration:none;color:inherit;transition:transform .18s var(--ease),border-color .18s var(--ease)}
+.proto-card:hover{transform:translateY(-2px);border-color:#c8c8cd}
+.proto-shot{background:#f3f3f3;border-right:1px solid var(--line);overflow:hidden}
+.proto-shot img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block}
+.proto-body{padding:32px}
+.proto-body h3{font-size:26px;margin:10px 0 12px}
+.proto-body p{font-size:15px;color:var(--ink-soft);margin:0 0 10px}
+.proto-go{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:600;color:var(--blue)}
+@media(max-width:900px){.proto-card{grid-template-columns:1fr}.proto-shot{border-right:0;border-bottom:1px solid var(--line)}.proto-body{padding:24px}}
+
+/* the screenshots are mostly white; without a border they bleed into the page */
+.proj-hero-visual img,
+.case-figure img,
+.gallery-item img,
+.proto-shot img{border:1px solid var(--line);background:#fff}
+.proj-hero-visual img,
+.case-figure img{border-radius:var(--r-m)}
+.gallery-item img{border-radius:var(--r-s)}
+.proto-shot{padding:0}
+.proto-shot img{border-radius:0;border-width:0 1px 0 0}
+.gallery-item{background:none;border:0;padding:0;cursor:zoom-in}
+
+/* Screenshots are framed in browser chrome and labelled, so neither a person
+   nor a visual classifier reads them as a live interface on this page. */
+.shot{border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:#fff}
+.shot-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f2f2f4;border-bottom:1px solid var(--line)}
+.shot-bar i{width:10px;height:10px;border-radius:50%;background:#d2d2d7;flex:none}
+.shot-bar .shot-tag{margin-left:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+.shot img{width:100%;display:block;border:0;border-radius:0;box-shadow:none}
+.case-figure .shot{margin:0}
+
+/* Safe Browsing / reviewer-facing: states plainly that this is portfolio work,
+   not a live banking interface, so the page cannot read as impersonation. */
+.case-disclaimer{
+  width:min(1180px, calc(100% - 128px)); margin:var(--sp-6) auto 0;
+  border:1px solid var(--line); border-left:3px solid #b9832b;
+  border-radius:var(--r-m); background:#fbf7ef;
+  padding:16px 20px; font-size:14.5px; line-height:1.6; color:var(--ink-soft); max-width:none;
+}
+.case-disclaimer b{ color:var(--ink); }
+@media(max-width:900px){ .case-disclaimer{ width:calc(100% - 48px); } }
+@media(max-width:600px){ .case-disclaimer{ width:calc(100% - 40px); } }
+
+.screens-wrap{width:min(1180px, calc(100% - 128px));margin:0 auto;padding:0 0 var(--sp-9)}
+.screen-sec{margin-top:var(--sp-8)}
+.screen-sec > .eyebrow{margin-bottom:var(--sp-4)}
+.screen-sec h2{font-size:26px;margin-bottom:var(--sp-3)}
+.screen-sec > p.sec-lede{margin:0 0 var(--sp-5);font-size:16.5px;line-height:1.62;color:var(--ink-soft);max-width:70ch}
+.screen{margin:0 0 var(--sp-7)}
+.screen .shot{display:block;width:100%;padding:0;margin:0;text-align:left;font:inherit;color:inherit;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:#fff;cursor:zoom-in}
+.screen .shot-bar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f2f2f4;border-bottom:1px solid var(--line)}
+.screen .shot-bar i{width:10px;height:10px;border-radius:50%;background:#d2d2d7;flex:none}
+.screen .shot-bar .shot-tag{margin-left:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+.screen .shot img{width:100%;height:auto;max-height:none;object-fit:fill;display:block;border:0;border-radius:0}
+.screen figcaption{margin-top:12px;font-size:14.5px;color:var(--ink-faint);line-height:1.6;max-width:78ch}
+.screen figcaption b{color:var(--ink-soft)}
+@media(max-width:900px){.screens-wrap{width:calc(100% - 48px)}}
+@media(max-width:600px){.screens-wrap{width:calc(100% - 40px)}}
 </style>
 </head>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-<!-- Extracted from @salesforce-ux/design-system 2.264.1 (BSD-3-Clause). Same-origin copy: Chrome blocks cross-origin SVG <use>. -->
-<symbol viewBox="0 0 520 520"  id="u-down" xmlns="http://www.w3.org/2000/svg"><path d="M83 140h354c10 0 17 13 9 22L273 374c-6 8-19 8-25 0L73 162c-7-9-1-22 10-22"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-info" xmlns="http://www.w3.org/2000/svg"><path d="M260 20a240 240 0 100 480 240 240 0 100-480m0 121c17 0 30 13 30 30s-13 30-30 30-30-13-30-30 13-30 30-30m50 210c0 5-4 9-10 9h-80c-5 0-10-3-10-9v-20c0-5 4-11 10-11 5 0 10-3 10-9v-40c0-5-4-11-10-11-5 0-10-3-10-9v-20c0-5 4-11 10-11h60c5 0 10 5 10 11v80c0 5 4 9 10 9 5 0 10 5 10 11z"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-search" xmlns="http://www.w3.org/2000/svg"><path d="M496 453L362 320a189 189 0 10-340-92 190 190 0 00298 135l133 133a14 14 0 0021 0l21-21a17 17 0 001-22M210 338a129 129 0 11130-130 129 129 0 01-130 130"/></symbol>
-<symbol  viewBox="0 0 100 100" id="s-account" xmlns="http://www.w3.org/2000/svg"><path d="M79 51.1c.1-2.1-1.4-2.7-2-2.7H55.2c-1.9 0-2.2 2-2.2 2.2V74h26zM64 67.9a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm10 10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zM59 40.3V28.7c.1-2.1-1.4-2.7-2-2.7H23.2c-1.9 0-2.2 2-2.2 2.2V74h26V44.7s0-2.4 2.2-2.4h7.9c1.1 0 1.9-1.2 1.9-2M32 66.9a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.3a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm11 30.7a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.3a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm0-10.2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2zm11 0a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2c0-1.1.9-2 2-2h2a2 2 0 012 2z"/></symbol>
-<symbol viewBox="0 0 1000 1000"  id="s-account_info" xmlns="http://www.w3.org/2000/svg"><path d="M639 559a121 121 0 10121 120 121 121 0 00-121-120m-1 55h1a18 18 0 11-1 0m31 126a5 5 0 01-6 5h-48a6 6 0 01-6-5v-12a7 7 0 016-7 6 6 0 006-5v-24a7 7 0 00-6-7 6 6 0 01-6-5v-12a7 7 0 016-7h36a7 7 0 016 7v48a5 5 0 006 5 7 7 0 016 7zm-33-224c10 0 27-1 27-16V224a24 24 0 00-24-24H264a24 24 0 00-24 24v497h221c14 0 18-10 17-24s-6-79 37-129 110-52 121-52M535 283a25 25 0 0121-24h31a25 25 0 0121 24v25a25 25 0 01-24 24h-25a25 25 0 01-24-24zm0 120a25 25 0 0124-24h25a25 25 0 0124 24v25a25 25 0 01-24 24h-25a25 25 0 01-24-24zM368 668a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0121-24h31a25 25 0 0121 24zm120 240a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0124-24h25a25 25 0 0124 24zm0-120a25 25 0 01-24 24h-25a25 25 0 01-24-24v-25a25 25 0 0121-24h31a25 25 0 0121 24z"/></symbol>
-<symbol viewBox="0 0 1000 1000"  id="s-partners" xmlns="http://www.w3.org/2000/svg"><path d="M770 317h-60c-13 0-26-6-36-15l-48-41c-10-8-23-14-36-14H473c-15 0-29 6-40 17l-62 51c-5 4-5 12-1 17l19 18c13 10 30 12 43 3l55-33c7-5 17-3 23 3l173 168c4 4 7 10 7 16v45c0 12 9 25 20 25h60c11 0 20-9 20-21V337c0-12-9-20-20-20M600 497L492 392l-30 18c-15 9-32 14-49 14-21 0-43-8-60-22l-39-32c-9-7-14-15-15-26-2-11-10-17-20-17h-69c-11 0-20 6-20 18v182c0 12 9 20 20 20h40c3 0 7-11 11-16 15-20 37-31 61-34 24-2 47 6 66 23l125 114c11 10 19 21 24 35 3 7 11 9 16 4l47-47c24-24 42-80 20-106zm-251 74a28 28 0 00-42 4c-11 14-9 34 4 46l125 113c6 6 14 8 22 7s15-5 20-12c11-14 9-34-4-46z"/></symbol>
-<symbol  viewBox="0 0 100 100" id="s-event" xmlns="http://www.w3.org/2000/svg"><path d="M76 42H24a2 2 0 00-2 2v30a6 6 0 006 6h44a6 6 0 006-6V44a2 2 0 00-2-2M40 70a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4c0-1.1.9-2 2-2h4a2 2 0 012 2zm0-14a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4c0-1.1.9-2 2-2h4a2 2 0 012 2zm14 14a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4c0-1.1.9-2 2-2h4a2 2 0 012 2zm0-14a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4c0-1.1.9-2 2-2h4a2 2 0 012 2zm14 14a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4c0-1.1.9-2 2-2h4a2 2 0 012 2zm0-14a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4c0-1.1.9-2 2-2h4a2 2 0 012 2zm4-30h-5v-2c0-2.2-1.8-4-4-4s-4 1.8-4 4v2H41v-2c0-2.2-1.8-4-4-4s-4 1.8-4 4v2h-5a6 6 0 00-6 6v2c0 1.1.9 2 2 2h52a2 2 0 002-2v-2a6 6 0 00-6-6"/></symbol>
-<symbol viewBox="0 0 1000 1000"  id="s-log_a_call" xmlns="http://www.w3.org/2000/svg"><path d="M697 200H321c-33 0-61 30-61 60v20h-20c-22 0-40 18-40 40s18 40 40 40h20v100h-20c-22 0-40 18-40 40s18 40 40 40h20v100h-20c-22 0-40 18-40 40s18 40 40 40h20v20c0 30 28 60 61 60h376c33 0 63-30 63-63V257c0-33-30-57-63-57m-36 403l-28 28c-6 6-15 10-23 9a264 264 0 01-249-249c0-9 3-17 9-23l28-28c13-13 35-12 46 3l26 32c9 11 9 26 1 38l-22 31c-3 4-3 10 1 13l46 51 51 46c4 4 9 4 13 1l31-22c11-8 27-8 38 1l32 26c12 8 13 30 0 43"/></symbol>
-<symbol viewBox="0 0 1000 1000"  id="s-task" xmlns="http://www.w3.org/2000/svg"><path d="M466 237l-21-21c-6-6-15-6-21 0L292 348l-53-53c-6-6-15-6-21 0l-21 21c-6 6-6 15 0 21l74 74a29 29 0 0042 0l153-153c5-5 5-15 0-21m304 143H510c-11 0-20-9-20-20v-40c0-11 9-20 20-20h260c11 0 20 9 20 20v40c0 11-9 20-20 20m0 180H450c-11 0-20-9-20-20v-40c0-11 9-20 20-20h320c11 0 20 9 20 20v40c0 11-9 20-20 20m-440 0h-40c-11 0-20-9-20-20v-40c0-11 9-20 20-20h40c11 0 20 9 20 20v40c0 11-9 20-20 20m0 180h-40c-11 0-20-9-20-20v-40c0-11 9-20 20-20h40c11 0 20 9 20 20v40c0 11-9 20-20 20m440 0H450c-11 0-20-9-20-20v-40c0-11 9-20 20-20h320c11 0 20 9 20 20v40c0 11-9 20-20 20"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-chevronright" xmlns="http://www.w3.org/2000/svg"><path d="M179 44l207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 6-16 0-22L136 88c-6-6-6-16 0-22l22-22c6-5 15-5 21 0"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-filter" xmlns="http://www.w3.org/2000/svg"><path d="M244 318c-6-6-15-6-21 0l-36 36c-6 6-17 2-17-7V215c0-8-7-15-15-15h-30c-8 0-15 7-15 15v132c0 9-11 13-17 7l-36-36c-6-6-15-6-21 0l-22 22c-6 6-6 15 0 21l115 115c6 6 15 6 21 0l116-116c6-6 6-15 0-21zM510 95c0-8-7-15-15-15H125c-8 0-15 7-15 15v30c0 8 7 15 15 15h370c8 0 15-7 15-15zm0 120c0-8-7-15-15-15H225c-8 0-15 7-15 15v30c0 8 7 15 15 15h270c8 0 15-7 15-15zm0 120c0-8-7-15-15-15H325c-8 0-15 7-15 15v30c0 8 7 15 15 15h170c8 0 15-7 15-15z"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-refresh" xmlns="http://www.w3.org/2000/svg"><path d="M465 40h-30c-8 0-15 7-15 15v70c0 9-5 13-12 7l-10-10a210 210 0 10-12 309c7-6 7-16 1-22l-21-21c-5-5-14-6-20-1a152 152 0 01-172 14 152 152 0 0177-281 150 150 0 01118 58c3 8-4 12-13 12h-70c-8 0-15 7-15 15v31c0 8 6 14 14 14h183c7 0 13-6 13-13V55c-1-8-8-15-16-15"/></symbol>
-<symbol viewBox="0 0 1000 1000"  id="s-contact" xmlns="http://www.w3.org/2000/svg"><path d="M740 290H260c-33 0-60 27-60 60v290c0 33 27 60 60 60h480c33 0 60-27 60-60V350c0-33-27-60-60-60M486 630H314c-19 0-34-21-34-41 1-30 32-48 65-63 23-10 26-19 26-29s-6-19-14-26a68 68 0 01-21-50c0-38 23-70 63-70s63 32 63 70c0 20-7 38-21 50-8 7-14 16-14 26s3 19 26 28c33 14 64 34 65 64 2 20-13 41-32 41m234-70c0 11-9 20-20 20h-90c-11 0-20-9-20-20v-30c0-11 9-20 20-20h90c11 0 20 9 20 20zm0-110c0 11-9 20-20 20H550c-11 0-20-9-20-20v-30c0-11 9-20 20-20h150c11 0 20 9 20 20z"/></symbol>
-<symbol viewBox="0 0 1000 1000"  id="s-household" xmlns="http://www.w3.org/2000/svg"><path d="M515 206c-9-8-22-8-30 0L207 462c-15 14-5 38 15 38h38v240c0 33 27 60 60 60h360c33 0 60-27 60-60V500h38c20 0 30-24 15-38zM369 639c-2 3-6 1-10 1h-24c-15 0-25-8-25-24 1-24 25-36 51-47 18-8 21-15 21-23s-5-15-11-21a52 52 0 01-16-40c0-30 18-56 50-56 19 0 33 9 42 23a97 97 0 00-37 79c0 19 5 37 15 52 4 6 2 11-5 14-17 9-39 21-51 42m207 71H424c-17 0-30-16-30-34 1-27 29-41 58-54 20-9 23-16 23-25s-6-17-12-23a57 57 0 01-18-44c0-33 20-62 56-62s56 29 56 62c0 18-6 33-18 44-7 6-12 14-12 23 0 8 3 16 23 25 29 13 57 27 58 54-2 18-15 34-32 34m89-70h-24c-4 0-8 2-10-1-12-21-34-30-52-39-6-3-8-10-4-16 10-15 15-33 15-52 0-33-14-61-36-78 8-14 22-23 42-23 33 0 50 26 50 56 0 16-5 30-16 40-6 6-11 13-11 21s3 15 21 23c26 12 51 23 51 47-1 14-11 22-26 22"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-add" xmlns="http://www.w3.org/2000/svg"><path d="M300 290h165c8 0 15-7 15-15v-30c0-8-7-15-15-15H300c-6 0-10-4-10-10V55c0-8-7-15-15-15h-30c-8 0-15 7-15 15v165c0 6-4 10-10 10H55c-8 0-15 7-15 15v30c0 8 7 15 15 15h165c6 0 10 4 10 10v165c0 8 7 15 15 15h30c8 0 15-7 15-15V300c0-6 4-10 10-10"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-adduser" xmlns="http://www.w3.org/2000/svg"><path d="M219 370c0-27 9-58 23-82 17-30 36-42 51-64 25-37 30-90 14-130-16-41-54-65-98-64s-80 28-94 69c-16 45-9 99 27 133 15 14 29 36 21 57-7 20-31 29-48 37-39 17-86 41-94 87-8 38 18 77 59 77h170c8 0 13-10 8-16a160 160 0 01-39-104m160-120c-66 0-120 54-120 120s54 120 120 120 120-54 120-120-54-120-120-120m61 130c0 6-5 10-11 10h-29v30c0 6-5 10-11 10h-20c-6 0-9-4-9-10v-30h-31c-6 0-9-4-9-10v-20c0-6 3-10 9-10h31v-30c0-6 3-10 9-10h20c6 0 11 4 11 10v30h29c6 0 11 4 11 10z"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-chevrondown" xmlns="http://www.w3.org/2000/svg"><path d="M476 178L271 385c-6 6-16 6-22 0L44 178c-6-6-6-16 0-22l22-22c6-6 16-6 22 0l161 163c6 6 16 6 22 0l161-162c6-6 16-6 22 0l22 22c5 6 5 15 0 21"/></symbol>
-<symbol viewBox="0 0 520 520"  id="u-expand_alt" xmlns="http://www.w3.org/2000/svg"><path d="M488 20H333c-10 0-13 9-5 17l49 49-90 90c-5 5-5 13 0 19l37 37c5 5 13 5 19 0l91-91 49 49c8 8 17 5 17-5V31c0-6-6-11-12-11M35 500h154c10 0 13-11 5-19l-49-50 90-91c5-5 5-14 0-19l-37-37c-5-5-13-5-19 0l-90 90-50-49c-9-8-19-5-19 5v154c0 7 8 16 15 16"/></symbol>
-</svg>
-
-
-<div class="pf-bar">
-  <div class="pf-note">
-    <b>Design prototype &mdash; not a real application.</b> This is a static user-interface mock-up from a design
-    portfolio. It has no login, collects nothing, and connects to no bank or financial system. Every person, company,
-    account number and balance shown is invented for demonstration. Not any financial institution&rsquo;s software,
-    data, or interface.
+<nav class="rail">
+  <div class="brand">
+    <div class="brand-mark">Jonathan <span>Lu</span></div>
+    <div class="brand-sub">Senior Product Designer</div>
   </div>
-  <a class="pf-back" href="arvest.html">← Back to case study</a>
+  <div class="rail-status">
+    <span class="dot" aria-hidden="true"></span>
+    OPEN TO NEW ROLES
+  </div>
+  <ul class="rail-nav">
+    <li><a class="rail-link" href="../index.html#overview"><span class="n">01</span>Overview</a></li>
+    <li><a class="rail-link is-active" href="../index.html#work"><span class="n">02</span>Work</a></li>
+    <li><a class="rail-link" href="../index.html#process"><span class="n">03</span>Process</a></li>
+    <li><a class="rail-link" href="../index.html#stack"><span class="n">04</span>Stack</a></li>
+    <li><a class="rail-link" href="../index.html#contact"><span class="n">05</span>Contact</a></li>
+  </ul>
+  <div class="rail-foot">
+    REMOTE · US HOURS<br>
+    &copy; 2026
+  </div>
+</nav>
+
+<main class="canvas">
+<div class="proj-head">
+<a class="back-link" href="arvest.html">← Arvest case study</a>
+<div class="eyebrow"><span class="num">CRM &amp; Enterprise</span> · DESIGN SCREENS</div>
+<h1>Relationship mapping</h1>
+<p class="proj-lede">The screen set behind the Arvest case study, flattened to images: account overview,
+account detail, deposit servicing, the relationship builder, the ownership hierarchy, and ARC.</p>
 </div>
 
-<div class="slds-scope app-frame">
+<div class="case-disclaimer">
+  <b>Design portfolio &mdash; not a banking service.</b> Every image below is a flat screenshot of a
+  static user-interface mock-up. There is no application here: nothing is clickable, no form exists, no
+  credentials, payments or personal data are collected, and nothing connects to a bank or financial
+  system. Every person, company, account number and balance shown is invented for demonstration. This
+  site is not operated by, affiliated with, or endorsed by any financial institution.
+</div>
 
-  <!-- ── global header ─────────────────────────────────────────── -->
-  <header class="slds-global-header_container">
-    <div class="slds-global-header slds-grid slds-grid_align-spread">
-      <div class="slds-global-header__item">
-        <div class="slds-global-header__logo" style="background:#014486;display:flex;align-items:center;padding:0 12px">
-          <span style="color:#fff;font-weight:700;font-size:13px;letter-spacing:.04em">UX DEMO &middot; CRM PATTERNS</span>
-        </div>
-      </div>
-      <div class="slds-global-header__item slds-global-header__item_search" role="search">
-        <div class="slds-form-element">
-          <label class="slds-assistive-text" for="global-search">Search accounts</label>
-          <div class="slds-search slds-input-has-icon slds-input-has-icon_left">
-            <svg class="slds-icon slds-input__icon slds-icon-text-default" aria-hidden="true">
-              <use xlink:href="#u-search"></use>
-            </svg>
-            <input type="search" id="global-search" class="slds-input" placeholder="Search (demo &mdash; not connected)">
-          </div>
-        </div>
-      </div>
-      <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center slds-list_horizontal">
-        <li class="slds-m-right_small slds-text-body_small slds-text-color_weak">Relationship Officer</li>
-        <li>
-          <span class="slds-avatar slds-avatar_circle slds-avatar_medium" style="background:#0b827c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">RO</span>
-        </li>
-      </ul>
-    </div>
-  </header>
+<div class="screens-wrap">
 
-  <!-- ── app nav ───────────────────────────────────────────────── -->
-  <div class="slds-context-bar">
-    <div class="slds-context-bar__primary">
-      <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-no-hover">
-        <span class="slds-context-bar__label-action slds-context-bar__app-name">
-          <span class="slds-truncate" title="Sample workspace">Sample Workspace</span>
-        </span>
-      </div>
-    </div>
-    <nav class="slds-context-bar__secondary" role="navigation">
-      <ul class="slds-grid">
-        <li class="slds-context-bar__item slds-is-active" data-nav="accounts">
-          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Accounts</span></a>
-        </li>
-        <li class="slds-context-bar__item" data-nav="detail">
-          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Account Detail</span></a>
-        </li>
-        <li class="slds-context-bar__item" data-nav="deposits">
-          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Deposit Accounts</span></a>
-        </li>
-        <li class="slds-context-bar__item" data-nav="relationships">
-          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">Relationships</span></a>
-        </li>
-        <li class="slds-context-bar__item" data-nav="arc">
-          <a href="javascript:void(0)" class="slds-context-bar__label-action"><span class="slds-truncate">ARC</span></a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+<div class="screen-sec"><div class="eyebrow"><span class="num">01</span> OVERVIEW</div><h2>The list you open on</h2><p class="sec-lede">A relationship officer starts from a book of business, not a record. The columns are the ones that decide who gets called today.</p>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/accounts.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/accounts.webp" alt="Relationship accounts list showing household, business, individual and trust records with total deposits and relationship tier" loading="lazy"></button><figcaption><b>Account overview.</b> Household, entity type, relationship role, total deposits and tier on one row, so the book can be sorted and triaged without opening a record. Role is shown as a phrase — &ldquo;primary owner &middot; 60%&rdquo; — because ownership percentage is the thing credit asks about first.</figcaption></figure>
+</div>
+<div class="screen-sec"><div class="eyebrow"><span class="num">02</span> ACCOUNT DETAIL</div><h2>One record, two questions</h2><p class="sec-lede">What is this account, and who is attached to it. Those are different questions, and answering both on one tab is what made the original page unreadable.</p>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/detail-details.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/detail-details.webp" alt="Account detail page with details in a white card and an activity and Chatter rail on the right" loading="lazy"></button><figcaption><b>Details.</b> The attributes sit in a single white card rather than loose on the page background, and activity and Chatter hold the right rail so the record and the conversation about it stay on one screen.</figcaption></figure>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/detail-parties.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/detail-parties.webp" alt="Related parties tab listing owners, signers and beneficiaries with their roles" loading="lazy"></button><figcaption><b>Related parties, moved to its own tab.</b> Ownership and signer authority are a compliance question, not an account attribute. Splitting them out is what let the Details tab fit without scrolling.</figcaption></figure>
+</div>
+<div class="screen-sec"><div class="eyebrow"><span class="num">03</span> DEPOSIT SERVICING</div><h2>Deposit accounts by type</h2><p class="sec-lede">Nine accounts across four parties. The type rail carries counts, because &ldquo;how many CDs does this household hold&rdquo; is asked far more often than any single balance.</p>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/dep-checking.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/dep-checking.webp" alt="Checking accounts list with product terms for a business checking account" loading="lazy"></button><figcaption><b>Checking.</b> The list answers the ownership question first — which entity holds it — then the product-terms card underneath carries the servicing detail: earnings credit, analysis fees, overdraft linkage, signers, positive pay.</figcaption></figure>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/dep-savings.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/dep-savings.webp" alt="Savings accounts list with balances and status" loading="lazy"></button><figcaption><b>Savings.</b> Same shape as checking. Holding the layout constant across types is what makes the left rail usable as a filter rather than five separate screens.</figcaption></figure>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/dep-mma.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/dep-mma.webp" alt="Money market account with tier and rate detail" loading="lazy"></button><figcaption><b>Money market.</b> Rate tiering is the servicing detail that matters here, so it takes the terms card.</figcaption></figure>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/dep-cd.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/dep-cd.webp" alt="Certificates of deposit with maturity dates and terms" loading="lazy"></button><figcaption><b>Certificates of deposit.</b> Maturity is the only date on this screen that triggers an outbound call, so it is the one promoted into the list rather than left in the terms card.</figcaption></figure>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/dep-other.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/dep-other.webp" alt="Other and non-deposit accounts" loading="lazy"></button><figcaption><b>Other &amp; non-deposit.</b> The catch-all still gets a real row rather than being hidden, because the accounts that do not fit the four standard types are usually the ones a review misses.</figcaption></figure>
+</div>
+<div class="screen-sec"><div class="eyebrow"><span class="num">04</span> RELATIONSHIPS</div><h2>Two mental models, one dataset</h2><p class="sec-lede">Officers think in households and influence. Credit and compliance think in ownership and control. The same records have to serve both, so the screen toggles rather than picking a side.</p>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/rel-map.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/rel-map.webp" alt="Relationship builder showing the Hollis household as a root card branching into related groups, accounts and contacts" loading="lazy"></button><figcaption><b>Relationship builder.</b> Root household, a branch rail, then groups, accounts and contacts. The connectors are drawn from measured element geometry rather than fixed percentages — the earlier version used CSS offsets and the lines never actually met at any width.</figcaption></figure>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/rel-tree.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/rel-tree.webp" alt="Ownership and control hierarchy showing beneficial ownership percentages and linked deposit accounts" loading="lazy"></button><figcaption><b>Ownership hierarchy.</b> The same dataset read the way credit and compliance read it. The percentages are ownership <em>of the operating company</em>, not of the household — a household has members, not owners — and the guarantor carries a dashed border at the same level with no percentage, because folding contingent liability into an ownership tree is how a relationship total quietly becomes wrong.</figcaption></figure>
+</div>
+<div class="screen-sec"><div class="eyebrow"><span class="num">05</span> ARC</div><h2>Walking outward one hop at a time</h2><p class="sec-lede">The builder shows the household you already know about. ARC is for the one you do not.</p>
+<figure class="screen"><button class="screen-open shot" data-src="img/screens/arc.webp"><div class="shot-bar"><i></i><i></i><i></i><span class="shot-tag">Design screen &middot; demo data</span></div><img src="img/screens/arc.webp" alt="Actionable Relationship Center expanding related groups, accounts, members and contacts one level at a time" loading="lazy"></button><figcaption><b>Actionable Relationship Center.</b> Each list expands a single hop, with the detail panel pinned right. This is the path by which a second household, a guarantor, or an unrecorded beneficial owner actually surfaces during a review.</figcaption></figure>
+</div>
+</div>
 
-  <div class="slds-p-around_medium">
+<div class="proj-nav">
+  <a href="arvest.html" class="proj-nav-link prev">← Arvest case study</a>
+  <a href="../index.html#work" class="proj-nav-link all">All work</a>
+  <a href="wbox.html" class="proj-nav-link next">Watch Box →</a>
+</div>
 
-  <!-- ══ VIEW 1 · ACCOUNTS OVERVIEW TABLE ═══════════════════════ -->
-  <section class="view is-on" id="view-accounts">
-    <div class="slds-page-header">
-      <div class="slds-page-header__row">
-        <div class="slds-page-header__col-title">
-          <div class="slds-media">
-            <div class="slds-media__figure">
-              <span class="slds-icon_container slds-icon-standard-account">
-                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
-                  <use xlink:href="#s-account"></use>
-                </svg>
-              </span>
-            </div>
-            <div class="slds-media__body">
-              <div class="slds-page-header__name">
-                <div class="slds-page-header__name-title">
-                  <h1><span class="slds-page-header__title slds-truncate">Relationship Accounts</span></h1>
-                </div>
-                <div class="slds-page-header__name-switcher">
-                  <div class="slds-dropdown-trigger slds-dropdown-trigger_click">
-                    <button class="slds-button slds-button_icon slds-button_icon-small" title="Switch list view">
-                      <svg class="slds-button__icon" aria-hidden="true">
-                        <use xlink:href="#u-down"></use>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <p class="slds-page-header__name-meta">My Book of Business &middot; Deposits &amp; Lending</p>
-            </div>
-          </div>
-        </div>
-        <div class="slds-page-header__col-actions">
-          <div class="slds-page-header__controls">
-            <div class="slds-page-header__control">
-              <button class="slds-button slds-button_neutral">Import</button>
-              <button class="slds-button slds-button_brand">New Account</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="slds-page-header__row slds-page-header__row_gutters">
-        <div class="slds-page-header__col-meta">
-          <p class="slds-page-header__meta-text">6 items &middot; Sorted by Total Deposits &middot; Filtered by Relationship Tier &middot; Updated 4 minutes ago</p>
-        </div>
-      </div>
-    </div>
+</main>
 
-    <div class="slds-box slds-box_x-small slds-theme_shade slds-m-bottom_small">
-      <div class="slds-grid slds-wrap slds-gutters_x-small slds-grid_vertical-align-end">
-        <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12">
-          <div class="slds-form-element">
-            <label class="slds-form-element__label" for="f-search">Search this list</label>
-            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
-              <svg class="slds-icon slds-input__icon slds-icon-text-default" aria-hidden="true">
-                <use xlink:href="#u-search"></use>
-              </svg>
-              <input type="search" id="f-search" class="slds-input" placeholder="Account or party name">
-            </div>
-          </div>
-        </div>
-        <div class="slds-col slds-size_1-of-2 slds-medium-size_3-of-12">
-          <div class="slds-form-element">
-            <label class="slds-form-element__label" for="f-type">Account Type</label>
-            <div class="slds-form-element__control">
-              <div class="slds-select_container">
-                <select class="slds-select" id="f-type">
-                  <option>All types</option><option>Household</option><option>Individual</option>
-                  <option>Business</option><option>Trust</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slds-col slds-size_1-of-2 slds-medium-size_3-of-12">
-          <div class="slds-form-element">
-            <label class="slds-form-element__label" for="f-tier">Relationship Tier</label>
-            <div class="slds-form-element__control">
-              <div class="slds-select_container">
-                <select class="slds-select" id="f-tier">
-                  <option>All tiers</option><option>Tier 1 — Managed</option>
-                  <option>Tier 2 — Assigned</option><option>Tier 3 — Self-serve</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12">
-          <button class="slds-button slds-button_neutral slds-m-top_x-small">Apply</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="slds-card">
-      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-table_fixed-layout">
-        <thead>
-          <tr class="slds-line-height_reset">
-            <th class="slds-text-title_caps" scope="col" style="width:3rem"><span class="slds-assistive-text">Select</span></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Account Name">Account Name</div></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Type">Type</div></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Relationship Role">Relationship Role</div></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Total Deposits">Total Deposits</div></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Products">Products</div></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Tier">Tier</div></th>
-            <th class="slds-text-title_caps" scope="col"><div class="slds-truncate" title="Last Review">Last Review</div></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="slds-hint-parent">
-            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
-            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Hollis Household</a></div></th>
-            <td><div class="slds-truncate">Household</div></td>
-            <td><div class="slds-truncate">Relationship root</div></td>
-            <td><div class="slds-truncate">$1,284,905.42</div></td>
-            <td><div class="slds-truncate">9</div></td>
-            <td><span class="slds-badge slds-theme_success">Tier 1</span></td>
-            <td><div class="slds-truncate">12 May 2026</div></td>
-          </tr>
-          <tr class="slds-hint-parent">
-            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
-            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Hollis Cabinetry LLC</a></div></th>
-            <td><div class="slds-truncate">Business</div></td>
-            <td><div class="slds-truncate">Operating entity</div></td>
-            <td><div class="slds-truncate">$742,118.06</div></td>
-            <td><div class="slds-truncate">4</div></td>
-            <td><span class="slds-badge slds-theme_success">Tier 1</span></td>
-            <td><div class="slds-truncate">12 May 2026</div></td>
-          </tr>
-          <tr class="slds-hint-parent">
-            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
-            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Dana R. Hollis</a></div></th>
-            <td><div class="slds-truncate">Individual</div></td>
-            <td><div class="slds-truncate">Primary owner &middot; 60%</div></td>
-            <td><div class="slds-truncate">$318,470.11</div></td>
-            <td><div class="slds-truncate">3</div></td>
-            <td><span class="slds-badge slds-theme_success">Tier 1</span></td>
-            <td><div class="slds-truncate">12 May 2026</div></td>
-          </tr>
-          <tr class="slds-hint-parent">
-            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
-            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Hollis Family Trust</a></div></th>
-            <td><div class="slds-truncate">Trust</div></td>
-            <td><div class="slds-truncate">Beneficial owner</div></td>
-            <td><div class="slds-truncate">$186,220.00</div></td>
-            <td><div class="slds-truncate">2</div></td>
-            <td><span class="slds-badge">Tier 2</span></td>
-            <td><div class="slds-truncate">03 Mar 2026</div></td>
-          </tr>
-          <tr class="slds-hint-parent">
-            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
-            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Terrence Hollis</a></div></th>
-            <td><div class="slds-truncate">Individual</div></td>
-            <td><div class="slds-truncate">Joint owner &middot; spouse</div></td>
-            <td><div class="slds-truncate">$38,097.25</div></td>
-            <td><div class="slds-truncate">2</div></td>
-            <td><span class="slds-badge">Tier 2</span></td>
-            <td><div class="slds-truncate">03 Mar 2026</div></td>
-          </tr>
-          <tr class="slds-hint-parent">
-            <td><input type="checkbox" class="slds-checkbox_faux" aria-label="Select row"></td>
-            <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="detail">Ridgeline Supply Co.</a></div></th>
-            <td><div class="slds-truncate">Business</div></td>
-            <td><div class="slds-truncate">Guarantor</div></td>
-            <td><div class="slds-truncate">$0.00</div></td>
-            <td><div class="slds-truncate">1</div></td>
-            <td><span class="slds-badge">Tier 3</span></td>
-            <td><div class="slds-truncate">18 Jan 2026</div></td>
-          </tr>
-        </tbody>
-      </table>
-      <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-        6 of 6 items &middot; Balances as of 08 Sep 2026, 06:00 CT &middot; Synthetic data
-      </footer>
-    </div>
-  </section>
-
-  <!-- ══ VIEW 2 · ACCOUNT DETAIL (record home) ══════════════════ -->
-  <section class="view" id="view-detail">
-    <div class="slds-page-header slds-page-header_record-home">
-      <div class="slds-page-header__row">
-        <div class="slds-page-header__col-title">
-          <div class="slds-media">
-            <div class="slds-media__figure">
-              <span class="slds-icon_container slds-icon-standard-account">
-                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
-                  <use xlink:href="#s-account"></use>
-                </svg>
-              </span>
-            </div>
-            <div class="slds-media__body">
-              <p class="slds-text-title_caps slds-line-height_reset">Business Account</p>
-              <h1><span class="slds-page-header__title slds-truncate">Hollis Cabinetry LLC</span></h1>
-              <p class="slds-text-body_small">Relationship root: <a href="javascript:void(0)" data-goto="relationships">Hollis Household</a> &middot; Officer: R. Okonkwo</p>
-            </div>
-          </div>
-        </div>
-        <div class="slds-page-header__col-actions">
-          <div class="slds-page-header__controls">
-            <div class="slds-page-header__control">
-              <button class="slds-button slds-button_neutral">Edit</button>
-              <button class="slds-button slds-button_neutral">New Deposit Account</button>
-              <button class="slds-button slds-button_brand" data-goto="relationships">View Relationship Map</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="slds-page-header__row slds-page-header__row_gutters">
-        <div class="slds-page-header__col-details">
-          <ul class="slds-page-header__detail-row">
-            <li class="slds-page-header__detail-block">
-              <div class="slds-text-title slds-truncate">Total Deposits</div>
-              <div class="slds-truncate slds-text-body_regular"><strong>$742,118.06</strong></div>
-            </li>
-            <li class="slds-page-header__detail-block">
-              <div class="slds-text-title slds-truncate">Total Exposure</div>
-              <div class="slds-truncate slds-text-body_regular"><strong>$1,150,000.00</strong></div>
-            </li>
-            <li class="slds-page-header__detail-block">
-              <div class="slds-text-title slds-truncate">Relationship Tier</div>
-              <div class="slds-truncate"><span class="slds-badge slds-theme_success">Tier 1 — Managed</span></div>
-            </li>
-            <li class="slds-page-header__detail-block">
-              <div class="slds-text-title slds-truncate">CIF / Tax ID</div>
-              <div class="slds-truncate slds-text-body_regular">CIF SAMPLE-2098117 &middot; tax ID not shown</div>
-            </li>
-            <li class="slds-page-header__detail-block">
-              <div class="slds-text-title slds-truncate">KYC Review</div>
-              <div class="slds-truncate"><span class="slds-badge slds-theme_success">Current</span> &middot; due 12 Nov 2026</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="slds-grid slds-wrap slds-gutters slds-m-top_small">
-      <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
-        <article class="slds-card">
-        <div class="slds-tabs_default">
-          <ul class="slds-tabs_default__nav" role="tablist">
-            <li class="slds-tabs_default__item slds-is-active" role="presentation" data-dtab="details"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Details</a></li>
-            <li class="slds-tabs_default__item" role="presentation" data-dtab="parties"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Related Parties (4)</a></li>
-          </ul>
-          <div class="slds-tabs_default__content slds-show" id="dtab-details" role="tabpanel">
-            <div class="slds-form slds-form_stacked slds-p-around_medium">
-              <div class="slds-grid slds-wrap slds-gutters">
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Legal Entity Name</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">Hollis Cabinetry LLC</div></div>
-                  </div>
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Entity Type</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">Limited Liability Company (AR)</div></div>
-                  </div>
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">NAICS</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">337110 — Wood Kitchen Cabinet Manufacturing</div></div>
-                  </div>
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Relationship Since</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">14 Aug 2019</div></div>
-                  </div>
-                </div>
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Beneficial Owners ≥ 25%</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">Dana R. Hollis (60%) &middot; Hollis Family Trust (40%)</div></div>
-                  </div>
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Authorized Signers</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">Dana R. Hollis &middot; Terrence Hollis</div></div>
-                  </div>
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Risk Rating</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">Moderate &middot; last scored 12 May 2026</div></div>
-                  </div>
-                  <div class="slds-form-element slds-form-element_readonly slds-m-bottom_small">
-                    <span class="slds-form-element__label">Relationship Officer</span>
-                    <div class="slds-form-element__control"><div class="slds-form-element__static">R. Okonkwo — Commercial, NWA</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="slds-tabs_default__content slds-hide" id="dtab-parties" role="tabpanel">
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-              <thead><tr class="slds-line-height_reset">
-                <th class="slds-text-title_caps" scope="col">Party</th>
-                <th class="slds-text-title_caps" scope="col">Type</th>
-                <th class="slds-text-title_caps" scope="col">Role</th>
-                <th class="slds-text-title_caps" scope="col">Ownership</th>
-                <th class="slds-text-title_caps" scope="col">Verification</th>
-              </tr></thead>
-              <tbody>
-                <tr class="slds-hint-parent">
-                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="relationships">Dana R. Hollis</a></div></th>
-                  <td><div class="slds-truncate">Individual</div></td>
-                  <td><div class="slds-truncate">Member &middot; Authorized signer</div></td>
-                  <td><div class="slds-truncate">60%</div></td>
-                  <td><span class="slds-badge slds-theme_success">CIP verified</span></td>
-                </tr>
-                <tr class="slds-hint-parent">
-                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="relationships">Hollis Family Trust</a></div></th>
-                  <td><div class="slds-truncate">Trust</div></td>
-                  <td><div class="slds-truncate">Member</div></td>
-                  <td><div class="slds-truncate">40%</div></td>
-                  <td><span class="slds-badge slds-theme_success">CIP verified</span></td>
-                </tr>
-                <tr class="slds-hint-parent">
-                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="relationships">Terrence Hollis</a></div></th>
-                  <td><div class="slds-truncate">Individual</div></td>
-                  <td><div class="slds-truncate">Authorized signer &middot; spouse of member</div></td>
-                  <td><div class="slds-truncate">&mdash;</div></td>
-                  <td><span class="slds-badge slds-theme_success">CIP verified</span></td>
-                </tr>
-                <tr class="slds-hint-parent">
-                  <th scope="row"><div class="slds-truncate"><a href="javascript:void(0)" data-goto="arc">Ridgeline Supply Co.</a></div></th>
-                  <td><div class="slds-truncate">Business</div></td>
-                  <td><div class="slds-truncate">Guarantor &middot; LN-40912</div></td>
-                  <td><div class="slds-truncate">&mdash;</div></td>
-                  <td><span class="slds-badge slds-theme_warning">Financials stale</span></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="slds-p-around_small slds-text-body_small slds-text-color_weak">
-              Ownership totals 100% across two members, which is what makes the beneficial-ownership record complete.
-              A guarantor carries no ownership and is listed separately so the percentages still reconcile.
-            </div>
-          </div>
-        </div>
-        </article>
-      </div>
-
-      <!-- activity / chatter rail -->
-      <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
-        <article class="slds-card">
-          <div class="slds-tabs_default">
-            <ul class="slds-tabs_default__nav" role="tablist">
-              <li class="slds-tabs_default__item slds-is-active" role="presentation" data-rail="activity">
-                <a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">ACTIVITY</a></li>
-              <li class="slds-tabs_default__item" role="presentation" data-rail="chatter">
-                <a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">CHATTER</a></li>
-            </ul>
-
-            <div class="slds-tabs_default__content slds-show" id="rail-activity" role="tabpanel">
-              <div class="slds-tabs_default slds-m-bottom_small">
-                <ul class="slds-tabs_default__nav" role="tablist">
-                  <li class="slds-tabs_default__item slds-is-active" role="presentation" data-compose="event"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">New Event</a></li>
-                  <li class="slds-tabs_default__item" role="presentation" data-compose="task"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">New Task</a></li>
-                  <li class="slds-tabs_default__item" role="presentation" data-compose="call"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Log a Call</a></li>
-                  <li class="slds-tabs_default__item" role="presentation" data-compose="email"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Email</a></li>
-                </ul>
-                <div class="slds-tabs_default__content slds-show slds-p-around_x-small" role="tabpanel">
-                  <div class="slds-grid slds-gutters_xx-small">
-                    <div class="slds-col slds-size_9-of-12">
-                      <input class="slds-input" id="compose-input" placeholder="Create new event…" aria-label="Create new">
-                    </div>
-                    <div class="slds-col slds-size_3-of-12">
-                      <button class="slds-button slds-button_brand" style="width:100%">Add</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-horizontal_x-small slds-m-bottom_x-small">
-                <h3 class="slds-text-heading_small">Activity Timeline</h3>
-                <div>
-                  <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filter timeline">
-                    <svg class="slds-button__icon" aria-hidden="true"><use xlink:href="#u-filter"></use></svg>
-                    <span class="slds-assistive-text">Filter timeline</span></button>
-                  <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-m-left_xx-small" title="Refresh">
-                    <svg class="slds-button__icon" aria-hidden="true"><use xlink:href="#u-refresh"></use></svg>
-                    <span class="slds-assistive-text">Refresh</span></button>
-                  <button class="slds-button slds-button_neutral slds-m-left_xx-small">Expand All</button>
-                </div>
-              </div>
-
-              <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-horizontal_x-small">
-                <h4 class="slds-text-title_caps">Next Steps</h4>
-                <button class="slds-button slds-button_neutral">More Steps</button>
-              </div>
-              <ul class="slds-timeline slds-p-around_x-small">
-                <li>
-                  <div class="slds-timeline__item_expandable slds-timeline__item_task slds-is-open">
-                    <span class="slds-assistive-text">Task</span>
-                    <div class="slds-media">
-                      <div class="slds-media__figure">
-                        <div class="slds-icon_container slds-icon-standard-task slds-timeline__icon">
-                          <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-task"></use></svg>
-                        </div>
-                      </div>
-                      <div class="slds-media__body">
-                        <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
-                          <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
-                            <input type="checkbox" class="slds-m-right_x-small" aria-label="Complete task">
-                            <h3 class="slds-truncate"><a href="javascript:void(0)"><strong>Retention call — CD SAMPLE-1147 matures 02 Oct</strong></a></h3>
-                          </div>
-                          <div class="slds-timeline__actions slds-timeline__actions_inline">
-                            <p class="slds-timeline__date">Sep 18</p>
-                          </div>
-                        </div>
-                        <p class="slds-m-horizontal_xx-small">$185,000 renews at an indicative 3.85%. Dana has asked about rates twice this quarter.</p>
-                        <p class="slds-m-horizontal_xx-small slds-text-color_weak">Related To <a href="javascript:void(0)">Hollis Household</a></p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="slds-timeline__item_expandable slds-timeline__item_event slds-is-open">
-                    <span class="slds-assistive-text">Event</span>
-                    <div class="slds-media">
-                      <div class="slds-media__figure">
-                        <div class="slds-icon_container slds-icon-standard-event slds-timeline__icon">
-                          <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-event"></use></svg>
-                        </div>
-                      </div>
-                      <div class="slds-media__body">
-                        <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
-                          <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
-                            <h3 class="slds-truncate"><a href="javascript:void(0)"><strong>Q4 treasury management review</strong></a></h3>
-                          </div>
-                          <div class="slds-timeline__actions slds-timeline__actions_inline">
-                            <p class="slds-timeline__date">10:00 AM | Sep 19</p>
-                          </div>
-                        </div>
-                        <p class="slds-m-horizontal_xx-small">You have an upcoming Event about <a href="javascript:void(0)">Hollis Cabinetry LLC</a></p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-
-              <h4 class="slds-text-title_caps slds-p-horizontal_x-small slds-m-top_small">Past Activity</h4>
-              <ul class="slds-timeline slds-p-around_x-small">
-                <li>
-                  <div class="slds-timeline__item_expandable slds-timeline__item_call slds-is-open">
-                    <span class="slds-assistive-text">Call</span>
-                    <div class="slds-media">
-                      <div class="slds-media__figure">
-                        <div class="slds-icon_container slds-icon-standard-log-a-call slds-timeline__icon">
-                          <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-log_a_call"></use></svg>
-                        </div>
-                      </div>
-                      <div class="slds-media__body">
-                        <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
-                          <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
-                            <h3 class="slds-truncate"><a href="javascript:void(0)"><strong>Check-in call with Dana Hollis</strong></a></h3>
-                          </div>
-                          <div class="slds-timeline__actions slds-timeline__actions_inline">
-                            <p class="slds-timeline__date">Today</p>
-                          </div>
-                        </div>
-                        <p class="slds-m-horizontal_xx-small">You logged a call. Dana flagged an equipment purchase in Q1 — routed to the equipment finance opportunity.</p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="slds-timeline__item_expandable slds-timeline__item_task slds-is-open">
-                    <span class="slds-assistive-text">Task</span>
-                    <div class="slds-media">
-                      <div class="slds-media__figure">
-                        <div class="slds-icon_container slds-icon-standard-task slds-timeline__icon">
-                          <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-task"></use></svg>
-                        </div>
-                      </div>
-                      <div class="slds-media__body">
-                        <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
-                          <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
-                            <h3 class="slds-truncate"><a href="javascript:void(0)"><strong>*Automated Task* — Beneficial ownership refresh</strong></a></h3>
-                          </div>
-                          <div class="slds-timeline__actions slds-timeline__actions_inline">
-                            <p class="slds-timeline__date">Aug 27</p>
-                          </div>
-                        </div>
-                        <p class="slds-m-horizontal_xx-small">Trust ownership recertified at 40%. No change to the beneficial-ownership record.</p>
-                        <p class="slds-m-horizontal_xx-small slds-text-color_weak">Related To <a href="javascript:void(0)">Hollis Cabinetry LLC</a></p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <div class="slds-p-around_x-small"><button class="slds-button slds-button_neutral" style="width:100%">More Past Activity</button></div>
-            </div>
-
-            <div class="slds-tabs_default__content slds-hide" id="rail-chatter" role="tabpanel">
-              <div class="slds-p-around_x-small">
-                <div class="slds-publisher slds-publisher_comment slds-is-active slds-m-bottom_small">
-                  <textarea class="slds-publisher__input slds-textarea slds-text-longform" rows="2" placeholder="Share an update…" aria-label="Share an update"></textarea>
-                  <div class="slds-publisher__actions slds-grid slds-grid_align-end slds-m-top_x-small">
-                    <button class="slds-button slds-button_brand">Share</button>
-                  </div>
-                </div>
-
-                <article class="slds-post slds-m-bottom_medium">
-                  <header class="slds-post__header slds-media">
-                    <div class="slds-media__figure">
-                      <span class="slds-avatar slds-avatar_circle slds-avatar_medium" style="background:#0b827c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">RO</span>
-                    </div>
-                    <div class="slds-media__body">
-                      <div class="slds-grid slds-grid_align-spread">
-                        <p><a href="javascript:void(0)">R. Okonkwo</a> — Commercial, NWA</p>
-                      </div>
-                      <p class="slds-text-body_small">Today at 9:14 AM</p>
-                    </div>
-                  </header>
-                  <div class="slds-post__content slds-text-longform slds-m-top_x-small">
-                    <p>Credit flagged the guarantor financials for Ridgeline as stale before we re-underwrite LN-40912. Priya is sending the 2026 statements this week — holding the equipment finance proposal until they land.</p>
-                  </div>
-                  <footer class="slds-post__footer slds-m-top_x-small">
-                    <ul class="slds-post__footer-actions-list slds-list_horizontal">
-                      <li class="slds-col slds-item slds-m-right_medium"><a href="javascript:void(0)" class="slds-text-body_small">Like</a></li>
-                      <li class="slds-col slds-item"><a href="javascript:void(0)" class="slds-text-body_small">Comment</a></li>
-                    </ul>
-                  </footer>
-                </article>
-
-                <article class="slds-post">
-                  <header class="slds-post__header slds-media">
-                    <div class="slds-media__figure">
-                      <span class="slds-avatar slds-avatar_circle slds-avatar_medium" style="background:#8c4b02;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">MT</span>
-                    </div>
-                    <div class="slds-media__body">
-                      <p><a href="javascript:void(0)">M. Trueblood</a> — Deposit Operations</p>
-                      <p class="slds-text-body_small">Aug 27 at 4:02 PM</p>
-                    </div>
-                  </header>
-                  <div class="slds-post__content slds-text-longform slds-m-top_x-small">
-                    <p>Positive pay exceptions on SAMPLE-7734 cleared to zero for a third straight week after the 10:00 CT review moved earlier. Closing service request 00041182 unless anyone objects.</p>
-                  </div>
-                  <footer class="slds-post__footer slds-m-top_x-small">
-                    <ul class="slds-post__footer-actions-list slds-list_horizontal">
-                      <li class="slds-col slds-item slds-m-right_medium"><a href="javascript:void(0)" class="slds-text-body_small">Like</a></li>
-                      <li class="slds-col slds-item"><a href="javascript:void(0)" class="slds-text-body_small">Comment</a></li>
-                    </ul>
-                  </footer>
-                </article>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ VIEW 3 · RELATIONSHIP MAP (graph ⇄ hierarchy) ══════════ -->
-  <section class="view" id="view-relationships">
-    <div class="slds-page-header">
-      <div class="slds-page-header__row">
-        <div class="slds-page-header__col-title">
-          <div class="slds-media">
-            <div class="slds-media__figure">
-              <span class="slds-icon_container slds-icon-standard-relationship">
-                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
-                  <use xlink:href="#s-partners"></use>
-                </svg>
-              </span>
-            </div>
-            <div class="slds-media__body">
-              <p class="slds-text-title_caps slds-line-height_reset">Relationship Map</p>
-              <h1><span class="slds-page-header__title slds-truncate">Hollis Household</span></h1>
-              <p class="slds-text-body_small">6 parties &middot; 9 deposit accounts &middot; 1 guaranteed facility</p>
-            </div>
-          </div>
-        </div>
-        <div class="slds-page-header__col-actions">
-          <div class="slds-page-header__controls">
-            <div class="slds-page-header__control">
-              <div class="slds-button-group" role="group">
-                <button class="slds-button slds-button_brand" id="btn-graph">Relationship builder</button>
-                <button class="slds-button slds-button_neutral" id="btn-tree">Ownership hierarchy</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slds-scoped-notification slds-media slds-media_center slds-scoped-notification_light slds-m-bottom_small" role="status">
-      <div class="slds-media__figure">
-        <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
-          <use xlink:href="#u-info"></use>
-        </svg>
-      </div>
-      <div class="slds-media__body">
-        <p><strong>Two mental models, one dataset.</strong> Officers think in households and influence — who can bring
-        whom. Credit and compliance think in ownership and control — who is liable, who must be verified. The same
-        records drive both views.</p>
-      </div>
-    </div>
-
-    <!-- graph -->
-    <div id="pane-graph">
-      <div class="rb-wrap">
-        <div class="rb">
-
-          <div class="rb-grid">
-            <div class="rb-card rb-grp" id="rb-root">
-              <div class="rb-grp-head">
-                <span class="slds-icon_container slds-icon-standard-household" style="display:inline-block">
-                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
-                </span>
-                <div><a href="javascript:void(0)" class="slds-text-body_regular">Hollis Household</a></div>
-                <div class="slds-text-body_small slds-text-color_weak">Household</div>
-                <span class="slds-badge slds-m-top_xx-small">PRIMARY GROUP</span>
-              </div>
-              <div class="rb-member" data-pop="dana">
-                <div><div class="rb-nm">Dana R. Hollis</div><div class="rb-role">Head of household &middot; Client</div>
-                  <span class="slds-badge slds-m-top_xx-small">PRIMARY MEMBER</span></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <div class="rb-member" data-pop="terrence">
-                <div><div class="rb-nm">Terrence Hollis</div><div class="rb-role">Client;Spouse</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <div class="rb-member" data-pop="marisol">
-                <div><div class="rb-nm">Marisol Hollis</div><div class="rb-role">Dependent</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <button class="rb-add">+ Add Relationship</button>
-            </div>
-            <div></div><div></div>
-          </div>
-
-          <div class="rb-links" id="rb-links"></div>
-
-          <div class="rb-grid" id="rb-branch">
-            <div class="rb-card rb-grp">
-              <div class="rb-grp-head">
-                <span class="slds-icon_container slds-icon-standard-household" style="display:inline-block">
-                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
-                </span>
-                <div class="slds-text-body_regular">Related Groups (1)</div>
-              </div>
-              <div class="rb-member" data-pop="vance">
-                <div><div class="rb-nm">Vance Household</div><div class="rb-role">Extended family</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <button class="rb-add">+ Add Group</button>
-            </div>
-
-            <div class="rb-card rb-grp">
-              <div class="rb-grp-head">
-                <span class="slds-icon_container slds-icon-standard-account" style="display:inline-block">
-                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account_info"></use></svg>
-                </span>
-                <div class="slds-text-body_regular">Related Accounts (3)</div>
-              </div>
-              <div class="rb-member is-acct" data-pop="cabinetry">
-                <div><div class="rb-nm">Hollis Cabinetry LLC</div><div class="rb-role">Owner;Signer &middot; 60%</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <div class="rb-member is-acct" data-pop="trust">
-                <div><div class="rb-nm">Hollis Family Trust</div><div class="rb-role">Trustee;Beneficiary &middot; 40%</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <div class="rb-member is-acct" data-pop="ridgeline">
-                <div><div class="rb-nm">Ridgeline Supply Co.</div><div class="rb-role">Guarantor</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <button class="rb-add">+ Add Account</button>
-            </div>
-
-            <div class="rb-card rb-grp">
-              <div class="rb-grp-head">
-                <span class="slds-icon_container slds-icon-standard-contact" style="display:inline-block">
-                  <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-contact"></use></svg>
-                </span>
-                <div class="slds-text-body_regular">Related Contacts (2)</div>
-              </div>
-              <div class="rb-member is-contact" data-pop="cpa">
-                <div><div class="rb-nm">Priya Raman</div><div class="rb-role">CPA</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <div class="rb-member is-contact" data-pop="atty">
-                <div><div class="rb-nm">Alan Whitfield</div><div class="rb-role">Attorney &middot; trust counsel</div></div>
-                <span class="rb-caret">&#9662;</span>
-              </div>
-              <button class="rb-add">+ Add Contact</button>
-            </div>
-          </div>
-
-          <!-- pop-out -->
-          <div class="rb-pop" id="rb-pop">
-            <button class="rb-pop-close" aria-label="Close">&times;</button>
-            <div class="rb-pop-head">
-              <div class="slds-media slds-media_center">
-                <div class="slds-media__figure">
-                  <span class="slds-icon_container slds-icon-standard-account">
-                    <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
-                  </span>
-                </div>
-                <div class="slds-media__body"><a href="javascript:void(0)" class="slds-text-heading_small" id="pop-name">—</a></div>
-              </div>
-              <div class="kv slds-m-top_x-small">
-                <div><div class="k">Total Financial Accounts</div><div id="pop-tfa">—</div></div>
-                <div><div class="k">Category</div><div id="pop-cat">—</div></div>
-                <div><div class="k">Next Interaction</div><div id="pop-next">—</div></div>
-                <div><div class="k">Last Interaction</div><div id="pop-last">—</div></div>
-              </div>
-            </div>
-            <div class="rb-pop-sec" id="pop-opps-wrap">
-              <h4>Opportunities (<span id="pop-opp-n">0</span>)</h4>
-              <div id="pop-opps"></div>
-              <a href="javascript:void(0)" class="slds-text-body_small">View All</a>
-            </div>
-            <div class="rb-pop-sec" id="pop-sr-wrap">
-              <h4>Service Requests (<span id="pop-sr-n">0</span>)</h4>
-              <div id="pop-sr"></div>
-              <a href="javascript:void(0)" class="slds-text-body_small">View All</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="slds-p-around_small slds-text-body_small slds-text-color_weak">
-        Click any party to open its summary. Roles are multi-value because one person is routinely several things at
-        once — <em>Client;Spouse</em>, <em>Trustee;Beneficiary</em> — and collapsing them to a single role is what
-        breaks beneficial-ownership review later.
-      </div>
-    </div>
-
-    <!-- hierarchy -->
-    <div id="pane-tree" style="display:none">
-      <div class="slds-card">
-        <div class="slds-card__header slds-grid">
-          <header class="slds-media slds-media_center slds-has-flexi-truncate">
-            <div class="slds-media__body">
-              <h2 class="slds-card__header-title">Ownership &amp; control hierarchy</h2>
-              <p class="slds-text-body_small slds-text-color_weak">Beneficial ownership as credit and compliance read it &mdash; who owns what, and who is liable</p>
-            </div>
-          </header>
-        </div>
-        <div class="slds-card__body slds-card__body_inner">
-          <div class="oh">
-            <ul>
-              <li>
-                <div class="oh-node is-root"><div><span class="oh-nm">Hollis Household</span><div class="oh-sub">Relationship root &middot; 4 owning parties</div></div><span class="oh-amt">$1,284,905.42</span></div>
-                <ul>
-                  <li>
-                    <div class="oh-node is-biz"><div><span class="oh-nm">Hollis Cabinetry LLC</span><span class="slds-badge slds-m-left_x-small">ownership 100% recorded</span><div class="oh-sub">Business &middot; operating entity &middot; owned by Dana R. Hollis and the Hollis Family Trust</div></div><span class="oh-amt">$742,118.06</span></div>
-                    <ul>
-                      <li><div class="oh-acct"><span>Business Checking SAMPLE-7734</span><span class="oh-amt">$286,402.19</span></div></li>
-                      <li><div class="oh-acct"><span>Business Operating SAMPLE-7735</span><span class="oh-amt">$126,478.25</span></div></li>
-                      <li><div class="oh-acct"><span>Business Reserve Savings SAMPLE-9018</span><span class="oh-amt">$104,237.62</span></div></li>
-                      <li><div class="oh-acct"><span>Business Money Market SAMPLE-3390</span><span class="oh-amt">$225,000.00</span></div></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="oh-node is-person"><div><span class="oh-nm">Dana R. Hollis</span><span class="slds-badge slds-m-left_x-small">owns 60% of Cabinetry</span><div class="oh-sub">Individual &middot; household member, authorized signer</div></div><span class="oh-amt">$318,470.11</span></div>
-                    <ul>
-                      <li><div class="oh-acct"><span>Personal Checking SAMPLE-4821</span><span class="oh-amt">$42,118.44</span></div></li>
-                      <li><div class="oh-acct"><span>Personal Savings SAMPLE-5502</span><span class="oh-amt">$91,351.67</span></div></li>
-                      <li><div class="oh-acct"><span>18-Month CD SAMPLE-1147</span><span class="oh-amt">$185,000.00</span></div></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="oh-node is-trust"><div><span class="oh-nm">Hollis Family Trust</span><span class="slds-badge slds-m-left_x-small">owns 40% of Cabinetry</span><div class="oh-sub">Trust &middot; household member</div></div><span class="oh-amt">$186,220.00</span></div>
-                    <ul>
-                      <li><div class="oh-acct"><span>36-Month CD SAMPLE-2260</span><span class="oh-amt">$186,220.00</span></div></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="oh-node is-person"><div><span class="oh-nm">Terrence Hollis</span><div class="oh-sub">Individual &middot; authorized signer on Cabinetry, no ownership</div></div><span class="oh-amt">$38,097.25</span></div>
-                    <ul>
-                      <li><div class="oh-acct"><span>Joint Checking SAMPLE-4822</span><span class="oh-amt">$38,097.25</span></div></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <div class="oh-node is-guar"><div><span class="oh-nm">Ridgeline Supply Co.</span><div class="oh-sub">Guarantor of LN-40912 &middot; contingent liability, not ownership</div></div><span class="oh-amt">$0.00</span></div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-          Percentages are ownership <em>of Hollis Cabinetry LLC</em>, not of the household &mdash; a household has members, not owners. Those two shares sum to 100%, which is what closes the beneficial-ownership record. The
-          guarantor sits at the same level but carries no percentage &mdash; a dashed border, because folding contingent
-          liability into an ownership tree is how a relationship total quietly becomes wrong.
-        </footer>
-      </div>
-    </div>
-
-    <!-- household detail panel -->
-    <article class="slds-card slds-m-top_medium" id="hh-panel">
-      <div class="slds-card__header slds-grid">
-        <header class="slds-media slds-media_center slds-has-flexi-truncate">
-          <div class="slds-media__figure">
-            <span class="slds-icon_container slds-icon-standard-account">
-              <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-account"></use></svg>
-            </span>
-          </div>
-          <div class="slds-media__body"><h2 class="slds-card__header-title">Hollis Household</h2></div>
-        </header>
-        <div class="slds-no-flex"><button class="slds-button slds-button_neutral">Edit</button></div>
-      </div>
-      <div class="slds-card__body slds-card__body_inner">
-        <ul class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
-          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
-            <div class="slds-text-title_caps">Total Financial Accounts</div><div class="slds-text-body_regular">$1,284,905</div></li>
-          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
-            <div class="slds-text-title_caps">Wallet Share</div><div class="slds-text-body_regular">38%</div></li>
-          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
-            <div class="slds-text-title_caps">Last Interaction</div><div class="slds-text-body_regular">27 Aug 2026</div></li>
-          <li class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
-            <div class="slds-text-title_caps">Next Interaction</div><div class="slds-text-body_regular">02 Oct 2026 — CD maturity</div></li>
-        </ul>
-
-        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-          <thead><tr class="slds-line-height_reset">
-            <th class="slds-text-title_caps">Member</th>
-            <th class="slds-text-title_caps">Contact</th>
-            <th class="slds-text-title_caps">Interactions</th>
-            <th class="slds-text-title_caps">Activity</th>
-          </tr></thead>
-          <tbody>
-            <tr class="slds-hint-parent">
-              <th scope="row">
-                <div><a href="javascript:void(0)">Dana R. Hollis</a> <span class="slds-badge">PRIMARY</span></div>
-                <div class="slds-text-body_small slds-text-color_weak">Roles Client &middot; Age 51</div>
-              </th>
-              <td><div class="slds-text-body_small">(479) 555-0142 &middot; mobile (479) 555-0188<br>d.hollis@example.com</div></td>
-              <td><div class="slds-text-body_small">Last 27 Aug 2026<br>Next 02 Oct 2026</div></td>
-              <td><div class="slds-text-body_small">Events 2 &middot; Tasks 1 &middot; Calls 4 &middot; Emails 3</div></td>
-            </tr>
-            <tr class="slds-hint-parent">
-              <th scope="row">
-                <div><a href="javascript:void(0)">Terrence Hollis</a></div>
-                <div class="slds-text-body_small slds-text-color_weak">Roles Client;Spouse &middot; Age 49</div>
-              </th>
-              <td><div class="slds-text-body_small">(479) 555-0143<br>t.hollis@example.com</div></td>
-              <td><div class="slds-text-body_small">Last 14 Jun 2026<br>Next —</div></td>
-              <td><div class="slds-text-body_small">Events 0 &middot; Tasks 0 &middot; Calls 1 &middot; Emails 0</div></td>
-            </tr>
-            <tr class="slds-hint-parent">
-              <th scope="row">
-                <div><a href="javascript:void(0)">Marisol Hollis</a></div>
-                <div class="slds-text-body_small slds-text-color_weak">Roles Dependent &middot; Age 19</div>
-              </th>
-              <td><div class="slds-text-body_small">—</div></td>
-              <td><div class="slds-text-body_small">Last —<br>Next —</div></td>
-              <td><div class="slds-text-body_small">Events 0 &middot; Tasks 0 &middot; Calls 0 &middot; Emails 0</div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-        Wallet share is an estimate against reported outside holdings, not a measured figure — labelled as such so
-        nobody quotes it in a credit memo.
-      </footer>
-    </article>
-  </section>
-
-
-  <!-- ══ VIEW · ARC (Actionable Relationship Center) ════════════ -->
-  <section class="view" id="view-arc">
-    <div class="slds-page-header">
-      <div class="slds-page-header__row">
-        <div class="slds-page-header__col-title">
-          <div class="slds-media">
-            <div class="slds-media__figure">
-              <span class="slds-icon_container slds-icon-standard-household">
-                <svg class="slds-icon slds-page-header__icon" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
-              </span>
-            </div>
-            <div class="slds-media__body">
-              <p class="slds-text-title_caps slds-line-height_reset">Actionable Relationship Center</p>
-              <h1><span class="slds-page-header__title slds-truncate">Hollis Household</span></h1>
-              <p class="slds-text-body_small">Expand any record to walk the relationship one hop at a time</p>
-            </div>
-          </div>
-        </div>
-        <div class="slds-page-header__col-actions">
-          <div class="slds-page-header__controls">
-            <div class="slds-page-header__control">
-              <div class="slds-form-element">
-                <label class="slds-checkbox_toggle slds-grid">
-                  <span class="slds-form-element__label slds-m-bottom_none">Show Related Lists</span>
-                  <input type="checkbox" id="arc-toggle" checked>
-                  <span class="slds-checkbox_faux_container" aria-live="assertive">
-                    <span class="slds-checkbox_faux"></span>
-                    <span class="slds-checkbox_on">On</span><span class="slds-checkbox_off">Off</span>
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="arc-shell">
-      <div class="arc-canvas">
-        <div class="slds-m-bottom_small">
-          <span class="slds-icon_container slds-icon-standard-household" style="vertical-align:middle">
-            <svg class="slds-icon slds-icon_x-small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
-          </span>
-          <a href="javascript:void(0)" class="slds-text-body_regular slds-m-left_xx-small" id="arc-root-name">Hollis Household</a>
-        </div>
-        <div class="arc-cols" id="arc-cols"></div>
-      </div>
-
-      <aside class="arc-side">
-        <div class="slds-media slds-media_center">
-          <div class="slds-media__figure">
-            <span class="slds-icon_container slds-icon-standard-household">
-              <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="#s-household"></use></svg>
-            </span>
-          </div>
-          <div class="slds-media__body"><h2 class="slds-text-heading_small" id="arc-sel-name">—</h2></div>
-        </div>
-        <button class="slds-button slds-button_neutral slds-m-top_x-small">+ Follow</button>
-
-        <div class="arc-bc" id="arc-bc">
-          <div style="flex:1;min-width:0">
-            <div class="nm slds-truncate" id="arc-bc-a">Hollis Household</div>
-            <div class="rl" id="arc-bc-ar">—</div>
-          </div>
-          <svg class="slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true"><use xlink:href="#s-partners"></use></svg>
-          <div style="flex:1;min-width:0">
-            <div class="nm slds-truncate" id="arc-bc-b">—</div>
-            <div class="rl" id="arc-bc-br">—</div>
-          </div>
-        </div>
-
-        <div class="slds-tabs_default">
-          <ul class="slds-tabs_default__nav" role="tablist">
-            <li class="slds-tabs_default__item slds-is-active" role="presentation" data-arctab="details"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Details</a></li>
-            <li class="slds-tabs_default__item" role="presentation" data-arctab="participants"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Participants</a></li>
-            <li class="slds-tabs_default__item" role="presentation" data-arctab="insights"><a class="slds-tabs_default__link" href="javascript:void(0)" role="tab">Insights</a></li>
-          </ul>
-          <div class="slds-tabs_default__content slds-show" id="arctab-details" role="tabpanel"></div>
-          <div class="slds-tabs_default__content slds-hide" id="arctab-participants" role="tabpanel"></div>
-          <div class="slds-tabs_default__content slds-hide" id="arctab-insights" role="tabpanel"></div>
-        </div>
-      </aside>
-    </div>
-
-    <p class="slds-text-body_small slds-text-color_weak slds-p-around_small">
-      ARC answers a different question from the relationship builder. The builder shows the household you already
-      know about; ARC is for walking outward one hop at a time when you don&rsquo;t — which is how a second household,
-      a guarantor, or an unrecorded beneficial owner actually surfaces.
-    </p>
-  </section>
-
-  <!-- ══ VIEW 4 · DEPOSIT ACCOUNTS (Checking/Savings/MMA/CD/Other) ══ -->
-  <section class="view" id="view-deposits">
-    <div class="slds-page-header">
-      <div class="slds-page-header__row">
-        <div class="slds-page-header__col-title">
-          <div class="slds-media">
-            <div class="slds-media__figure">
-              <span class="slds-icon_container slds-icon-standard-product-item">
-                <svg class="slds-icon slds-page-header__icon" aria-hidden="true">
-                  <use xlink:href="#s-account_info"></use>
-                </svg>
-              </span>
-            </div>
-            <div class="slds-media__body">
-              <p class="slds-text-title_caps slds-line-height_reset">Hollis Household</p>
-              <h1><span class="slds-page-header__title slds-truncate">Deposit Accounts</span></h1>
-              <p class="slds-text-body_small">9 accounts across 4 parties &middot; $1,284,905.42 total</p>
-            </div>
-          </div>
-        </div>
-        <div class="slds-page-header__col-actions">
-          <div class="slds-page-header__controls">
-            <div class="slds-page-header__control">
-              <button class="slds-button slds-button_neutral">Statements</button>
-              <button class="slds-button slds-button_brand">Open Account</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slds-grid slds-wrap slds-gutters">
-      <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
-        <nav class="slds-nav-vertical slds-box slds-box_x-small slds-theme_default" aria-label="Account types">
-          <div class="slds-nav-vertical__section">
-            <h2 class="slds-nav-vertical__title slds-text-title_caps">Account type</h2>
-            <ul>
-              <li class="slds-nav-vertical__item slds-is-active" data-dep="checking"><a href="javascript:void(0)" class="slds-nav-vertical__action">Checking <span class="slds-badge slds-m-left_x-small">3</span></a></li>
-              <li class="slds-nav-vertical__item" data-dep="savings"><a href="javascript:void(0)" class="slds-nav-vertical__action">Savings <span class="slds-badge slds-m-left_x-small">2</span></a></li>
-              <li class="slds-nav-vertical__item" data-dep="mma"><a href="javascript:void(0)" class="slds-nav-vertical__action">Money Market <span class="slds-badge slds-m-left_x-small">1</span></a></li>
-              <li class="slds-nav-vertical__item" data-dep="cd"><a href="javascript:void(0)" class="slds-nav-vertical__action">Certificates of Deposit <span class="slds-badge slds-m-left_x-small">2</span></a></li>
-              <li class="slds-nav-vertical__item" data-dep="other"><a href="javascript:void(0)" class="slds-nav-vertical__action">Other &amp; Non-deposit <span class="slds-badge slds-m-left_x-small">3</span></a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-
-      <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12">
-
-        <!-- CHECKING -->
-        <div class="dep is-on" id="dep-checking">
-          <article class="slds-card">
-            <div class="slds-card__header slds-grid">
-              <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                <div class="slds-media__body"><h2 class="slds-card__header-title">Checking &middot; $453,617.88 across 3 accounts</h2></div>
-              </header>
-            </div>
-            <div class="slds-card__body">
-              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead><tr class="slds-line-height_reset">
-                  <th class="slds-text-title_caps">Account</th><th class="slds-text-title_caps">Owner</th>
-                  <th class="slds-text-title_caps">Product</th><th class="slds-text-title_caps">Available</th>
-                  <th class="slds-text-title_caps">Current</th><th class="slds-text-title_caps">Status</th>
-                </tr></thead>
-                <tbody>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Checking SAMPLE-7734</a></th><td>Hollis Cabinetry LLC</td><td>Commercial Analysis</td><td>$284,902.19</td><td>$286,402.19</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Operating SAMPLE-7735</a></th><td>Hollis Cabinetry LLC</td><td>Commercial Analysis</td><td>$126,478.25</td><td>$126,478.25</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Joint Checking SAMPLE-4822</a></th><td>Terrence &amp; Dana Hollis</td><td>Consumer Interest</td><td>$38,097.25</td><td>$38,097.25</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
-          <article class="slds-card slds-m-top_small">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">Business Checking SAMPLE-7734 — product terms</h2></div>
-            <div class="slds-card__body slds-card__body_inner">
-              <dl class="slds-list_horizontal slds-wrap">
-                <dt class="slds-item_label slds-text-color_weak">Earnings credit rate</dt><dd class="slds-item_detail">1.85% &middot; applied to analysis fees</dd>
-                <dt class="slds-item_label slds-text-color_weak">Monthly analysis fees</dt><dd class="slds-item_detail">$214.60 &middot; fully offset by credit</dd>
-                <dt class="slds-item_label slds-text-color_weak">Overdraft protection</dt><dd class="slds-item_detail">Linked to Business Reserve SAMPLE-9018</dd>
-                <dt class="slds-item_label slds-text-color_weak">Signers</dt><dd class="slds-item_detail">Dana R. Hollis &middot; Terrence Hollis</dd>
-                <dt class="slds-item_label slds-text-color_weak">Positive pay</dt><dd class="slds-item_detail">Enabled &middot; exceptions reviewed daily 10:00 CT</dd>
-              </dl>
-            </div>
-          </article>
-        </div>
-
-        <!-- SAVINGS -->
-        <div class="dep" id="dep-savings">
-          <article class="slds-card">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">Savings &middot; $195,589.29 across 2 accounts</h2></div>
-            <div class="slds-card__body">
-              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead><tr class="slds-line-height_reset">
-                  <th class="slds-text-title_caps">Account</th><th class="slds-text-title_caps">Owner</th>
-                  <th class="slds-text-title_caps">APY</th><th class="slds-text-title_caps">Balance</th>
-                  <th class="slds-text-title_caps">Withdrawals this cycle</th><th class="slds-text-title_caps">Status</th>
-                </tr></thead>
-                <tbody>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Reserve SAMPLE-9018</a></th><td>Hollis Cabinetry LLC</td><td>2.40%</td><td>$104,237.62</td><td>1 of 6</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Personal Savings SAMPLE-5502</a></th><td>Dana R. Hollis</td><td>2.15%</td><td>$91,351.67</td><td>3 of 6</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-              Withdrawal counter reflects bank policy, not Regulation D — the Fed removed the six-transfer limit in
-              April 2020. Surfacing it as policy rather than regulation was a deliberate copy decision.
-            </footer>
-          </article>
-        </div>
-
-        <!-- MONEY MARKET -->
-        <div class="dep" id="dep-mma">
-          <article class="slds-card">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">Money Market &middot; $225,000.00 &middot; 1 account</h2></div>
-            <div class="slds-card__body">
-              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead><tr class="slds-line-height_reset">
-                  <th class="slds-text-title_caps">Account</th><th class="slds-text-title_caps">Owner</th>
-                  <th class="slds-text-title_caps">Blended APY</th><th class="slds-text-title_caps">Balance</th><th class="slds-text-title_caps">Status</th>
-                </tr></thead>
-                <tbody>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Business Money Market SAMPLE-3390</a></th><td>Hollis Cabinetry LLC</td><td>3.42%</td><td>$225,000.00</td><td><span class="slds-badge slds-theme_success">Active</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
-          <article class="slds-card slds-m-top_small">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">Rate tiers</h2></div>
-            <div class="slds-card__body">
-              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead><tr class="slds-line-height_reset">
-                  <th class="slds-text-title_caps">Tier</th><th class="slds-text-title_caps">Balance range</th>
-                  <th class="slds-text-title_caps">APY</th><th class="slds-text-title_caps">Applied to</th>
-                </tr></thead>
-                <tbody>
-                  <tr><th scope="row">1</th><td>$0 – $24,999.99</td><td>1.10%</td><td>—</td></tr>
-                  <tr><th scope="row">2</th><td>$25,000 – $99,999.99</td><td>2.65%</td><td>—</td></tr>
-                  <tr class="slds-is-selected"><th scope="row">3</th><td>$100,000 – $249,999.99</td><td>3.42%</td><td><strong>$225,000.00</strong></td></tr>
-                  <tr><th scope="row">4</th><td>$250,000+</td><td>3.75%</td><td>—</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-              Showing which tier the balance actually lands in was the single most requested change from officers —
-              the prior screen showed the rate card with no indication of where the customer sat.
-            </footer>
-          </article>
-        </div>
-
-        <!-- CD -->
-        <div class="dep" id="dep-cd">
-          <article class="slds-card">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">Certificates of Deposit &middot; $371,220.00 across 2 accounts</h2></div>
-            <div class="slds-card__body">
-              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead><tr class="slds-line-height_reset">
-                  <th class="slds-text-title_caps">Certificate</th><th class="slds-text-title_caps">Owner</th>
-                  <th class="slds-text-title_caps">Term</th><th class="slds-text-title_caps">APY</th>
-                  <th class="slds-text-title_caps">Balance</th><th class="slds-text-title_caps">Matures</th>
-                  <th class="slds-text-title_caps">Renewal</th>
-                </tr></thead>
-                <tbody>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">18-Month CD SAMPLE-1147</a></th><td>Dana R. Hollis</td><td>18 mo</td><td>4.10%</td><td>$185,000.00</td><td><span class="slds-badge slds-theme_warning">02 Oct 2026 — 24 days</span></td><td>Auto-renew</td></tr>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">36-Month CD SAMPLE-2260</a></th><td>Hollis Family Trust</td><td>36 mo</td><td>4.35%</td><td>$186,220.00</td><td>19 Jul 2028</td><td>Notify at maturity</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
-          <article class="slds-card slds-m-top_small">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">18-Month CD SAMPLE-1147 — maturity handling</h2></div>
-            <div class="slds-card__body slds-card__body_inner">
-              <dl class="slds-list_horizontal slds-wrap">
-                <dt class="slds-item_label slds-text-color_weak">Grace period</dt><dd class="slds-item_detail">10 calendar days from maturity</dd>
-                <dt class="slds-item_label slds-text-color_weak">Early withdrawal penalty</dt><dd class="slds-item_detail">180 days simple interest on amount withdrawn</dd>
-                <dt class="slds-item_label slds-text-color_weak">Renewal rate (indicative)</dt><dd class="slds-item_detail">3.85% &middot; not guaranteed until maturity date</dd>
-                <dt class="slds-item_label slds-text-color_weak">Interest disposition</dt><dd class="slds-item_detail">Credit to Personal Checking SAMPLE-4821</dd>
-                <dt class="slds-item_label slds-text-color_weak">Officer action</dt><dd class="slds-item_detail"><span class="slds-badge slds-theme_warning">Retention call due</span> — inside 30-day window</dd>
-              </dl>
-            </div>
-            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-              Maturity inside 30 days promotes the certificate into the officer's task list. Retention is the whole
-              reason this screen exists.
-            </footer>
-          </article>
-        </div>
-
-        <!-- OTHER -->
-        <div class="dep" id="dep-other">
-          <article class="slds-card">
-            <div class="slds-card__header"><h2 class="slds-card__header-title">Other &amp; non-deposit &middot; 3 records</h2></div>
-            <div class="slds-card__body">
-              <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                <thead><tr class="slds-line-height_reset">
-                  <th class="slds-text-title_caps">Record</th><th class="slds-text-title_caps">Owner</th>
-                  <th class="slds-text-title_caps">Type</th><th class="slds-text-title_caps">Balance / Limit</th>
-                  <th class="slds-text-title_caps">Status</th>
-                </tr></thead>
-                <tbody>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Term Loan #LN-40912</a></th><td>Hollis Cabinetry LLC</td><td>Commercial loan &middot; guaranteed</td><td>$1,150,000.00 outstanding</td><td><span class="slds-badge slds-theme_success">Current</span></td></tr>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">HELOC SAMPLE-6604</a></th><td>Dana &amp; Terrence Hollis</td><td>Revolving line</td><td>$0.00 drawn of $150,000</td><td><span class="slds-badge slds-theme_success">Open</span></td></tr>
-                  <tr class="slds-hint-parent"><th scope="row"><a href="javascript:void(0)">Safe Deposit Box 214-B</a></th><td>Hollis Family Trust</td><td>Non-deposit service</td><td>—</td><td><span class="slds-badge">Annual fee due 01 Dec</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-            <footer class="slds-card__footer slds-text-body_small slds-text-color_weak">
-              Non-deposit records sit here rather than in the deposit tabs so totals stay honest — a HELOC limit is not
-              a deposit, and a safe deposit box has no balance at all. Mixing them inflates the relationship number.
-            </footer>
-          </article>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  </div><!-- /padding -->
-</div><!-- /slds-scope -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close">×</button>
+  <img src="" alt="">
+</div>
 
 <script>
-(function(){
-  function show(view){
-    document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('is-on', v.id === 'view-' + view); });
-    document.querySelectorAll('.slds-context-bar__item').forEach(function(li){
-      li.classList.toggle('slds-is-active', li.getAttribute('data-nav') === view);
+  // lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = lightbox.querySelector('img');
+  document.querySelectorAll('.gallery-item, .screen-open').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      lbImg.src = btn.dataset.src;
+      lbImg.alt = btn.querySelector('img').alt;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden','false');
     });
-    window.scrollTo(0,0);
-    if(view === 'relationships') rbLinks();
+  });
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden','true');
+    lbImg.src = '';
   }
-  document.querySelectorAll('[data-nav]').forEach(function(li){
-    li.addEventListener('click', function(e){ e.preventDefault(); show(li.getAttribute('data-nav')); });
-  });
-  document.addEventListener('click', function(e){
-    var t = e.target.closest('[data-goto]');
-    if(t){ e.preventDefault(); show(t.getAttribute('data-goto')); }
-  });
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
 
-
-  // relationship builder — connectors drawn from live geometry so they always meet
-  function rbLinks(){
-    var host = document.getElementById('rb-links');
-    var root = document.getElementById('rb-root');
-    var branch = document.getElementById('rb-branch');
-    if(!host || !root || !branch || !host.offsetParent) return;   // not laid out yet
-    host.innerHTML = '';
-    var hr = host.getBoundingClientRect();
-    if(!hr.width) return;
-    var railY = Math.round(hr.height / 2);
-    var rootX = Math.round(root.getBoundingClientRect().left + root.offsetWidth / 2 - hr.left);
-    var xs = Array.prototype.map.call(branch.children, function(c){
-      var r = c.getBoundingClientRect();
-      return Math.round(r.left + r.width / 2 - hr.left);
-    });
-    function seg(l,t,w,h){
-      var d = document.createElement('div');
-      d.className = 'rb-seg';
-      d.style.left = l + 'px'; d.style.top = t + 'px';
-      d.style.width = w + 'px'; d.style.height = h + 'px';
-      host.appendChild(d);
-    }
-    seg(rootX, 0, 1, railY + 1);                                   // stem down from the root card
-    var lo = Math.min.apply(null, xs.concat([rootX]));
-    var hi = Math.max.apply(null, xs.concat([rootX]));
-    seg(lo, railY, hi - lo, 1);                                    // horizontal rail
-    xs.forEach(function(x){ seg(x, railY, 1, hr.height - railY); });// drops into each column
-  }
-  window.addEventListener('resize', rbLinks);
-
-  // relationship map: graph <-> hierarchy
-  var bg = document.getElementById('btn-graph'), bt = document.getElementById('btn-tree');
-  var pg = document.getElementById('pane-graph'), pt = document.getElementById('pane-tree');
-  function mode(graph){
-    pg.style.display = graph ? '' : 'none';
-    pt.style.display = graph ? 'none' : '';
-    bg.className = 'slds-button ' + (graph ? 'slds-button_brand' : 'slds-button_neutral');
-    bt.className = 'slds-button ' + (graph ? 'slds-button_neutral' : 'slds-button_brand');
-  }
-  bg.addEventListener('click', function(){ mode(true); rbLinks(); });
-  bt.addEventListener('click', function(){ mode(false); });
-
-
-  // relationship pop-out (FSC-style summary card)
-  var POP = {
-    dana:      {n:'Dana R. Hollis', tfa:'$318,470.11', cat:'Gold', next:'02 Oct 2026', last:'27 Aug 2026',
-                opps:[['Wealth transfer review','Prospecting','$0',false]], sr:[]},
-    terrence:  {n:'Terrence Hollis', tfa:'$38,097.25', cat:'Silver', next:'—', last:'14 Jun 2026', opps:[], sr:[]},
-    marisol:   {n:'Marisol Hollis', tfa:'$0.00', cat:'—', next:'—', last:'—', opps:[], sr:[]},
-    cabinetry: {n:'Hollis Cabinetry LLC', tfa:'$742,118.06', cat:'Platinum', next:'19 Sep 2026', last:'27 Aug 2026',
-                opps:[['Equipment finance — line increase','Proposal','$400,000',true],
-                      ['Treasury management upgrade','Prospecting','$18,000',false]],
-                sr:[['00041182','Dana R. Hollis','Positive pay exception workflow','Medium']]},
-    trust:     {n:'Hollis Family Trust', tfa:'$186,220.00', cat:'Gold', next:'—', last:'03 Mar 2026',
-                opps:[['Successor trustee documentation','Qualification','$0',false]],
-                sr:[['00041044','Alan Whitfield','Beneficiary designation update','High']]},
-    ridgeline: {n:'Ridgeline Supply Co.', tfa:'$0.00', cat:'—', next:'—', last:'18 Jan 2026',
-                opps:[], sr:[['00040911','Priya Raman','Annual guarantor financials due','Low']]},
-    vance:     {n:'Vance Household', tfa:'$412,300.00', cat:'Silver', next:'—', last:'19 Feb 2026',
-                opps:[['Household consolidation review','Qualification','$0',false]], sr:[]},
-    cpa:       {n:'Priya Raman', tfa:'—', cat:'CPA', next:'—', last:'11 Aug 2026', opps:[], sr:[]},
-    atty:      {n:'Alan Whitfield', tfa:'—', cat:'Attorney', next:'—', last:'03 Mar 2026', opps:[], sr:[]}
-  };
-  var pop = document.getElementById('rb-pop');
-  function fill(k){
-    var d = POP[k]; if(!d) return;
-    document.getElementById('pop-name').textContent = d.n;
-    document.getElementById('pop-tfa').textContent  = d.tfa;
-    document.getElementById('pop-cat').textContent  = d.cat;
-    document.getElementById('pop-next').textContent = d.next;
-    document.getElementById('pop-last').textContent = d.last;
-    var oc = document.getElementById('pop-opps'); oc.innerHTML = '';
-    d.opps.forEach(function(o){
-      oc.insertAdjacentHTML('beforeend',
-        '<div class="slds-m-bottom_x-small"><a href="javascript:void(0)" class="slds-text-body_small">' + o[0] + '</a>' +
-        '<div class="kv slds-m-top_xxx-small"><div><span class="k">Deal Slowing:</span> ' + (o[3] ? '&#9745;' : '&#9744;') + '</div>' +
-        '<div><span class="k">Stage:</span> ' + o[1] + '</div>' +
-        '<div><span class="k">Amount:</span> ' + o[2] + '</div></div></div>');
-    });
-    document.getElementById('pop-opp-n').textContent = d.opps.length + (d.opps.length ? '+' : '');
-    document.getElementById('pop-opps-wrap').style.display = d.opps.length ? '' : 'none';
-    var sc = document.getElementById('pop-sr'); sc.innerHTML = '';
-    d.sr.forEach(function(r){
-      sc.insertAdjacentHTML('beforeend',
-        '<div class="slds-m-bottom_x-small"><a href="javascript:void(0)" class="slds-text-body_small">' + r[0] + '</a>' +
-        '<div class="kv slds-m-top_xxx-small"><div><span class="k">Contact:</span> ' + r[1] + '</div>' +
-        '<div><span class="k">Priority:</span> ' + r[3] + '</div></div>' +
-        '<div class="slds-text-body_small"><span class="k">Subject:</span> ' + r[2] + '</div></div>');
-    });
-    document.getElementById('pop-sr-n').textContent = d.sr.length;
-    document.getElementById('pop-sr-wrap').style.display = d.sr.length ? '' : 'none';
-  }
-  document.querySelectorAll('[data-pop]').forEach(function(el){
-    el.addEventListener('click', function(e){
-      e.stopPropagation();
-      fill(el.getAttribute('data-pop'));
-      pop.classList.add('is-on');           // show first so it can be measured
-      var host = document.querySelector('.rb');
-      var hr = host.getBoundingClientRect(), er = el.getBoundingClientRect();
-      var left = er.left - hr.left + er.width / 2 - 40;
-      left = Math.max(0, Math.min(left, host.offsetWidth - pop.offsetWidth));
-      var top = er.top - hr.top - 8;
-      top = Math.max(0, Math.min(top, host.offsetHeight - pop.offsetHeight));
-      pop.style.left = left + 'px';
-      pop.style.top  = top + 'px';
+  // queue mock interactivity (loopwork only — harmless if absent)
+  document.querySelectorAll('.queue-row .approve').forEach(function(b){
+    b.addEventListener('click', function(){
+      var row = b.closest('.queue-row');
+      row.classList.add('is-done');
+      row.querySelector('.status-note').textContent = 'Approved ✓';
     });
   });
-  pop.querySelector('.rb-pop-close').addEventListener('click', function(){ pop.classList.remove('is-on'); });
-  document.addEventListener('click', function(e){ if(!pop.contains(e.target)) pop.classList.remove('is-on'); });
-
-
-
-  // account-detail tabs (Details / Related Parties)
-  document.querySelectorAll('[data-dtab]').forEach(function(li){
-    li.addEventListener('click', function(e){
-      e.preventDefault();
-      var k = li.getAttribute('data-dtab');
-      document.querySelectorAll('[data-dtab]').forEach(function(x){ x.classList.toggle('slds-is-active', x === li); });
-      ['details','parties'].forEach(function(t){
-        var el = document.getElementById('dtab-' + t);
-        el.classList.toggle('slds-show', t === k);
-        el.classList.toggle('slds-hide', t !== k);
-      });
+  document.querySelectorAll('.queue-row .escalate').forEach(function(b){
+    b.addEventListener('click', function(){
+      var row = b.closest('.queue-row');
+      row.classList.add('is-done');
+      row.querySelector('.status-note').textContent = 'Escalated ↑';
     });
   });
-
-  // activity / chatter rail
-  document.querySelectorAll('[data-rail]').forEach(function(li){
-    li.addEventListener('click', function(e){
-      e.preventDefault();
-      var k = li.getAttribute('data-rail');
-      document.querySelectorAll('[data-rail]').forEach(function(x){ x.classList.toggle('slds-is-active', x === li); });
-      ['activity','chatter'].forEach(function(n){
-        var el = document.getElementById('rail-' + n);
-        el.classList.toggle('slds-show', n === k);
-        el.classList.toggle('slds-hide', n !== k);
-      });
-    });
-  });
-  var PLACE = {event:'Create new event…', task:'Create new task…', call:'Log a call…', email:'Subject'};
-  document.querySelectorAll('[data-compose]').forEach(function(li){
-    li.addEventListener('click', function(e){
-      e.preventDefault();
-      var k = li.getAttribute('data-compose');
-      document.querySelectorAll('[data-compose]').forEach(function(x){ x.classList.toggle('slds-is-active', x === li); });
-      document.getElementById('compose-input').placeholder = PLACE[k];
-    });
-  });
-
-
-  // ── ARC (Actionable Relationship Center) ───────────────────────────
-  var ARCN = {
-    'hollis-hh':{n:'Hollis Household',ic:'s-household',rel:'Primary household',tfa:'$1,284,905.42',aum:'$412,880.00',next:'02 Oct 2026',last:'27 Aug 2026',
-      parts:['Dana R. Hollis — Client','Terrence Hollis — Client;Spouse','Marisol Hollis — Dependent'],
-      ins:['CD SAMPLE-1147 matures in 24 days — $185,000 at risk','Wallet share 38% (estimate) — deposit concentration in one entity'],
-      lists:[{t:'Group Relationships',ic:'s-household',items:['vance-hh']},
-             {t:'Related Accounts',ic:'s-account_info',items:['cabinetry','ridgeline']},
-             {t:'Member Relationships',ic:'s-account',items:['trust']},
-             {t:'Members',ic:'s-contact',items:['dana','terrence','marisol']},
-             {t:'Household Insurance',ic:'s-account',items:[]}]},
-    'vance-hh':{n:'Vance Household',ic:'s-household',rel:'Extended family',tfa:'$412,300.00',aum:'$0.00',next:'—',last:'19 Feb 2026',
-      parts:['Ruth Vance — Client','Ellis Vance — Client;Spouse'],
-      ins:['No assigned relationship officer','Referral source: Dana R. Hollis (parent household)'],
-      lists:[{t:'Group Relationships',ic:'s-household',items:['hollis-hh']},
-             {t:'Related Accounts',ic:'s-account_info',items:[]},
-             {t:'Member Relationships',ic:'s-account',items:[]},
-             {t:'Members',ic:'s-contact',items:['ruth','ellis']},
-             {t:'Household Insurance',ic:'s-account',items:[]}]},
-    'cabinetry':{n:'Hollis Cabinetry LLC',ic:'s-account_info',rel:'Operating entity',tfa:'$742,118.06',aum:'$0.00',next:'19 Sep 2026',last:'27 Aug 2026',ph:'(479) 555-0110',
-      parts:['Dana R. Hollis — Owner;Signer 60%','Hollis Family Trust — Owner 40%','Terrence Hollis — Authorized signer'],
-      ins:['Equipment finance proposal flagged Deal Slowing','Guarantor financials stale — blocks re-underwrite of LN-40912'],
-      lists:[{t:'Group Relationships',ic:'s-household',items:[]},
-             {t:'Related Accounts',ic:'s-account_info',items:['ridgeline']},
-             {t:'Member Relationships',ic:'s-account',items:['trust']},
-             {t:'Members',ic:'s-contact',items:['dana','terrence']},
-             {t:'Household Insurance',ic:'s-account',items:[]}]},
-    'ridgeline':{n:'Ridgeline Supply Co.',ic:'s-account_info',rel:'Guarantor',tfa:'$0.00',aum:'$0.00',next:'—',last:'18 Jan 2026',ph:'(479) 555-0164',
-      parts:['Guarantor of LN-40912 — $1,150,000 outstanding'],
-      ins:['Contingent liability only — no deposit relationship','2026 financials outstanding since 18 Jan'],
-      lists:[{t:'Group Relationships',ic:'s-household',items:[]},
-             {t:'Related Accounts',ic:'s-account_info',items:['cabinetry']},
-             {t:'Member Relationships',ic:'s-account',items:[]},
-             {t:'Members',ic:'s-contact',items:[]},
-             {t:'Household Insurance',ic:'s-account',items:[]}]},
-    'trust':{n:'Hollis Family Trust',ic:'s-account',rel:'Beneficial owner',tfa:'$186,220.00',aum:'$186,220.00',next:'—',last:'03 Mar 2026',
-      parts:['Alan Whitfield — Trust counsel','Marisol Hollis — Beneficiary'],
-      ins:['Successor trustee documentation incomplete','36-month CD SAMPLE-2260 matures 19 Jul 2028'],
-      lists:[{t:'Group Relationships',ic:'s-household',items:[]},
-             {t:'Related Accounts',ic:'s-account_info',items:['cabinetry']},
-             {t:'Member Relationships',ic:'s-account',items:[]},
-             {t:'Members',ic:'s-contact',items:['marisol']},
-             {t:'Household Insurance',ic:'s-account',items:[]}]},
-    'dana':{n:'Dana R. Hollis',ic:'s-contact',rel:'Client',tfa:'$318,470.11',aum:'$318,470.11',next:'02 Oct 2026',last:'27 Aug 2026',ph:'(479) 555-0142',pri:1,
-      parts:['Primary member of Hollis Household'],ins:['Asked about CD rates twice this quarter'],lists:[]},
-    'terrence':{n:'Terrence Hollis',ic:'s-contact',rel:'Client;Spouse',tfa:'$38,097.25',aum:'$38,097.25',next:'—',last:'14 Jun 2026',ph:'(479) 555-0143',
-      parts:['Authorized signer on Hollis Cabinetry LLC'],ins:['No interaction in 12 weeks'],lists:[]},
-    'marisol':{n:'Marisol Hollis',ic:'s-contact',rel:'Dependent',tfa:'$0.00',aum:'$0.00',next:'—',last:'—',
-      parts:['Beneficiary of Hollis Family Trust'],ins:['Age 19 — student account eligibility'],lists:[]},
-    'ruth':{n:'Ruth Vance',ic:'s-contact',rel:'Client',tfa:'$286,300.00',aum:'$0.00',next:'—',last:'19 Feb 2026',ph:'(479) 555-0198',pri:1,
-      parts:['Primary member of Vance Household'],ins:['Mother of Dana R. Hollis'],lists:[]},
-    'ellis':{n:'Ellis Vance',ic:'s-contact',rel:'Client;Spouse',tfa:'$126,000.00',aum:'$0.00',next:'—',last:'19 Feb 2026',
-      parts:['Joint owner, Vance Household'],ins:['No digital banking enrollment'],lists:[]}
-  };
-  var arcRoot='hollis-hh', arcExpanded=null, arcSel='hollis-hh';
-
-  function arcListHTML(key, colIdx){
-    var d=ARCN[key]; if(!d || !d.lists.length) return '';
-    var showEmpty=document.getElementById('arc-toggle').checked, h='';
-    d.lists.forEach(function(L){
-      if(!L.items.length && !showEmpty) return;
-      h += '<div class="arc-list"><div class="arc-list-head">'+
-           '<svg class="slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true"><use xlink:href="#u-chevrondown"></use></svg>'+
-           '<span class="slds-icon_container slds-icon-standard-account"><svg class="slds-icon slds-icon_xx-small" aria-hidden="true"><use xlink:href="#'+L.ic+'"></use></svg></span>'+
-           '<span class="arc-ttl slds-truncate">'+L.t+' ('+L.items.length+')</span>'+
-           '<button class="slds-button slds-button_neutral slds-button_stretch" style="width:auto;padding:2px 10px;font-size:12px">New</button></div>';
-      L.items.forEach(function(k){
-        var it=ARCN[k]; if(!it) return;
-        h += '<div class="arc-node'+(arcSel===k?' is-sel':'')+'" data-arc="'+k+'" data-col="'+colIdx+'">'+
-             '<span class="arc-caret">▾</span>'+
-             '<div class="arc-nm slds-truncate">'+it.n+'</div>'+
-             (it.pri?'<span class="slds-badge slds-m-top_xxx-small">Primary Member</span>':'')+
-             '<div class="arc-kv"><span class="k">Account</span><span class="slds-truncate">'+it.n+'</span>'+
-             (it.ph ? '<span class="k">Phone</span><span>'+it.ph+'</span>'
-                    : '<span class="k">Total Fin.</span><span>'+it.tfa+'</span>')+'</div>'+
-             (ARCN[k].lists.length ? '<button class="arc-expand" data-arcx="'+k+'" title="Expand"><svg class="slds-icon slds-icon_xx-small slds-icon-text-default" aria-hidden="true"><use xlink:href="#u-expand_alt"></use></svg></button>' : '')+
-             '</div>';
-      });
-      h += '</div>';
-    });
-    return h;
-  }
-
-  function arcSide(){
-    var d=ARCN[arcSel]; if(!d) return;
-    document.getElementById('arc-sel-name').textContent=d.n;
-    document.getElementById('arc-bc-a').textContent=ARCN[arcRoot].n;
-    document.getElementById('arc-bc-ar').textContent=ARCN[arcRoot].rel;
-    document.getElementById('arc-bc-b').textContent=d.n;
-    document.getElementById('arc-bc-br').textContent=d.rel;
-    document.getElementById('arctab-details').innerHTML =
-      '<div class="slds-p-around_small">'+
-      [['Account Name',d.n],['Relationship',d.rel],['Total Financial Accounts',d.tfa],['AUM',d.aum],
-       ['Next Interaction',d.next],['Last Interaction',d.last]].map(function(r){
-        return '<div class="slds-form-element slds-form-element_readonly slds-m-bottom_x-small">'+
-               '<span class="slds-form-element__label">'+r[0]+'</span>'+
-               '<div class="slds-form-element__control"><div class="slds-form-element__static">'+r[1]+'</div></div></div>';
-      }).join('')+'</div>';
-    document.getElementById('arctab-participants').innerHTML =
-      '<ul class="slds-has-dividers_bottom-space slds-p-around_small">'+
-      d.parts.map(function(x){return '<li class="slds-item slds-text-body_small slds-p-vertical_xx-small">'+x+'</li>';}).join('')+'</ul>';
-    document.getElementById('arctab-insights').innerHTML =
-      '<ul class="slds-has-dividers_bottom-space slds-p-around_small">'+
-      d.ins.map(function(x){return '<li class="slds-item slds-text-body_small slds-p-vertical_xx-small">'+x+'</li>';}).join('')+'</ul>';
-  }
-
-  function arcDraw(){
-    var cols=document.getElementById('arc-cols');
-    cols.innerHTML='<div class="arc-col">'+arcListHTML(arcRoot,0)+'</div>'+
-                   (arcExpanded ? '<div class="arc-col">'+arcListHTML(arcExpanded,1)+'</div>' : '');
-    arcSide();
-    // elbow connector from the expanded node to the second column
-    var old=document.querySelectorAll('.arc-link'); old.forEach(function(o){o.remove();});
-    if(!arcExpanded) return;
-    var src=cols.querySelector('.arc-node[data-arc="'+arcExpanded+'"][data-col="0"]');
-    var tgt=cols.children[1];
-    if(!src||!tgt) return;
-    var cr=cols.getBoundingClientRect(), sr=src.getBoundingClientRect(), tr=tgt.getBoundingClientRect();
-    var x1=sr.right-cr.left, y1=sr.top-cr.top+sr.height/2;
-    var x2=tr.left-cr.left,  y2=tr.top-cr.top+24;
-    var mid=x1+(x2-x1)/2;
-    function seg(l,t,w,h){var d=document.createElement('div');d.className='arc-link';
-      d.style.left=l+'px';d.style.top=t+'px';d.style.width=w+'px';d.style.height=h+'px';cols.appendChild(d);}
-    seg(x1, y1, mid-x1, 1);
-    seg(mid, Math.min(y1,y2), 1, Math.abs(y2-y1)||1);
-    seg(mid, y2, x2-mid, 1);
-  }
-
-  document.addEventListener('click', function(e){
-    var x=e.target.closest('[data-arcx]');
-    if(x){ e.stopPropagation(); arcExpanded=x.getAttribute('data-arcx'); arcSel=arcExpanded; arcDraw(); return; }
-    var n=e.target.closest('[data-arc]');
-    if(n){ arcSel=n.getAttribute('data-arc'); arcDraw(); }
-  });
-  document.getElementById('arc-toggle').addEventListener('change', arcDraw);
-  document.querySelectorAll('[data-arctab]').forEach(function(li){
-    li.addEventListener('click', function(ev){
-      ev.preventDefault();
-      var k=li.getAttribute('data-arctab');
-      document.querySelectorAll('[data-arctab]').forEach(function(x){x.classList.toggle('slds-is-active',x===li);});
-      ['details','participants','insights'].forEach(function(t){
-        var el=document.getElementById('arctab-'+t);
-        el.classList.toggle('slds-show', t===k); el.classList.toggle('slds-hide', t!==k);
-      });
-    });
-  });
-  arcDraw();
-
-  // deposit sub-nav
-  document.querySelectorAll('[data-dep]').forEach(function(li){
-    li.addEventListener('click', function(e){
-      e.preventDefault();
-      var k = li.getAttribute('data-dep');
-      document.querySelectorAll('[data-dep]').forEach(function(x){ x.classList.toggle('slds-is-active', x === li); });
-      document.querySelectorAll('.dep').forEach(function(d){ d.classList.toggle('is-on', d.id === 'dep-' + k); });
-    });
-  });
-})();
 </script>
 </body>
 </html>
