@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arvest — Salesforce relationship mapping | Jonathan Lu</title>
-<meta name="description" content="Arvest case study: relationship mapping and deposit servicing designed on Salesforce with SLDS, Object Manager, Lightning App Builder and Flow. Includes an interactive SLDS prototype.">
+<meta name="description" content="Design portfolio case study (not a banking service): relationship mapping and deposit servicing designed on Salesforce with SLDS, Object Manager, Lightning App Builder and Flow. Includes an interactive SLDS prototype.">
 <style>
 
 :root{
@@ -709,6 +709,18 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 .shot-bar .shot-tag{margin-left:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
 .shot img{width:100%;display:block;border:0;border-radius:0;box-shadow:none}
 .case-figure .shot{margin:0}
+
+/* Safe Browsing / reviewer-facing: states plainly that this is portfolio work,
+   not a live banking interface, so the page cannot read as impersonation. */
+.case-disclaimer{
+  width:min(1180px, calc(100% - 128px)); margin:var(--sp-6) auto 0;
+  border:1px solid var(--line); border-left:3px solid #b9832b;
+  border-radius:var(--r-m); background:#fbf7ef;
+  padding:16px 20px; font-size:14.5px; line-height:1.6; color:var(--ink-soft); max-width:none;
+}
+.case-disclaimer b{ color:var(--ink); }
+@media(max-width:900px){ .case-disclaimer{ width:calc(100% - 48px); } }
+@media(max-width:600px){ .case-disclaimer{ width:calc(100% - 40px); } }
 </style>
 </head>
 <body>
@@ -745,6 +757,14 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 <div class="tagrow">
 <span class="tag">Salesforce</span><span class="tag">SLDS</span><span class="tag">Banking</span><span class="tag">Enterprise</span>
 </div>
+</div>
+
+<div class="case-disclaimer">
+  <b>Design portfolio &mdash; not a banking service.</b> This page documents user-experience work by
+  Jonathan Lu, an independent product designer. Every screen shown is a static design mock-up built with
+  invented demonstration data. Nothing here is a live banking interface, no real customer or account
+  information appears anywhere on this site, and no page collects credentials, payments or personal data.
+  This site is not operated by, affiliated with, or endorsed by any bank or financial institution.
 </div>
 
 <div class="proj-body">
