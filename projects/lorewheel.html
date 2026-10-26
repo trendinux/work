@@ -506,6 +506,29 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   .platform-notes h5{ margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700; }
   .platform-notes p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
 
+  /* Tablet (iPad Pro 11) and desktop (browser window) */
+  .device-wrap--tablet{ width:min(100%, 440px); }
+  .device-wrap--desktop{ width:100%; }
+  .device--tablet{ border-radius:6cqi; padding:3.2cqi; }
+  .device--tablet .device-screen{ border-radius:3cqi; }
+  .device--tablet .statusbar{ height:4.6cqi; padding:0 4cqi; font-size:2.1cqi; }
+  .device--tablet .statusbar .icons{ gap:.9cqi; }
+  .device--tablet .statusbar svg{ height:1.7cqi; width:auto; }
+  .device--tablet .cam{ position:absolute; top:1.05cqi; left:50%; transform:translateX(-50%); width:1.2cqi; height:1.2cqi; border-radius:50%; background:#1d1d24; z-index:2; }
+  .device--tablet .home-ind{ position:absolute; bottom:4.4cqi; left:50%; transform:translateX(-50%); width:22cqi; height:.8cqi; border-radius:99px; background:#f4f4f6; opacity:.85; z-index:2; }
+  .device--desktop{ border-radius:1.2cqi; padding:0; overflow:hidden; background:#1b1b20; }
+  .device--desktop .device-screen{ border-radius:0; }
+  .browserbar{ display:flex; align-items:center; gap:2cqi; height:4.4cqi; padding:0 1.8cqi; background:#26262c; border-bottom:1px solid #34343c; }
+  .browserbar .lights{ display:flex; gap:.8cqi; flex:none; }
+  .browserbar .lights i{ width:1.2cqi; height:1.2cqi; border-radius:50%; background:#ff5f57; }
+  .browserbar .lights i:nth-child(2){ background:#febc2e; }
+  .browserbar .lights i:nth-child(3){ background:#28c840; }
+  .browserbar .url{ flex:0 1 46%; margin:0 auto; transform:translateX(-3cqi); height:2.7cqi; border-radius:.8cqi; background:#18181d; color:#a1a1a6; font:500 1.35cqi/2.7cqi -apple-system,system-ui,sans-serif; text-align:center; white-space:nowrap; overflow:hidden; }
+  .device-row--tablet{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .device-row--desktop{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  @media (max-width:900px){ .device-row.device-row--desktop{ grid-template-columns:1fr; } }
+  @media (max-width:560px){ .device-row.device-row--tablet{ grid-template-columns:1fr; } }
+
   /* ============ DESIGN SYSTEM ============ */
   .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
   .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
@@ -854,7 +877,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <div class="meta-row"><span>Status</span><b>LIVE</b></div>
       <div class="meta-row"><span>Category</span><b>Consumer &middot; Games</b></div>
       <div class="meta-row"><span>Role</span><b>Product Designer: Product Strategy, UX/UI, Brand, Front-end</b></div>
-      <div class="meta-row"><span>Platforms</span><b>Responsive web for TV and laptop, and phones on iOS and Android</b></div>
+      <div class="meta-row"><span>Platforms</span><b>Responsive web for phone (iOS and Android), tablet, laptop and TV</b></div>
       <div class="meta-row"><span>Live</span><b><a href="https://lorewheel.com" target="_blank" rel="noopener">lorewheel.com</a></b></div>
     </aside>
   </div>
@@ -920,9 +943,9 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   </div>
 
   <div class="artifact-section" id="mobile">
-    <div class="eyebrow"><span class="num">MOBILE DESIGN</span></div>
-    <h3>One responsive product on iPhone and Android</h3>
-    <p class="artifact-cap">Lorewheel is a website, not a store app, so the phone design is the same code fitted to each platform's browser. These are live screens captured from lorewheel.com in Safari's engine at iPhone 15 size and in Chrome at Pixel 7 size, shown in iOS and Android device frames.</p>
+    <div class="eyebrow"><span class="num">ACROSS DEVICES</span></div>
+    <h3>One responsive product on phone, tablet and desktop</h3>
+    <p class="artifact-cap">Lorewheel is a website, not a store app, so every device runs the same code fitted to its screen. These are live screens captured from lorewheel.com: in Safari's engine at iPhone 15 and iPad Pro 11 size, in Chrome at Pixel 7 size and on a 1440-pixel desktop, shown in iOS, Android, iPad and browser frames.</p>
 
     <div class="platform-head"><h4>iOS</h4><span>iPhone 15 &middot; 390 &times; 844 pt &middot; Safari</span></div>
     <div class="device-row">
@@ -977,6 +1000,46 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
         <span class="screen-tag">PIXEL 7 &middot; DAILY</span>
         <h5>A daily habit, laid out like a card stack</h5>
         <p>Daily is the one part of Lorewheel built for a single person on a phone. Each of the three games is a full-width card with its own art and type, numbered one of three, so the day reads as a short stack to work through rather than a menu.</p>
+      </div>
+    </div>
+
+    <div class="platform-head"><h4>Tablet</h4><span>iPad Pro 11 &middot; 834 &times; 1194 pt &middot; Safari</span></div>
+    <div class="device-row device-row--tablet">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ipad-home.jpg">
+          <div class="device-wrap device-wrap--tablet"><div class="device device--tablet"><span class="cam" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#16161a"><span>9:41&nbsp;&nbsp;Mon Oct 26</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><span>100%</span><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="lorewheel-img/lw-ipad-home.jpg" alt="Lorewheel home in Safari on an iPad Pro 11: the full sidebar with Home, All games, Event Packs and the rest, beside the planning question, the featured Head-to-Head Quiz and the Most played rail" loading="lazy" width="900" height="1288"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPAD PRO 11 &middot; SAFARI &middot; HOME</span>
+        <h5>At tablet width the sidebar comes back</h5>
+        <p>Past phone width there is room for the full sidebar again, so every section of the catalogue is one tap away and the five-tab bar is gone. The cover art fills the rest of the width, which is the point: on a tablet propped on a table, the games are the colour.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ipad-quiz.jpg">
+          <div class="device-wrap device-wrap--tablet"><div class="device device--tablet"><span class="cam" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#16161a"><span>9:41&nbsp;&nbsp;Mon Oct 26</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><span>100%</span><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="lorewheel-img/lw-ipad-quiz.jpg" alt="Head-to-Head Quiz setup on an iPad: a centred column with Who's playing, Just me and Two players, then the grid of quiz topics and a Start the quiz button" loading="lazy" width="900" height="1288"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPAD PRO 11 &middot; QUIZ SETUP</span>
+        <h5>A centred column, not a stretched one</h5>
+        <p>The setup keeps a narrow centred column on a tablet instead of spreading the tiles across the screen. Two people sitting either side of a tablet both reach every choice, and each line stays short enough to read at a glance.</p>
+      </div>
+    </div>
+
+    <div class="platform-head"><h4>Desktop</h4><span>1440 &times; 900 &middot; Chrome</span></div>
+    <div class="device-row device-row--desktop">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-desktop-quiz.jpg">
+          <div class="device-wrap device-wrap--desktop"><div class="device device--desktop"><div class="browserbar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">lorewheel.com/quiz</span></div><div class="device-screen"><img src="lorewheel-img/lw-desktop-quiz.jpg" alt="Head-to-Head Quiz on a 1440 pixel desktop: the title over a desert key art, Who's playing and Pick a quiz in a centred column, and a Start the quiz button" loading="lazy" width="1600" height="1000"></div></div></div>
+        </button>
+        <span class="screen-tag">DESKTOP &middot; 1440 &times; 900 &middot; QUIZ</span>
+        <h5>Readable from across the room</h5>
+        <p>Lorewheel is often a laptop plugged into the TV. On a 1440-pixel screen the quiz stays one centred card instead of stretching across the width, so on the television everyone looks at one place while the host works the laptop.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-desktop-game.jpg">
+          <div class="device-wrap device-wrap--desktop"><div class="device device--desktop"><div class="browserbar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">lorewheel.com/games/two-truths</span></div><div class="device-screen"><img src="lorewheel-img/lw-desktop-game.jpg" alt="Two Truths and a Lie game page on desktop: the art-deco casino key art, the facts as tags, a Play Two Truths and a Lie now button, and the What it feels like section below" loading="lazy" width="1600" height="1000"></div></div></div>
+        </button>
+        <span class="screen-tag">DESKTOP &middot; GAME PAGE</span>
+        <h5>The same order on every screen</h5>
+        <p>The game page keeps the phone's order at desktop width: art, facts, one button, then the description. Nothing moves to a side column, so a host who found the game on a phone finds the button in the same place on the laptop.</p>
       </div>
     </div>
 

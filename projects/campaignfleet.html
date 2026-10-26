@@ -468,6 +468,94 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
   }
   .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:64ch; }
+
+  /* ============ DEVICE TEMPLATES: iOS (iPhone 15) and Android (Pixel 7) ============ */
+  /* Drawn in CSS and sized with container query units, so one rule scales to any column. */
+  .platform-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-top:var(--sp-7); }
+  .platform-head h4{ margin:0; font-family:var(--f-display); font-size:20px; font-weight:700; }
+  .platform-head span{ font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); }
+  .device-row{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-5); }
+  .device-cell{ min-width:0; display:grid; gap:var(--sp-3); align-content:start; }
+  .screen-card.device-cell .artifact-frame{ border:0; background:none; border-radius:0; overflow:visible; display:grid; justify-items:center; margin-bottom:var(--sp-2); }
+  .device-cell .artifact-frame:hover{ transform:translateY(-3px); }
+  .device-cell .artifact-frame:focus-visible{ outline:2px solid var(--ink); outline-offset:6px; border-radius:24px; }
+  .device-wrap{ container-type:inline-size; width:min(100%, 300px); }
+  .device{ width:100%; position:relative; background:#0c0c0f; box-shadow:0 0 0 1px #2a2a30, 0 30px 60px -28px rgba(0,0,0,.55); }
+  .device-screen{ position:relative; overflow:hidden; background:#04060a; }
+  .device-cell .device-screen img{ display:block; width:100%; height:auto; max-height:none; margin:0; object-fit:fill; }
+  .statusbar{ display:flex; align-items:center; justify-content:space-between; color:#f4f4f6; background:#04060a; font-family:-apple-system,"SF Pro Text",Roboto,system-ui,sans-serif; font-weight:600; line-height:1; }
+  .statusbar svg{ display:block; fill:currentColor; }
+  .statusbar .icons{ display:flex; align-items:center; }
+  /* iOS: continuous corners, Dynamic Island, 9:41, home indicator */
+  .device--ios{ border-radius:15cqi; padding:3.6cqi; }
+  .device--ios .device-screen{ border-radius:11.6cqi; }
+  .device--ios .statusbar{ height:14cqi; padding:0 8cqi 0 10cqi; font-size:4.4cqi; }
+  .device--ios .statusbar .icons{ gap:1.6cqi; }
+  .device--ios .statusbar svg{ height:3.4cqi; width:auto; }
+  .device--ios .island{ position:absolute; top:6.6cqi; left:50%; transform:translateX(-50%); width:31cqi; height:9.2cqi; border-radius:99px; background:#000; z-index:2; }
+  .device--ios .home-ind{ position:absolute; bottom:5.4cqi; left:50%; transform:translateX(-50%); width:35cqi; height:1.4cqi; border-radius:99px; background:#f4f4f6; opacity:.9; z-index:2; }
+  /* Android: squarer corners, centred punch-hole camera, 12:00 on the left, gesture pill */
+  .device--android{ border-radius:10cqi; padding:3cqi; }
+  .device--android .device-screen{ border-radius:7.6cqi; }
+  .device--android .statusbar{ height:9cqi; padding:0 6.5cqi; font-size:3.9cqi; font-weight:500; }
+  .device--android .statusbar .icons{ gap:1.4cqi; }
+  .device--android .statusbar svg{ height:3.6cqi; width:auto; }
+  .device--android .punch{ position:absolute; top:5.2cqi; left:50%; transform:translateX(-50%); width:4.6cqi; height:4.6cqi; border-radius:50%; background:#000; box-shadow:0 0 0 .6cqi #101014; z-index:2; }
+  .device--android .gesture{ position:absolute; bottom:4.6cqi; left:50%; transform:translateX(-50%); width:27cqi; height:1.2cqi; border-radius:99px; background:#f4f4f6; opacity:.75; z-index:2; }
+  .platform-notes{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-5); margin-top:var(--sp-7); padding-top:var(--sp-5); border-top:1px solid var(--line); }
+  .platform-notes h5{ margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .platform-notes p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+
+  /* Tablet (iPad Pro 11) and desktop (browser window) */
+  .device-wrap--tablet{ width:min(100%, 440px); }
+  .device-wrap--desktop{ width:100%; }
+  .device--tablet{ border-radius:6cqi; padding:3.2cqi; }
+  .device--tablet .device-screen{ border-radius:3cqi; }
+  .device--tablet .statusbar{ height:4.6cqi; padding:0 4cqi; font-size:2.1cqi; }
+  .device--tablet .statusbar .icons{ gap:.9cqi; }
+  .device--tablet .statusbar svg{ height:1.7cqi; width:auto; }
+  .device--tablet .cam{ position:absolute; top:1.05cqi; left:50%; transform:translateX(-50%); width:1.2cqi; height:1.2cqi; border-radius:50%; background:#1d1d24; z-index:2; }
+  .device--tablet .home-ind{ position:absolute; bottom:4.4cqi; left:50%; transform:translateX(-50%); width:22cqi; height:.8cqi; border-radius:99px; background:#f4f4f6; opacity:.85; z-index:2; }
+  .device--desktop{ border-radius:1.2cqi; padding:0; overflow:hidden; background:#1b1b20; }
+  .device--desktop .device-screen{ border-radius:0; }
+  .browserbar{ display:flex; align-items:center; gap:2cqi; height:4.4cqi; padding:0 1.8cqi; background:#26262c; border-bottom:1px solid #34343c; }
+  .browserbar .lights{ display:flex; gap:.8cqi; flex:none; }
+  .browserbar .lights i{ width:1.2cqi; height:1.2cqi; border-radius:50%; background:#ff5f57; }
+  .browserbar .lights i:nth-child(2){ background:#febc2e; }
+  .browserbar .lights i:nth-child(3){ background:#28c840; }
+  .browserbar .url{ flex:0 1 46%; margin:0 auto; transform:translateX(-3cqi); height:2.7cqi; border-radius:.8cqi; background:#18181d; color:#a1a1a6; font:500 1.35cqi/2.7cqi -apple-system,system-ui,sans-serif; text-align:center; white-space:nowrap; overflow:hidden; }
+  .device-row--tablet{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .device-row--desktop{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  @media (max-width:900px){ .device-row.device-row--desktop{ grid-template-columns:1fr; } }
+  @media (max-width:560px){ .device-row.device-row--tablet{ grid-template-columns:1fr; } }
+
+  /* ============ DESIGN SYSTEM ============ */
+  .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+  .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
+  .ds-fact b{ font-family:var(--f-display); font-size:26px; line-height:1; font-variant-numeric:tabular-nums; }
+  .ds-fact span{ font-size:13px; color:var(--ink-soft); line-height:1.4; }
+  .ds-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-6); }
+  .ds-grid .wide{ grid-column:1 / -1; }
+  .ds-grid .artifact-frame{ background:#16161a; }
+  @media (max-width:900px){
+    .device-row{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .platform-notes, .ds-facts{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .ds-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:560px){
+    .device-row, .platform-notes, .ds-facts{ grid-template-columns:1fr; }
+    .device-wrap{ width:min(100%, 280px); }
+  }
+  @media (prefers-reduced-motion:reduce){ .device-cell .artifact-frame:hover{ transform:none; } }
+
+  /* ============ DESIGN SYSTEM ============ */
+  .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+  .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
+  .ds-fact b{ font-family:var(--f-display); font-size:26px; line-height:1; font-variant-numeric:tabular-nums; }
+  .ds-fact span{ font-size:13px; color:var(--ink-soft); line-height:1.4; }
+  .ds-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-6); }
+  .ds-grid .wide{ grid-column:1 / -1; }
+  .ds-grid .artifact-frame{ background:#04060a; }
   @media (max-width:900px){
     .screen-grid{ grid-template-columns:1fr; }
   }
@@ -798,7 +886,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <div class="meta-row"><span>Status</span><b>LIVE</b></div>
       <div class="meta-row"><span>Category</span><b>AI &middot; SaaS</b></div>
       <div class="meta-row"><span>Role</span><b>Product Designer: Product Strategy, UX/UI, Brand</b></div>
-      <div class="meta-row"><span>Platforms</span><b>Responsive web</b></div>
+      <div class="meta-row"><span>Platforms</span><b>Responsive web for phone (iOS and Android), tablet and desktop</b></div>
       <div class="meta-row"><span>Live</span><b><a href="https://campaignfleet.com" target="_blank" rel="noopener">campaignfleet.com</a></b></div>
     </aside>
   </div>
@@ -857,6 +945,157 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
         <span class="screen-tag">PRICING</span>
         <h5>Priced by products, not seats</h5>
         <p>The unit that grows with the customer's work is the number of products being marketed, so that is what the plans count: Solo, Portfolio and Agency. Every feature is in every plan and teammates are unlimited, which keeps the comparison to one question. The terms sit in plain text under the cards: you can try it without risk and refund your first payment yourself within 14 days.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="artifact-section" id="devices">
+    <div class="eyebrow"><span class="num">ACROSS DEVICES</span></div>
+    <h3>One responsive product on phone, tablet and desktop</h3>
+    <p class="artifact-cap">Campaign Fleet's site and app are one responsive web product. These are live screens captured from campaignfleet.com and app.campaignfleet.com: in Safari's engine at iPhone 15 and iPad Pro 11 size, in Chrome at Pixel 7 size and on a 1440-pixel desktop, shown in iOS, Android, iPad and browser frames.</p>
+
+    <div class="platform-head"><h4>iOS</h4><span>iPhone 15 &middot; 390 &times; 844 pt &middot; Safari</span></div>
+    <div class="device-row">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ios-home.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="campaignfleet-img/cf-ios-home.jpg" alt="Campaign Fleet home in Safari on iPhone: the early access banner, the wordmark, a two-line menu, a green Get access button and the radar, which shows a changed price and the caption Changed, 16 claims recalled" loading="lazy" width="720" height="1207"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE 15 &middot; SAFARI &middot; HOME</span>
+        <h5>The radar plays first, even on a phone</h5>
+        <p>The hero is the product working: facts as points, claims as lines, and a price that changes and pulls back the sixteen pieces that quoted it. On a phone it comes before the headline, so the first thing a visitor sees is the promise kept, then the words for it.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ios-demo.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="campaignfleet-img/cf-ios-demo.jpg" alt="The Try it now demo on iPhone: a fact sheet with price, trial and export facts, each with the page and line it came from, and a full-width Change the price on the site button" loading="lazy" width="720" height="1207"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE 15 &middot; TRY IT NOW</span>
+        <h5>A working demo under one thumb</h5>
+        <p>The recall demo stacks into one column: the fact sheet, each fact with the page and line it came from, then a full-width button to change the price. Press it and the posts below are recalled in place, so the demo works without leaving the page or zooming.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ios-login.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="campaignfleet-img/cf-ios-login.jpg" alt="Sign in on iPhone: Open your desk, one email field and an Email me a sign-in link button, with a note that there are no passwords" loading="lazy" width="720" height="1207"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE 15 &middot; SIGN IN</span>
+        <h5>One field, no password</h5>
+        <p>The app's sign-in is an email field and one button. The link arrives by email, so there is no password to type on a phone keyboard, and the note under the button says so before anyone wonders.</p>
+      </div>
+    </div>
+
+    <div class="platform-head"><h4>Android</h4><span>Pixel 7 &middot; 412 &times; 915 dp &middot; Chrome</span></div>
+    <div class="device-row">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-android-how.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="campaignfleet-img/cf-android-how.jpg" alt="How it works in Chrome on a Pixel 7: What happens after you sign up, step by step, explaining that only two of the eight steps involve a model" loading="lazy" width="720" height="1465"></div><span class="gesture" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL 7 &middot; CHROME &middot; HOW IT WORKS</span>
+        <h5>Says who does each step</h5>
+        <p>Every step names who does it: you, an AI model or fixed code. Only two of the eight involve a model, and the page says so near the top. At phone width the steps run as one numbered column.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-android-features.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="campaignfleet-img/cf-android-features.jpg" alt="What you get on a Pixel 7: square cards for Proof behind every line and A warning when a fact changes, each with a small radar icon" loading="lazy" width="720" height="1465"></div><span class="gesture" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL 7 &middot; WHAT YOU GET</span>
+        <h5>Square cards, one per promise</h5>
+        <p>Features are square-cornered sheets with a thin rule and a corner tick, like entries in a log. Each holds one promise and how it is kept, so a reader can stop after any card and still have the whole of that point.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-android-pricing.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="campaignfleet-img/cf-android-pricing.jpg" alt="Pricing on a Pixel 7: Choose a plan by how many products you run, with the Solo plan at $49 a month, its limits and a Start with Solo button" loading="lazy" width="720" height="1465"></div><span class="gesture" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL 7 &middot; PRICING</span>
+        <h5>Priced by product, read in a column</h5>
+        <p>Plans are chosen by how many products you run, not by seats, and each plan stacks into a full-width card with its price in the mono figure style and its limits as a short list.</p>
+      </div>
+    </div>
+
+    <div class="platform-head"><h4>Tablet</h4><span>iPad Pro 11 &middot; 834 &times; 1194 pt &middot; Safari</span></div>
+    <div class="device-row device-row--tablet">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ipad-home.jpg">
+          <div class="device-wrap device-wrap--tablet"><div class="device device--tablet"><span class="cam" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#04060a"><span>9:41&nbsp;&nbsp;Mon Oct 26</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><span>100%</span><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="campaignfleet-img/cf-ipad-home.jpg" alt="Campaign Fleet home on an iPad Pro 11: the menu on one line, the radar across the width and the headline Your marketing, written every week, with Every claim checked before you see it in green" loading="lazy" width="900" height="1288"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPAD PRO 11 &middot; SAFARI &middot; HOME</span>
+        <h5>The radar gets the width</h5>
+        <p>At tablet width the menu fits on one line and the radar takes the full width, with the headline and the green line that carries the promise directly under it.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ipad-demo.jpg">
+          <div class="device-wrap device-wrap--tablet"><div class="device device--tablet"><span class="cam" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#04060a"><span>9:41&nbsp;&nbsp;Mon Oct 26</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><span>100%</span><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="18.6" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="campaignfleet-img/cf-ipad-demo.jpg" alt="The Try it now demo on an iPad: the fact sheet above the published posts and emails that quote it, with recalled lines marked in red" loading="lazy" width="900" height="1288"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPAD PRO 11 &middot; TRY IT NOW</span>
+        <h5>Cause and effect on one screen</h5>
+        <p>On a tablet the fact sheet and the posts that quote it fit on one screen, so a changed price and the pieces it recalls in red are visible together without scrolling between them.</p>
+      </div>
+    </div>
+
+    <div class="platform-head"><h4>Desktop</h4><span>1440 &times; 900 &middot; Chrome</span></div>
+    <div class="device-row device-row--desktop">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-desktop-week.jpg">
+          <div class="device-wrap device-wrap--desktop"><div class="device device--desktop"><div class="browserbar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">campaignfleet.com/#how</span></div><div class="device-screen"><img src="campaignfleet-img/cf-desktop-week.jpg" alt="Here is what a week looks like on desktop: five steps (read, plan, draft, review, approve) listed on the left, drawn on the right as points on a radar orbit" loading="lazy" width="1600" height="1000"></div></div></div>
+        </button>
+        <span class="screen-tag">DESKTOP &middot; 1440 &times; 900 &middot; THE WEEK</span>
+        <h5>The weekly loop, drawn as an orbit</h5>
+        <p>On a wide screen the week is shown twice: as five written steps and as five points on one orbit, read, plan, draft, review and approve. The loop is the product, so the page draws it as one.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-desktop-how.jpg">
+          <div class="device-wrap device-wrap--desktop"><div class="device device--desktop"><div class="browserbar" aria-hidden="true"><span class="lights"><i></i><i></i><i></i></span><span class="url">campaignfleet.com/how-it-works</span></div><div class="device-screen"><img src="campaignfleet-img/cf-desktop-how.jpg" alt="How it works on desktop: What happens after you sign up, step by step, with the first step It reads your site marked as fixed code" loading="lazy" width="1600" height="1000"></div></div></div>
+        </button>
+        <span class="screen-tag">DESKTOP &middot; HOW IT WORKS</span>
+        <h5>A long read, set like a document</h5>
+        <p>How it works is meant to be read in full, so it runs as one measured column with each step's owner in mono under its title. The light headline weight keeps a long page calm.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="artifact-section" id="design-system">
+    <div class="eyebrow"><span class="num">DESIGN SYSTEM</span></div>
+    <h3>A radar room at night, where colour means a state</h3>
+    <p class="artifact-cap">The look is cold and dark, set in IBM Plex Sans with Plex Mono for anything that is a record: claims, sources, labels and figures. Corners are square, like a ledger. Colour is kept for meaning: green for what is on the record, red for what was recalled, amber for the step waiting on a person. The site, the app and the emails share the same tokens, so signing in does not change the look. For Figma, a script reads the live CSS into variables, with each record state as a mode.</p>
+
+    <div class="ds-facts">
+      <div class="ds-fact"><b>23</b><span>colour primitives, read from the live stylesheet</span></div>
+      <div class="ds-fact"><b>22</b><span>chrome variables, each pointing to a primitive</span></div>
+      <div class="ds-fact"><b>4</b><span>record states as modes of one collection</span></div>
+      <div class="ds-fact"><b>6.4:1</b><span>lowest contrast of any text pair</span></div>
+    </div>
+
+    <div class="ds-grid">
+      <div class="screen-card wide">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ds-states.jpg">
+          <img src="campaignfleet-img/cf-ds-states.jpg" alt="Four record states as cards: Waiting for you in amber, On the record in green, Recalled in red with the old price struck through, and Retired in grey, each with a claim, its source and its contrast ratio" loading="lazy" width="1600" height="675">
+        </button>
+        <span class="screen-tag">RECORD STATES &middot; ONE MODE EACH</span>
+        <h5>Four states, three variables</h5>
+        <p>Every fact, draft and post is waiting, on the record, recalled or retired. In Figma each state is a mode of the same three variables (text, fill and edge), so a designer sets a frame's mode and its chip, background and edge all change together. Every state also carries its word, and recalled lines are struck through, so the state never depends on telling red from green.</p>
+      </div>
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ds-chrome.jpg">
+          <img src="campaignfleet-img/cf-ds-chrome.jpg" alt="Chrome colour variables as square swatches: page, sheet, raised, rule and control borders, four text levels, the green action and its hover, focus ring, hover edge, record colours and their washes, data blue and violet, and two overlays" loading="lazy" width="1600" height="1101">
+        </button>
+        <span class="screen-tag">CHROME &middot; ONE NIGHT MODE</span>
+        <h5>Named for what they do</h5>
+        <p>Chrome variables are named by role and point to primitives named by value. The green that marks a confirmed fact is also the only filled button, so the one action on a page and the proof behind it share a colour.</p>
+      </div>
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ds-type.jpg">
+          <img src="campaignfleet-img/cf-ds-type.jpg" alt="Type scale in IBM Plex Sans and Mono, from the light 83 pixel hero down to the 14 pixel mono labels, buttons and the rotated Recalled stamp, each with its size, weight and use" loading="lazy" width="1600" height="2146">
+        </button>
+        <span class="screen-tag">TYPE &middot; IBM PLEX SANS AND MONO</span>
+        <h5>Light headlines, mono records</h5>
+        <p>Eleven text styles. Headlines are light rather than bold, which keeps a page about trust from shouting. Mono marks anything a reader might check against a source, and nothing is set under 14px.</p>
+      </div>
+      <div class="screen-card wide">
+        <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ds-scales.jpg">
+          <img src="campaignfleet-img/cf-ds-scales.jpg" alt="Square and round corner samples, the spacing scale in 4.5 pixel steps, the hero scrim and tile glow gradients, the sheet and lead plan shadows, and the components they draw: Get access, How it works and a Recalled stamp" loading="lazy" width="1600" height="951">
+        </button>
+        <span class="screen-tag">SHAPE, SPACE, DEPTH</span>
+        <h5>Measured before it was handed over</h5>
+        <p>Every text pair passes, the lowest at 6.4:1 (red on its own wash). Building the tokens also showed two colours written as literals in the CSS rather than as variables, the control border and the lead-text frost; they are primitives in Figma so the file and the code can be brought back into step.</p>
       </div>
     </div>
   </div>
