@@ -468,6 +468,62 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
     margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
   }
   .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:64ch; }
+
+  /* ============ DEVICE TEMPLATES: iOS (iPhone 15) and Android (Pixel 7) ============ */
+  /* Drawn in CSS and sized with container query units, so one rule scales to any column. */
+  .platform-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-top:var(--sp-7); }
+  .platform-head h4{ margin:0; font-family:var(--f-display); font-size:20px; font-weight:700; }
+  .platform-head span{ font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); }
+  .device-row{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-5); }
+  .device-cell{ min-width:0; display:grid; gap:var(--sp-3); align-content:start; }
+  .screen-card.device-cell .artifact-frame{ border:0; background:none; border-radius:0; overflow:visible; display:grid; justify-items:center; margin-bottom:var(--sp-2); }
+  .device-cell .artifact-frame:hover{ transform:translateY(-3px); }
+  .device-cell .artifact-frame:focus-visible{ outline:2px solid var(--ink); outline-offset:6px; border-radius:24px; }
+  .device-wrap{ container-type:inline-size; width:min(100%, 300px); }
+  .device{ width:100%; position:relative; background:#0c0c0f; box-shadow:0 0 0 1px #2a2a30, 0 30px 60px -28px rgba(0,0,0,.55); }
+  .device-screen{ position:relative; overflow:hidden; background:#16161a; }
+  .device-cell .device-screen img{ display:block; width:100%; height:auto; max-height:none; margin:0; object-fit:fill; }
+  .statusbar{ display:flex; align-items:center; justify-content:space-between; color:#f4f4f6; background:#16161a; font-family:-apple-system,"SF Pro Text",Roboto,system-ui,sans-serif; font-weight:600; line-height:1; }
+  .statusbar svg{ display:block; fill:currentColor; }
+  .statusbar .icons{ display:flex; align-items:center; }
+  /* iOS: continuous corners, Dynamic Island, 9:41, home indicator */
+  .device--ios{ border-radius:15cqi; padding:3.6cqi; }
+  .device--ios .device-screen{ border-radius:11.6cqi; }
+  .device--ios .statusbar{ height:14cqi; padding:0 8cqi 0 10cqi; font-size:4.4cqi; }
+  .device--ios .statusbar .icons{ gap:1.6cqi; }
+  .device--ios .statusbar svg{ height:3.4cqi; width:auto; }
+  .device--ios .island{ position:absolute; top:6.6cqi; left:50%; transform:translateX(-50%); width:31cqi; height:9.2cqi; border-radius:99px; background:#000; z-index:2; }
+  .device--ios .home-ind{ position:absolute; bottom:5.4cqi; left:50%; transform:translateX(-50%); width:35cqi; height:1.4cqi; border-radius:99px; background:#f4f4f6; opacity:.9; z-index:2; }
+  /* Android: squarer corners, centred punch-hole camera, 12:00 on the left, gesture pill */
+  .device--android{ border-radius:10cqi; padding:3cqi; }
+  .device--android .device-screen{ border-radius:7.6cqi; }
+  .device--android .statusbar{ height:9cqi; padding:0 6.5cqi; font-size:3.9cqi; font-weight:500; }
+  .device--android .statusbar .icons{ gap:1.4cqi; }
+  .device--android .statusbar svg{ height:3.6cqi; width:auto; }
+  .device--android .punch{ position:absolute; top:5.2cqi; left:50%; transform:translateX(-50%); width:4.6cqi; height:4.6cqi; border-radius:50%; background:#000; box-shadow:0 0 0 .6cqi #101014; z-index:2; }
+  .device--android .gesture{ position:absolute; bottom:4.6cqi; left:50%; transform:translateX(-50%); width:27cqi; height:1.2cqi; border-radius:99px; background:#f4f4f6; opacity:.75; z-index:2; }
+  .platform-notes{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-5); margin-top:var(--sp-7); padding-top:var(--sp-5); border-top:1px solid var(--line); }
+  .platform-notes h5{ margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .platform-notes p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+
+  /* ============ DESIGN SYSTEM ============ */
+  .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+  .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
+  .ds-fact b{ font-family:var(--f-display); font-size:26px; line-height:1; font-variant-numeric:tabular-nums; }
+  .ds-fact span{ font-size:13px; color:var(--ink-soft); line-height:1.4; }
+  .ds-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-6); }
+  .ds-grid .wide{ grid-column:1 / -1; }
+  .ds-grid .artifact-frame{ background:#16161a; }
+  @media (max-width:900px){
+    .device-row{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .platform-notes, .ds-facts{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .ds-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:560px){
+    .device-row, .platform-notes, .ds-facts{ grid-template-columns:1fr; }
+    .device-wrap{ width:min(100%, 280px); }
+  }
+  @media (prefers-reduced-motion:reduce){ .device-cell .artifact-frame:hover{ transform:none; } }
   @media (max-width:900px){
     .screen-grid{ grid-template-columns:1fr; }
   }
@@ -798,7 +854,7 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
       <div class="meta-row"><span>Status</span><b>LIVE</b></div>
       <div class="meta-row"><span>Category</span><b>Consumer &middot; Games</b></div>
       <div class="meta-row"><span>Role</span><b>Product Designer: Product Strategy, UX/UI, Brand, Front-end</b></div>
-      <div class="meta-row"><span>Platforms</span><b>Responsive web for TV, laptop and phone</b></div>
+      <div class="meta-row"><span>Platforms</span><b>Responsive web for TV and laptop, and phones on iOS and Android</b></div>
       <div class="meta-row"><span>Live</span><b><a href="https://lorewheel.com" target="_blank" rel="noopener">lorewheel.com</a></b></div>
     </aside>
   </div>
@@ -859,6 +915,122 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
         <span class="screen-tag">DAILY</span>
         <h5>A reason to come back between parties</h5>
         <p>A party product is used a few times a year. Daily gives one person three quick games each day, the same three for everyone, so you can compare with friends. It is the habit loop for the weeks with no party in them, and it leads back to the group games.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="artifact-section" id="mobile">
+    <div class="eyebrow"><span class="num">MOBILE DESIGN</span></div>
+    <h3>One responsive product on iPhone and Android</h3>
+    <p class="artifact-cap">Lorewheel is a website, not a store app, so the phone design is the same code fitted to each platform's browser. These are live screens captured from lorewheel.com in Safari's engine at iPhone 15 size and in Chrome at Pixel 7 size, shown in iOS and Android device frames.</p>
+
+    <div class="platform-head"><h4>iOS</h4><span>iPhone 15 &middot; 390 &times; 844 pt &middot; Safari</span></div>
+    <div class="device-row">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ios-home.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="lorewheel-img/lw-ios-home.jpg" alt="Lorewheel home in Safari on iPhone: Party games for any gathering, a What are you planning chip row, a featured Head-to-Head Quiz and a Most played rail, above the five-tab bar" loading="lazy" width="720" height="1207"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE 15 &middot; SAFARI &middot; HOME</span>
+        <h5>The desktop sidebar becomes five tabs</h5>
+        <p>Below 760px the sidebar folds into a bottom bar with five tabs: Home, All games, Circle, Almanac and More. Everything else lives in the More panel, so a phone never has a sixth tab squeezed in. The planning question and the featured game stay above the fold.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ios-game.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="lorewheel-img/lw-ios-game.jpg" alt="Two Truths and a Lie game page in Safari on iPhone: the art-deco casino key art with three playing cards on green felt, the time, player count and age tags, and a Play now button" loading="lazy" width="720" height="1207"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE 15 &middot; GAME PAGE</span>
+        <h5>Key art first, one button below it</h5>
+        <p>A game page on a phone is read by someone deciding whether to start it now. It leads with the game's own art, then its facts as tags (time, players, devices, price, age) and a full-width button that says exactly what happens. The rules sit lower, for the person who is still reading.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ios-blind-rank.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="lorewheel-img/lw-ios-blind-rank.jpg" alt="Blind Rank in Safari on iPhone: Pizza toppings, thing 1 of 5, Extra cheese, and five slots numbered 1 to 5 each labelled Put it here" loading="lazy" width="720" height="1207"></div><span class="home-ind" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE 15 &middot; BLIND RANK</span>
+        <h5>A whole game inside one thumb's reach</h5>
+        <p>Blind Rank is played alone on a phone. Each of the five slots is a full-width target, so a thumb can place an item anywhere on the list without stretching to the top of the screen. The item being ranked is the largest text on the page.</p>
+      </div>
+    </div>
+
+    <div class="platform-head"><h4>Android</h4><span>Pixel 7 &middot; 412 &times; 915 dp &middot; Chrome</span></div>
+    <div class="device-row">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-android-home.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="lorewheel-img/lw-android-home.jpg" alt="Lorewheel home in Chrome on a Pixel 7: the same headline, planning chips and featured quiz as on iPhone, with the five-tab bar at the bottom" loading="lazy" width="720" height="1465"></div><span class="gesture" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL 7 &middot; CHROME &middot; HOME</span>
+        <h5>The same product at a taller ratio</h5>
+        <p>Android phones are narrower and taller, and Chrome draws its own address bar. The order holds on both: the planning chips, the featured game, then the Most played row, with the five tabs fixed to the bottom where a thumb already is.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-android-quiz.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="lorewheel-img/lw-android-quiz.jpg" alt="Head-to-Head Quiz setup in Chrome on a Pixel 7: Who's playing with Just me selected and Two players, then a grid of quiz topics including USA, You vs the Meme and Work life" loading="lazy" width="720" height="1465"></div><span class="gesture" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL 7 &middot; QUIZ SETUP</span>
+        <h5>Choices as large, square targets</h5>
+        <p>Who is playing and which quiz are both picked from large tiles. The selected tile takes the accent outline, not just a colour change, so the choice still reads in sunlight and for people who can't tell the colours apart.</p>
+      </div>
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-android-daily.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="lorewheel-img/lw-android-daily.jpg" alt="Lorewheel Daily in Chrome on a Pixel 7: Daily number 22 for Monday, October 26, and the first game card, The Daily Split, with a Play button" loading="lazy" width="720" height="1465"></div><span class="gesture" aria-hidden="true"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL 7 &middot; DAILY</span>
+        <h5>A daily habit, laid out like a card stack</h5>
+        <p>Daily is the one part of Lorewheel built for a single person on a phone. Each of the three games is a full-width card with its own art and type, numbered one of three, so the day reads as a short stack to work through rather than a menu.</p>
+      </div>
+    </div>
+
+    <div class="platform-notes">
+      <div><h5>Safe areas on both</h5><p>The tab bar and full-screen games pad themselves by the phone's safe-area insets, so nothing sits under the Dynamic Island, the punch-hole camera, the home indicator or the gesture bar.</p></div>
+      <div><h5>Installs like an app</h5><p>The site ships a web manifest with standalone display and a theme colour that matches the frame, so &ldquo;Add to Home Screen&rdquo; on iOS and &ldquo;Install app&rdquo; on Android open it without browser chrome.</p></div>
+      <div><h5>Set for readers past 40</h5><p>The root is 18px and nothing is set under 14px, badges included. Tap targets are at least 44px, Apple's minimum, and the answer tiles and main buttons run well past it.</p></div>
+    </div>
+  </div>
+
+  <div class="artifact-section" id="design-system">
+    <div class="eyebrow"><span class="num">DESIGN SYSTEM</span></div>
+    <h3>A quiet frame, and a separate world for every game</h3>
+    <p class="artifact-cap">The system has two layers. The chrome is one committed dark theme so it stays out of the way of the cover art. Each game then gets its own art direction: a medium, a typeface, a palette, a card object and an entrance. A test fails if two games share a face, a card object or a medium. For Figma, the live CSS is read into variables by a script, with every game as a mode of one collection, so a frame switches worlds by changing its mode.</p>
+
+    <div class="ds-facts">
+      <div class="ds-fact"><b>23</b><span>colour primitives, read from the live stylesheet</span></div>
+      <div class="ds-fact"><b>19</b><span>chrome variables, each pointing to a primitive</span></div>
+      <div class="ds-fact"><b>10</b><span>game looks as modes of one variable collection</span></div>
+      <div class="ds-fact"><b>14px</b><span>smallest text anywhere, by rule</span></div>
+    </div>
+
+    <div class="ds-grid">
+      <div class="screen-card wide">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ds-looks.jpg">
+          <img src="lorewheel-img/lw-ds-looks.jpg" alt="Ten game looks as cards: Lorewheel, Last Photo, Firsts, Tiny Joys, Hot Takes, Childhood Rooms, Secret Menu, The Tally, Confession Booth and Two Truths, each in its own typeface and palette with its card object, a Play button and seven colour swatches" loading="lazy" width="1600" height="1259">
+        </button>
+        <span class="screen-tag">GAME LOOKS &middot; ONE MODE EACH</span>
+        <h5>Ten worlds from one set of variables</h5>
+        <p>Every look fills the same eight slots: stage, surface, ink, muted, accent, the ink on the accent, line and title. The card object differs per game (a Polaroid, a ticket stub, a diner receipt, a chalkboard), but the slots it reads from do not. That is what lets one engine render two hundred games and still give each its own face.</p>
+      </div>
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ds-chrome.jpg">
+          <img src="lorewheel-img/lw-ds-chrome.jpg" alt="Chrome colour variables as swatches: backdrop, frame, three surface levels, borders, three text levels, brand and action gradient stops, success, badge and two overlays, each with the primitive it points to" loading="lazy" width="1600" height="1211">
+        </button>
+        <span class="screen-tag">CHROME &middot; ONE DARK MODE</span>
+        <h5>Named for what they do</h5>
+        <p>Chrome variables are named by role (surface, text, action) and point to primitives named by value. A designer picks <em>text/secondary</em>, not a grey, and a change to the grey reaches every screen.</p>
+      </div>
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ds-type.jpg">
+          <img src="lorewheel-img/lw-ds-type.jpg" alt="Type scale in Plus Jakarta Sans from the 58px game title down to the 14px tag, each row with its size in pixels and rem, weight, line height and where it is used" loading="lazy" width="1600" height="2343">
+        </button>
+        <span class="screen-tag">TYPE &middot; PLUS JAKARTA SANS</span>
+        <h5>Eleven styles, one floor</h5>
+        <p>Three weights and eleven text styles, with sizes bound to variables. The game title style is the one place a game's own typeface replaces the system face.</p>
+      </div>
+      <div class="screen-card wide">
+        <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ds-scales.jpg">
+          <img src="lorewheel-img/lw-ds-scales.jpg" alt="Radius, spacing, gradient and shadow scales, and the components they draw: the action button, filter chips, a tag and a badge" loading="lazy" width="1600" height="1586">
+        </button>
+        <span class="screen-tag">SHAPE, SPACE, DEPTH</span>
+        <h5>Measured before it was handed over</h5>
+        <p>Every colour pair was checked for contrast when the tokens were built. Primary and secondary text pass on every surface, and so does the ink on each game's card. Two findings went on the list to fix rather than into the file: the pink badge is 3.6:1 with white text, and six games' button accents fall under 4.5:1. The live site corrects those at runtime; the Figma file shows the raw values so a designer sees them.</p>
       </div>
     </div>
   </div>
