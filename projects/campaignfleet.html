@@ -529,6 +529,22 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   @media (max-width:900px){ .device-row.device-row--desktop{ grid-template-columns:1fr; } }
   @media (max-width:560px){ .device-row.device-row--tablet{ grid-template-columns:1fr; } }
 
+  /* ============ DESIGN SYSTEM STORY ============ */
+  .ds-steps{ list-style:none; margin:var(--sp-6) 0 0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); counter-reset:dsstep; }
+  .ds-steps li{ counter-increment:dsstep; border-top:2px solid var(--ink); padding-top:var(--sp-3); display:grid; gap:6px; align-content:start; }
+  .ds-steps li::before{ content:"0" counter(dsstep); font-family:var(--f-mono); font-size:12px; letter-spacing:.1em; color:var(--blue); }
+  .ds-steps h5{ margin:0; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .ds-steps p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+  .ds-trace{ margin-top:var(--sp-7); }
+  .ds-trace .artifact-frame{ background:#16161a; }
+  .ds-notes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-5); margin-top:var(--sp-7); }
+  .ds-note{ border:1px solid var(--line); border-radius:var(--r-m); padding:20px 22px; background:var(--panel); display:grid; gap:8px; align-content:start; }
+  .ds-note .screen-tag{ margin:0; }
+  .ds-note h5{ margin:0; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .ds-note p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+  @media (max-width:900px){ .ds-steps{ grid-template-columns:repeat(2,minmax(0,1fr)); } .ds-notes{ grid-template-columns:1fr; } }
+  @media (max-width:560px){ .ds-steps{ grid-template-columns:1fr; } }
+
   /* ============ DESIGN SYSTEM ============ */
   .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
   .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
@@ -548,13 +564,6 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   }
   @media (prefers-reduced-motion:reduce){ .device-cell .artifact-frame:hover{ transform:none; } }
 
-  /* ============ DESIGN SYSTEM ============ */
-  .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
-  .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
-  .ds-fact b{ font-family:var(--f-display); font-size:26px; line-height:1; font-variant-numeric:tabular-nums; }
-  .ds-fact span{ font-size:13px; color:var(--ink-soft); line-height:1.4; }
-  .ds-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-6); }
-  .ds-grid .wide{ grid-column:1 / -1; }
   .ds-grid .artifact-frame{ background:#04060a; }
   @media (max-width:900px){
     .screen-grid{ grid-template-columns:1fr; }
@@ -1054,8 +1063,26 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
   <div class="artifact-section" id="design-system">
     <div class="eyebrow"><span class="num">DESIGN SYSTEM</span></div>
-    <h3>A radar room at night, where colour means a state</h3>
-    <p class="artifact-cap">The look is cold and dark, set in IBM Plex Sans with Plex Mono for anything that is a record: claims, sources, labels and figures. Corners are square, like a ledger. Colour is kept for meaning: green for what is on the record, red for what was recalled, amber for the step waiting on a person. The site, the app and the emails share the same tokens, so signing in does not change the look. For Figma, a script reads the live CSS into variables, with each record state as a mode.</p>
+    <h3>How I built Campaign Fleet from its design system</h3>
+    <p class="artifact-cap">As the product designer I made one rule carry the whole look: colour means a state, never decoration. Everything else stays cold, dark and square so the states are what you notice. I then wrote the system down from the live stylesheet, with a script reading the values out of the CSS, so the site, the app and the emails all come from one set of decisions.</p>
+
+    <ol class="ds-steps">
+      <li><h5>Make colour a state</h5><p>Green for what is on the record, red for what was recalled, amber for the step waiting on a person, muted for retired. Nothing else gets those hues, and the green action button shares the green of a proven claim.</p></li>
+      <li><h5>Set records in mono</h5><p>Claims, sources, labels and figures are IBM Plex Mono, so anything a reader might check against a source looks checkable. Reading text is Plex Sans, with light headlines rather than bold ones.</p></li>
+      <li><h5>Keep it square</h5><p>Every sheet, field, button and chip has square corners, like a ledger. Only the dots on the radar are round, which makes the radar the one soft thing on the page.</p></li>
+      <li><h5>One system, three surfaces</h5><p>The marketing site, the signed-in app and the emails share the tokens, so signing in does not change the look. The phone, tablet and desktop screens above are that one system.</p></li>
+    </ol>
+
+    <div class="screen-card ds-trace">
+      <button type="button" class="gallery-item artifact-frame" data-src="campaignfleet-img/cf-ds-trace.jpg">
+        <img src="campaignfleet-img/cf-ds-trace.jpg" alt="One decision traced from token to screen: the record-recalled red and its wash, the on-the-record green, the Plex Mono stamp style and square corners become the Recalled stamp and recalled line, shown outlined on the live Try it now demo after the price changes" loading="lazy" width="2400" height="765">
+      </button>
+      <span class="screen-tag">ONE DECISION, TOKEN TO SCREEN</span>
+      <h5>Red means recalled, and says so</h5>
+      <p>The recall state is five tokens: the red, its dark wash, the green it is set against, the mono stamp style and square corners. They make the stamp and the recalled line, and the live demo shows both the moment a price changes. The word &ldquo;Recalled&rdquo; is always there, so the state never depends on telling red from green.</p>
+    </div>
+
+
 
     <div class="ds-facts">
       <div class="ds-fact"><b>23</b><span>colour primitives, read from the live stylesheet</span></div>
@@ -1097,6 +1124,11 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
         <h5>Measured before it was handed over</h5>
         <p>Every text pair passes, the lowest at 6.4:1 (red on its own wash). Building the tokens also showed two colours written as literals in the CSS rather than as variables, the control border and the lead-text frost; they are primitives in Figma so the file and the code can be brought back into step.</p>
       </div>
+    </div>
+  
+    <div class="ds-notes">
+      <div class="ds-note"><span class="screen-tag">WHAT THE AUDIT FOUND</span><h5>Two colours outside the system</h5><p>Reading the CSS turned up two values written as raw hex instead of tokens: the outline button border and the lead-paragraph text colour. I added them as named colours so the file matches the product, and flagged them to become proper CSS variables so the two can&rsquo;t drift.</p></div>
+      <div class="ds-note"><span class="screen-tag">HANDED OVER</span><h5>In Figma and in Claude Design</h5><p>A Figma kit of layered boards with the tokens as variables, with each record state as a mode, plus a plugin that rebuilds the live pages as editable layers. The same system is set up in Claude Design, so an AI agent building for Campaign Fleet starts from the real rules.</p></div>
     </div>
   </div>
 

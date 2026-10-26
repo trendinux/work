@@ -529,6 +529,23 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
   @media (max-width:900px){ .device-row.device-row--desktop{ grid-template-columns:1fr; } }
   @media (max-width:560px){ .device-row.device-row--tablet{ grid-template-columns:1fr; } }
 
+
+  /* ============ DESIGN SYSTEM STORY ============ */
+  .ds-steps{ list-style:none; margin:var(--sp-6) 0 0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); counter-reset:dsstep; }
+  .ds-steps li{ counter-increment:dsstep; border-top:2px solid var(--ink); padding-top:var(--sp-3); display:grid; gap:6px; align-content:start; }
+  .ds-steps li::before{ content:"0" counter(dsstep); font-family:var(--f-mono); font-size:12px; letter-spacing:.1em; color:var(--blue); }
+  .ds-steps h5{ margin:0; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .ds-steps p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+  .ds-trace{ margin-top:var(--sp-7); }
+  .ds-trace .artifact-frame{ background:#16161a; }
+  .ds-notes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-5); margin-top:var(--sp-7); }
+  .ds-note{ border:1px solid var(--line); border-radius:var(--r-m); padding:20px 22px; background:var(--panel); display:grid; gap:8px; align-content:start; }
+  .ds-note .screen-tag{ margin:0; }
+  .ds-note h5{ margin:0; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .ds-note p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+  @media (max-width:900px){ .ds-steps{ grid-template-columns:repeat(2,minmax(0,1fr)); } .ds-notes{ grid-template-columns:1fr; } }
+  @media (max-width:560px){ .ds-steps{ grid-template-columns:1fr; } }
+
   /* ============ DESIGN SYSTEM ============ */
   .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
   .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
@@ -1052,8 +1069,26 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
 
   <div class="artifact-section" id="design-system">
     <div class="eyebrow"><span class="num">DESIGN SYSTEM</span></div>
-    <h3>A quiet frame, and a separate world for every game</h3>
-    <p class="artifact-cap">The system has two layers. The chrome is one committed dark theme so it stays out of the way of the cover art. Each game then gets its own art direction: a medium, a typeface, a palette, a card object and an entrance. A test fails if two games share a face, a card object or a medium. For Figma, the live CSS is read into variables by a script, with every game as a mode of one collection, so a frame switches worlds by changing its mode.</p>
+    <h3>How I built Lorewheel from its design system</h3>
+    <p class="artifact-cap">As the product designer I set Lorewheel up as two layers: a quiet chrome that every screen shares, and a separate art direction for every game. I then wrote the system down from the product&rsquo;s own stylesheet, with a script reading every colour, size and radius out of the live CSS, so the documentation and the screens can&rsquo;t drift apart.</p>
+
+    <ol class="ds-steps">
+      <li><h5>Decide the frame</h5><p>One committed dark theme, so the cover art carries the colour. An 18px root and nothing under 14px, because the host reading a phone at arm&rsquo;s length is often past 40.</p></li>
+      <li><h5>Give each game a world</h5><p>Eight colour slots per game (stage, surface, ink, accent and the rest), plus its own medium, typeface and card object. A test fails the build if two games share a face, a card or a medium.</p></li>
+      <li><h5>Build parts from tokens</h5><p>Buttons, chips, tags and game cards read tokens, never hex values. The same tag sits on cover art and on a plain panel because its fill is a token, not a guess.</p></li>
+      <li><h5>Ship it to every screen</h5><p>The phone, tablet and desktop screens above are that one set of tokens at three widths. Then I handed the system over in the two places the next designer or agent will look for it.</p></li>
+    </ol>
+
+    <div class="screen-card ds-trace">
+      <button type="button" class="gallery-item artifact-frame" data-src="lorewheel-img/lw-ds-trace.jpg">
+        <img src="lorewheel-img/lw-ds-trace.jpg" alt="One decision traced from token to screen: the action-start and action-end colours, white text, a 10px radius, Plus Jakarta Sans 800 and the button glow become the primary button, which appears as Play now on the live Head-to-Head Quiz hero, outlined" loading="lazy" width="2400" height="862">
+      </button>
+      <span class="screen-tag">ONE DECISION, TOKEN TO SCREEN</span>
+      <h5>Press here is plum to violet</h5>
+      <p>The primary button is six tokens and nothing else: two gradient stops, white text at 9.6:1, a 10px radius, the 800 weight and a violet glow. The component reads those tokens, and every screen that starts a game uses the component, so the live hero's &ldquo;Play now&rdquo; is the token decision, not a colour someone picked again.</p>
+    </div>
+
+
 
     <div class="ds-facts">
       <div class="ds-fact"><b>23</b><span>colour primitives, read from the live stylesheet</span></div>
@@ -1095,6 +1130,11 @@ footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;just
         <h5>Measured before it was handed over</h5>
         <p>Every colour pair was checked for contrast when the tokens were built. Primary and secondary text pass on every surface, and so does the ink on each game's card. Two findings went on the list to fix rather than into the file: the pink badge is 3.6:1 with white text, and six games' button accents fall under 4.5:1. The live site corrects those at runtime; the Figma file shows the raw values so a designer sees them.</p>
       </div>
+    </div>
+  
+    <div class="ds-notes">
+      <div class="ds-note"><span class="screen-tag">WHAT THE AUDIT FOUND</span><h5>Two buttons for one job</h5><p>Writing the system down showed that the game pages use a different primary button from the app: the pink-to-orange brand gradient as a pill with dark text. It passes contrast (5.2:1 at its weakest), so it is a consistency problem rather than an accessibility one. I documented the app&rsquo;s button as the standard and listed the game pages as the next change.</p></div>
+      <div class="ds-note"><span class="screen-tag">HANDED OVER</span><h5>In Figma and in Claude Design</h5><p>A Figma kit of layered boards with the tokens as variables, and a plugin that rebuilds the live pages as editable layers. The same system is set up in Claude Design (brand book, tokens, component previews), so an AI agent working on Lorewheel builds from it instead of from a screenshot.</p></div>
     </div>
   </div>
 
