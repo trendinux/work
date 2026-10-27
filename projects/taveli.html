@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://jonludesign.com/projects/taveli">
+<script>(function(){if(location.hostname==='trendinux.github.io'){var p=location.pathname.replace(/^\/work/,'')||'/';location.replace('https://jonludesign.com'+p+location.search+location.hash);}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#1d1d1f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jonathan Lu">
+<meta property="og:title" content="Taveli — Jonathan Lu">
+<meta property="og:description" content="Taveli: a dating app that explains why two people might click, keeps sensitive preferences private, and moves people toward real gatherings. Product design, brand, design system and front end for iOS and Android.">
+<meta property="og:url" content="https://jonludesign.com/projects/taveli">
+<meta property="og:image" content="https://jonludesign.com/assets/og/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Jonathan Lu, Senior Product Designer, with screens from four case studies">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jonludesign.com/assets/og/og-card.jpg">
+<title>Taveli — Jonathan Lu</title>
+<meta name="description" content="Taveli: a dating app that explains why two people might click, keeps sensitive preferences private, and moves people toward real gatherings. Product design, brand, design system and front end for iOS and Android.">
+<style>
+
+:root{
+  --rail-bg:#1d1d1f;--rail-ink:#f5f5f7;--rail-muted:#a1a1a6;--rail-line:rgba(255,255,255,.1);
+  --bg:#f8f7f4;--panel:#fff;--ink:#1d1d1f;--ink-soft:#48484a;--ink-faint:#6e6e73;
+  --line:#d2d2d7;--line-s:#c9c4b6;--line-strong:#aeb0b5;
+  --blue:#0071e3;--blue-dim:#e8f0fe;--teal:#007a6e;--teal-dim:#e0f2ef;--amber:#8a6d00;--amber-dim:#fef3d7;
+  --r-s:8px;--r-m:12px;--r-l:20px;
+  --sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;--sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:88px;
+  --f-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'SF Mono',SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
+  --rail-w:268px;--ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.58;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}a{color:inherit;overflow-wrap:break-word}::selection{background:var(--blue);color:#fff}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:0;margin:0;text-wrap:balance;overflow-wrap:break-word}
+p,li,.proj-main,.proj-meta,.process-copy,.lead-head,.lead-form,.mock-card,.scenario-card,.dash-section,.proj-nav-link{min-width:0;overflow-wrap:break-word}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:8px}
+.eyebrow .num{color:var(--blue)}
+
+/* rail */
+.rail{position:fixed;top:0;left:0;bottom:0;width:var(--rail-w);background:var(--rail-bg);color:var(--rail-ink);display:flex;flex-direction:column;padding:32px 24px;z-index:40;border-right:1px solid var(--rail-line)}
+.canvas{margin-left:var(--rail-w);min-height:100vh}
+.brand{margin-bottom:48px}
+.brand-mark{font-family:var(--f-display);font-size:28px;font-weight:700;line-height:1}
+.brand-mark span{color:var(--amber)}
+.brand-sub{margin-top:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rail-muted)}
+.rail-status{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--rail-muted);padding:12px 0;border-top:1px solid var(--rail-line);border-bottom:1px solid var(--rail-line);margin-bottom:32px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none;animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,122,110,.5)}70%{box-shadow:0 0 0 7px rgba(0,122,110,0)}100%{box-shadow:0 0 0 0 rgba(0,122,110,0)}}
+.rail-nav{list-style:none;margin:0;padding:0;flex:1}
+.rail-nav li+li{margin-top:4px}
+.rail-link{display:flex;align-items:baseline;gap:12px;text-decoration:none;color:var(--rail-muted);font-size:15px;font-weight:500;padding:8px;border-radius:var(--r-s);transition:color .2s var(--ease),background .2s var(--ease)}
+.rail-link .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint)}
+.rail-link:hover,.rail-link.is-active{color:var(--rail-ink);background:rgba(255,255,255,.08)}
+.rail-link.is-active .n{color:var(--amber)}
+.rail-foot{font-family:var(--f-mono);font-size:11px;color:var(--rail-muted);padding-top:24px;border-top:1px solid var(--rail-line);line-height:1.7}
+
+/* hero */
+.hero{padding:112px 64px 56px;max-width:1080px}
+.hero h1{font-size:60px;line-height:1.05;margin-top:12px;max-width:18ch;overflow-wrap:break-word}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-lede{margin-top:24px;max-width:62ch;font-size:18px;color:var(--ink-soft)}
+.hero-lede b{color:var(--ink);font-weight:600}
+.hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px}
+.btn{font-family:var(--f-body);font-weight:600;font-size:15px;line-height:1.25;padding:13px 24px;border-radius:var(--r-m);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;cursor:pointer;text-align:center;white-space:normal;transition:transform .18s var(--ease),background .18s var(--ease)}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
+.btn--p{background:var(--ink);color:#fff}.btn--p:hover{background:var(--blue)}
+.btn--g{background:transparent;color:var(--ink);border-color:var(--line-s)}.btn--g:hover{border-color:var(--ink)}
+
+/* stat ticker */
+.ticker{margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap}
+.stat{flex:1 1 220px;padding:24px 24px 24px 0;border-right:1px solid var(--line);position:relative}
+.stat:last-child{border-right:none}.stat:first-child{padding-left:0}
+.stat-label{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+.stat-val{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
+
+/* section */
+section{padding:96px 64px;max-width:1240px;border-top:1px solid var(--line)}
+.sec-head{margin-bottom:56px;max-width:760px}
+.sec-head h2{font-size:38px;margin-top:12px}
+.sec-head p{margin-top:16px;color:var(--ink-soft);font-size:16px;max-width:60ch}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden;text-decoration:none;color:var(--ink);transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .24s var(--ease)}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -18px rgba(0,0,0,.12);border-color:#c8c8cd}
+.thumb{height:160px;position:relative;overflow:hidden;background:var(--bg)}
+.thumb .chrome{display:flex;align-items:center;gap:5px;position:absolute;top:0;left:0;right:0;padding:8px 12px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.04);z-index:2}
+.chrome i{width:7px;height:7px;border-radius:50%;background:#d2d2d7}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.85) contrast(.95);transition:transform .35s var(--ease)}
+.card:hover .thumb img{transform:scale(1.03)}
+.card-body{padding:22px 24px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pill{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.pill--live{background:var(--teal-dim);color:var(--teal)}
+.pill--ship{background:var(--blue-dim);color:var(--blue)}
+.pill--acq{background:var(--amber-dim);color:var(--amber)}
+.pill--new{background:var(--ink);color:#fff}
+.card-cat{font-family:var(--f-mono);font-size:10px;color:var(--ink-faint)}
+.card-body h3{font-size:18px;letter-spacing:0;margin-bottom:6px}
+.card-body .desc{font-size:14px;color:var(--ink-soft);line-height:1.5}
+.card-metric{font-family:var(--f-mono);font-size:12px;color:var(--teal);margin-top:10px}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.card-go{font-family:var(--f-mono);font-size:12px;color:var(--blue);text-align:right}
+
+/* compact cards */
+.grid-sm{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:32px}
+.card-sm{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-m);padding:16px;text-decoration:none;color:var(--ink);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.card-sm:hover{transform:translateY(-3px);box-shadow:0 12px 24px -12px rgba(0,0,0,.1)}
+.card-sm h4{font-size:15px;margin:0 0 4px}.card-sm p{font-size:13px;color:var(--ink-soft);margin:0}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:56px}
+.steps::before{content:'';position:absolute;top:24px;left:0;right:0;height:1px;background:var(--line)}
+.step{padding-right:24px;position:relative}
+.step-n{width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--f-mono);font-size:12px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;margin-bottom:16px}
+.step h4{font-size:16px;margin:0 0 6px}.step p{margin:0;font-size:14px;color:var(--ink-soft)}
+
+/* stack */
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin-top:56px}
+.stack-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-s);padding:24px}
+.stack-box h4{font-size:13px;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:13px;color:var(--ink-soft);border:1px solid var(--line);padding:6px 12px;border-radius:8px;background:var(--bg)}
+.tag-ai{color:var(--blue);border-color:var(--blue-dim);background:var(--blue-dim)}
+
+/* lead form */
+.lead-wrap{padding:96px 64px 64px;max-width:1240px;border-top:1px solid var(--line)}
+.lead-inner{background:var(--rail-bg);color:var(--rail-ink);border-radius:var(--r-l);padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.lead-head h3{font-size:34px;color:#fff;margin-top:12px}
+.lead-head p{margin-top:12px;font-size:15px;color:var(--rail-muted);max-width:36ch}
+.lead-form{display:flex;flex-direction:column;gap:12px}
+.lead-form input,.lead-form textarea{font-family:var(--f-body);font-size:15px;padding:14px 16px;border-radius:var(--r-s);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;outline:none;transition:border-color .18s;resize:vertical}
+.lead-form input::placeholder,.lead-form textarea::placeholder{color:rgba(255,255,255,.35)}
+.lead-form input:focus,.lead-form textarea:focus{border-color:var(--blue)}
+.lead-btn{font-family:var(--f-body);font-size:15px;font-weight:600;padding:14px 24px;border-radius:var(--r-s);border:none;background:var(--blue);color:#fff;cursor:pointer;transition:background .18s,transform .18s;align-self:flex-start}
+a.lead-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.lead-form-inner a.lead-btn{align-self:center}
+.lead-btn:hover{background:#005bb5;transform:translateY(-1px)}.lead-btn:active{transform:scale(.97)}
+
+/* contact */
+.contact{padding:80px 64px;max-width:1240px}
+.contact-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-l);padding:56px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:32px}
+.contact-panel h2{font-size:34px;max-width:18ch}
+.contact-status{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--teal);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+
+footer{padding:48px 64px 64px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--f-mono);font-size:12px;color:var(--ink-faint)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.is-v{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+@media(max-width:980px){
+  .rail{position:relative;width:100%;height:auto;flex-direction:row;align-items:center;padding:16px 20px;gap:20px;overflow-x:auto}
+  .brand{margin-bottom:0;flex:none}.brand-mark{font-size:20px;white-space:nowrap}.brand-sub{margin-top:3px;font-size:9.5px;letter-spacing:.08em;white-space:nowrap}.rail-status{border:none;padding:0;margin-bottom:0;flex:none}
+  .rail-nav{display:flex;gap:8px;flex:none}.rail-nav li+li{margin-top:0}
+  .rail-foot{display:none}.canvas{margin-left:0}
+  .hero{padding:72px 24px 40px}
+  section,.contact{padding:72px 24px}
+  .lead-wrap{padding:72px 24px 48px}
+  .ticker{flex-direction:column}.stat{border-right:none;border-bottom:1px solid var(--line);padding:16px 0}
+  .steps{grid-template-columns:1fr;gap:24px}.steps::before{display:none}
+  .lead-inner{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+}
+
+  /* ============ DETAILED AGENT-OS DASHBOARD MOCKUP ============ */
+  .dash-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .dash-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .dash-section h3{ font-size:30px; margin-top:0; max-width:34ch; }
+  .dash-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:64ch; }
+
+  .dash{
+    --d-bg:#16181d;
+    --d-panel:#1c1f26;
+    --d-line:#2a2e37;
+    --d-ink:#e9eaec;
+    --d-mut:#878d99;
+    --d-faint:#5d636e;
+    background:var(--d-bg);
+    border:1px solid var(--d-line);
+    border-radius:14px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:212px 1fr;
+    font-family:var(--f-body);
+    color:var(--d-ink);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+
+  /* sidebar */
+  .dash-side{ background:var(--d-panel); border-right:1px solid var(--d-line); padding:14px 10px; min-width:0; }
+  .dash-ws{
+    display:flex; align-items:center; gap:8px; padding:6px 8px 12px; border-bottom:1px solid var(--d-line); margin-bottom:10px;
+  }
+  .dash-ws .ws-logo{ width:20px; height:20px; border-radius:6px; background:linear-gradient(135deg,#6366f1,#a855f7); flex:none; }
+  .dash-ws .ws-meta{ min-width:0; }
+  .dash-ws .ws-ey{ font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--d-faint); }
+  .dash-ws .ws-name{ font-size:13.5px; font-weight:600; color:var(--d-ink); font-family:var(--f-display); }
+  .dash-ws .ws-name em{ font-style:italic; color:#dca455; font-weight:500; }
+  .dash-nav{ display:flex; flex-direction:column; gap:1px; }
+  .dash-nav-item{
+    display:flex; align-items:center; gap:9px;
+    font-size:12px; color:var(--d-mut);
+    padding:6px 8px; border-radius:6px; cursor:default;
+  }
+  .dash-nav-item .ic{ width:13px; height:13px; border-radius:3px; background:var(--d-faint); flex:none; opacity:.7; }
+  .dash-nav-item.is-active{ background:rgba(255,255,255,.07); color:var(--d-ink); }
+  .dash-nav-item.is-active .ic{ background:#a855f7; opacity:1; }
+  .dash-nav-badge{ margin-left:auto; font-family:var(--f-mono); font-size:9px; color:var(--d-faint); }
+  .dash-nav-sec{
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--d-faint); padding:12px 8px 5px;
+  }
+  .dash-sub{ display:flex; flex-direction:column; gap:1px; }
+  .dash-sub-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:11.5px; color:var(--d-mut); padding:5px 8px 5px 10px; border-radius:6px; cursor:default;
+  }
+  .dash-sub-item .dot{ width:7px; height:7px; border-radius:2px; flex:none; box-shadow:none; animation:none; }
+  .dash-sub-item.is-active{ background:rgba(255,255,255,.07); color:var(--d-ink); }
+  .dash-sub-badge{ margin-left:auto; font-family:var(--f-mono); font-size:9px; color:var(--d-faint); }
+
+  /* main */
+  .dash-main{ min-width:0; display:flex; flex-direction:column; }
+  .dash-top{
+    display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--d-line);
+  }
+  .dash-title{ font-size:15px; font-weight:600; }
+  .dash-chip{
+    font-family:var(--f-mono); font-size:9px; padding:3px 8px; border-radius:5px;
+    background:rgba(34,197,94,.14); color:#4ade80;
+  }
+  .dash-top-right{ margin-left:auto; display:flex; align-items:center; gap:7px; }
+  .dash-pill{
+    font-size:10px; padding:5px 10px; border-radius:6px; border:1px solid var(--d-line); color:var(--d-mut);
+    display:flex; align-items:center; gap:5px;
+  }
+  .dash-pill.accent{ background:#6366f1; border-color:#6366f1; color:#fff; }
+  .dash-pill.ai{ color:#c4b5fd; border-color:#3b3160; background:rgba(139,92,246,.12); }
+
+  .dash-tabs{
+    display:flex; gap:2px; padding:0 16px; border-bottom:1px solid var(--d-line); overflow-x:auto; scrollbar-width:none;
+  }
+  .dash-tabs::-webkit-scrollbar{ display:none; }
+  .dash-tab{
+    font-size:11.5px; color:var(--d-mut); padding:10px 10px; white-space:nowrap; border-bottom:2px solid transparent;
+  }
+  .dash-tab.is-active{ color:var(--d-ink); border-bottom-color:#a855f7; }
+
+  .dash-toolbar{
+    display:flex; align-items:center; gap:8px; padding:10px 16px; flex-wrap:wrap;
+  }
+  .dash-tool{
+    font-size:10.5px; color:var(--d-mut); border:1px solid var(--d-line); border-radius:6px; padding:5px 10px;
+    display:flex; align-items:center; gap:5px;
+  }
+  .dash-tool.accent{ background:#6366f1; border-color:#6366f1; color:#fff; }
+  .dash-prog{ margin-left:auto; display:flex; align-items:center; gap:8px; font-size:10px; color:var(--d-mut); }
+  .dash-prog-bar{ width:90px; height:5px; border-radius:3px; background:var(--d-line); overflow:hidden; }
+  .dash-prog-bar i{ display:block; height:100%; width:62%; background:linear-gradient(90deg,#6366f1,#a855f7); }
+
+  /* sidebar agent avatars */
+  .dash-sub-item .ava{
+    width:18px; height:18px; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--f-mono); font-size:8px; color:#fff; font-weight:600;
+  }
+
+  /* fleet list view */
+  .dash-list{ padding:0 16px 16px; }
+  .dash-group{ display:flex; align-items:center; gap:8px; padding:12px 0 8px; }
+  .dash-group .g-label{ font-size:10px; font-weight:600; padding:3px 9px; border-radius:5px; }
+  .g-run{ background:rgba(34,197,94,.16); color:#4ade80; }
+  .g-rev{ background:rgba(220,154,50,.16); color:#fbbf24; }
+  .g-idle{ background:rgba(255,255,255,.08); color:var(--d-mut); }
+  .g-paused{ background:rgba(248,113,113,.14); color:#f87171; }
+  .dash-group .g-count{ font-family:var(--f-mono); font-size:9.5px; color:var(--d-faint); }
+
+  .dash-head-row, .dash-task{
+    display:grid;
+    grid-template-columns:24px 2.3fr .8fr .9fr .8fr .7fr 60px;
+    align-items:center; gap:10px;
+    padding:8px 6px; font-size:11.5px;
+  }
+  .dash-head-row{
+    font-family:var(--f-mono); font-size:8.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--d-faint);
+    border-bottom:1px solid var(--d-line);
+  }
+  .dash-task{ border-bottom:1px solid var(--d-line); color:var(--d-ink); }
+  .dash-task .t-name{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .dash-task .t-check{ width:13px; height:13px; border-radius:50%; border:1.5px solid var(--d-faint); flex:none; }
+  .dash-task .t-check.done{ border-color:#4ade80; background:#4ade80; }
+  .dash-task .t-name span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .t-tag{ font-size:9.5px; padding:3px 8px; border-radius:5px; white-space:nowrap; width:fit-content; }
+  .ts-run{ background:rgba(34,197,94,.14); color:#4ade80; }
+  .ts-rev{ background:rgba(220,154,50,.14); color:#fbbf24; }
+  .ts-idle{ background:rgba(255,255,255,.06); color:var(--d-mut); }
+  .ts-paused{ background:rgba(248,113,113,.14); color:#f87171; }
+  .t-risk{ font-size:9.5px; padding:3px 8px; border-radius:5px; width:fit-content; }
+  .tr-low{ background:rgba(34,197,94,.12); color:#4ade80; }
+  .tr-med{ background:rgba(220,154,50,.14); color:#fbbf24; }
+  .tr-high{ background:rgba(248,113,113,.14); color:#f87171; }
+  .t-mut{ color:var(--d-mut); }
+  .t-conf{ font-family:var(--f-mono); font-size:10.5px; }
+  .t-ava{
+    width:18px; height:18px; border-radius:50%; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--f-mono); font-size:7.5px; color:#fff; font-weight:600;
+  }
+
+  @media (max-width:760px){
+    .dash{ grid-template-columns:1fr; }
+    .dash-side{ display:none; }
+    .dash-head-row, .dash-task{ grid-template-columns:20px 2fr .9fr .8fr; }
+    .dash-head-row span:nth-child(n+5), .dash-task > :nth-child(n+5){ display:none; }
+  }
+
+  /* ============ PROJECT DETAIL PAGE ============ */
+  .back-link{
+    font-family:var(--f-mono);
+    font-size:12px;
+    letter-spacing:.04em;
+    text-decoration:none;
+    color:var(--ink-faint);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:var(--sp-5);
+    transition:color .18s var(--ease);
+  }
+  .back-link:hover{ color:var(--blue); }
+
+  .proj-head{ width:min(1180px, calc(100% - 128px)); padding:var(--sp-9) 0 0; margin:0 auto; }
+  .proj-head h1{ font-size:52px; line-height:1.05; margin-top:var(--sp-3); max-width:18ch; }
+  .proj-lede{ margin-top:var(--sp-5); font-size:18px; line-height:1.62; color:var(--ink-soft); max-width:64ch; }
+  .proj-head .tagrow{ margin-top:var(--sp-6); }
+  .proj-head .tag{ color:var(--ink-soft); border-color:var(--line); }
+
+  .proj-hero-visual{
+    width:min(1180px, calc(100% - 128px));
+    margin:var(--sp-8) auto 0;
+    border-radius:var(--r-l);
+    overflow:hidden;
+    background:#0f1216;
+  }
+  .proj-hero-visual img{ width:100%; display:block; }
+  .proj-hero-abstract{
+    position:relative;
+    min-height:320px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .proj-hero-note{
+    position:relative; z-index:2;
+    font-family:var(--f-mono);
+    font-size:12px;
+    color:var(--rail-muted);
+    background:rgba(0,0,0,.35);
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid var(--rail-line);
+  }
+
+  .proj-body{
+    width:min(1180px, calc(100% - 128px));
+    padding:var(--sp-9) 0;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:minmax(0,1.55fr) minmax(280px,.82fr);
+    gap:var(--sp-9);
+    align-items:start;
+  }
+  .proj-main p{ font-size:16.5px; line-height:1.72; color:var(--ink-soft); margin:0 0 var(--sp-5); max-width:66ch; }
+  .proj-main p:last-child{ margin-bottom:0; }
+  .proj-metric{
+    margin-top:var(--sp-2);
+    margin-bottom:var(--sp-5);
+    display:inline-flex;
+    font-family:var(--f-mono);
+    font-size:13px;
+    color:var(--teal);
+    background:var(--teal-dim);
+    padding:7px 14px;
+    border-radius:var(--r-s);
+  }
+  .proj-meta{
+    border:1px solid var(--line);
+    border-radius:var(--r-l);
+    padding:var(--sp-6);
+    background:var(--panel);
+    position:sticky;
+    top:var(--sp-6);
+  }
+  .meta-row{ padding:var(--sp-3) 0; border-bottom:1px solid var(--line); }
+  .meta-row:last-child{ border-bottom:none; padding-bottom:0; }
+  .meta-row span{
+    display:block;
+    font-family:var(--f-mono);
+    font-size:10.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:6px;
+  }
+  .meta-row b{ font-family:var(--f-body); font-weight:600; font-size:14px; display:block; line-height:1.5; overflow-wrap:break-word; }
+
+  .proj-gallery{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .proj-gallery .eyebrow{ margin-bottom:var(--sp-5); }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+    gap:var(--sp-5);
+  }
+  .gallery-item{
+    border:1px solid var(--line);
+    border-radius:var(--r-m);
+    overflow:hidden;
+    padding:0;
+    background:var(--panel);
+    cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .gallery-item:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .gallery-item img{ width:100%; height:240px; object-fit:cover; display:block; }
+
+  /* ============ SELECTED SCREENS WALKTHROUGH ============ */
+  .artifact-section{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .artifact-section .eyebrow{ margin-bottom:var(--sp-3); }
+  .artifact-section h3{ font-size:30px; margin-top:0; max-width:36ch; }
+  .artifact-cap{ margin-top:var(--sp-3); margin-bottom:var(--sp-5); font-size:14px; color:var(--ink-soft); max-width:72ch; }
+  .artifact-frame{
+    display:block; width:100%; padding:0; margin:0;
+    font:inherit; text-align:left; appearance:none;
+    border:1px solid var(--line); border-radius:var(--r-m);
+    overflow:hidden; background:var(--panel); cursor:zoom-in;
+    transition:border-color .18s var(--ease), transform .18s var(--ease);
+  }
+  .artifact-frame:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+  .artifact-frame img{ width:100%; height:auto; object-fit:unset; display:block; }
+  .screen-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:var(--sp-6) var(--sp-5);
+    margin-top:var(--sp-6);
+  }
+  .screen-card{ min-width:0; }
+  .screen-grid--phones{ grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:var(--sp-7); }
+  .screen-grid--phones .artifact-frame{ background:#141418; }
+  .screen-grid--phones .artifact-frame img{ max-height:620px; width:auto; max-width:100%; margin:0 auto; }
+  .screen-card.screen-lede{ margin-top:var(--sp-5); }
+  .screen-card .artifact-frame{ margin-bottom:var(--sp-4); }
+  .screen-tag{
+    font-family:var(--f-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:6px;
+  }
+  .screen-card h5{
+    margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700;
+  }
+  .screen-card p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; max-width:64ch; }
+
+  /* ============ DEVICE TEMPLATES: iOS (iPhone 15) and Android (Pixel 7) ============ */
+  /* Drawn in CSS and sized with container query units, so one rule scales to any column. */
+  .platform-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-top:var(--sp-7); }
+  .platform-head h4{ margin:0; font-family:var(--f-display); font-size:20px; font-weight:700; }
+  .platform-head span{ font-family:var(--f-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); }
+  .device-row{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-5); }
+  .device-cell{ min-width:0; display:grid; gap:var(--sp-3); align-content:start; }
+  .screen-card.device-cell .artifact-frame{ border:0; background:none; border-radius:0; overflow:visible; display:grid; justify-items:center; margin-bottom:var(--sp-2); }
+  .device-cell .artifact-frame:hover{ transform:translateY(-3px); }
+  .device-cell .artifact-frame:focus-visible{ outline:2px solid var(--ink); outline-offset:6px; border-radius:24px; }
+  .device-wrap{ container-type:inline-size; width:min(100%, 300px); }
+  .device{ width:100%; position:relative; background:#0c0c0f; box-shadow:0 0 0 1px #2a2a30, 0 30px 60px -28px rgba(0,0,0,.55); }
+  .device-screen{ position:relative; overflow:hidden; background:#16161a; }
+  .device-cell .device-screen img{ display:block; width:100%; height:auto; max-height:none; margin:0; object-fit:fill; }
+  .statusbar{ display:flex; align-items:center; justify-content:space-between; color:#f4f4f6; background:#16161a; font-family:-apple-system,"SF Pro Text",Roboto,system-ui,sans-serif; font-weight:600; line-height:1; }
+  .statusbar svg{ display:block; fill:currentColor; }
+  .statusbar .icons{ display:flex; align-items:center; }
+  /* iOS: continuous corners, Dynamic Island, 9:41, home indicator */
+  .device--ios{ border-radius:15cqi; padding:3.6cqi; }
+  .device--ios .device-screen{ border-radius:11.6cqi; }
+  .device--ios .statusbar{ height:14cqi; padding:0 8cqi 0 10cqi; font-size:4.4cqi; }
+  .device--ios .statusbar .icons{ gap:1.6cqi; }
+  .device--ios .statusbar svg{ height:3.4cqi; width:auto; }
+  .device--ios .island{ position:absolute; top:6.6cqi; left:50%; transform:translateX(-50%); width:31cqi; height:9.2cqi; border-radius:99px; background:#000; z-index:2; }
+  .device--ios .home-ind{ position:absolute; bottom:5.4cqi; left:50%; transform:translateX(-50%); width:35cqi; height:1.4cqi; border-radius:99px; background:#f4f4f6; opacity:.9; z-index:2; }
+  /* Android: squarer corners, centred punch-hole camera, 12:00 on the left, gesture pill */
+  .device--android{ border-radius:10cqi; padding:3cqi; }
+  .device--android .device-screen{ border-radius:7.6cqi; }
+  .device--android .statusbar{ height:9cqi; padding:0 6.5cqi; font-size:3.9cqi; font-weight:500; }
+  .device--android .statusbar .icons{ gap:1.4cqi; }
+  .device--android .statusbar svg{ height:3.6cqi; width:auto; }
+  .device--android .punch{ position:absolute; top:5.2cqi; left:50%; transform:translateX(-50%); width:4.6cqi; height:4.6cqi; border-radius:50%; background:#000; box-shadow:0 0 0 .6cqi #101014; z-index:2; }
+  .device--android .gesture{ position:absolute; bottom:4.6cqi; left:50%; transform:translateX(-50%); width:27cqi; height:1.2cqi; border-radius:99px; background:#f4f4f6; opacity:.75; z-index:2; }
+  .platform-notes{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--sp-5); margin-top:var(--sp-7); padding-top:var(--sp-5); border-top:1px solid var(--line); }
+  .platform-notes h5{ margin:0 0 8px; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .platform-notes p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+
+  /* Tablet (iPad Pro 11) and desktop (browser window) */
+  .device-wrap--tablet{ width:min(100%, 440px); }
+  .device-wrap--desktop{ width:100%; }
+  .device--tablet{ border-radius:6cqi; padding:3.2cqi; }
+  .device--tablet .device-screen{ border-radius:3cqi; }
+  .device--tablet .statusbar{ height:4.6cqi; padding:0 4cqi; font-size:2.1cqi; }
+  .device--tablet .statusbar .icons{ gap:.9cqi; }
+  .device--tablet .statusbar svg{ height:1.7cqi; width:auto; }
+  .device--tablet .cam{ position:absolute; top:1.05cqi; left:50%; transform:translateX(-50%); width:1.2cqi; height:1.2cqi; border-radius:50%; background:#1d1d24; z-index:2; }
+  .device--tablet .home-ind{ position:absolute; bottom:4.4cqi; left:50%; transform:translateX(-50%); width:22cqi; height:.8cqi; border-radius:99px; background:#f4f4f6; opacity:.85; z-index:2; }
+  .device--desktop{ border-radius:1.2cqi; padding:0; overflow:hidden; background:#1b1b20; }
+  .device--desktop .device-screen{ border-radius:0; }
+  .browserbar{ display:flex; align-items:center; gap:2cqi; height:4.4cqi; padding:0 1.8cqi; background:#26262c; border-bottom:1px solid #34343c; }
+  .browserbar .lights{ display:flex; gap:.8cqi; flex:none; }
+  .browserbar .lights i{ width:1.2cqi; height:1.2cqi; border-radius:50%; background:#ff5f57; }
+  .browserbar .lights i:nth-child(2){ background:#febc2e; }
+  .browserbar .lights i:nth-child(3){ background:#28c840; }
+  .browserbar .url{ flex:0 1 46%; margin:0 auto; transform:translateX(-3cqi); height:2.7cqi; border-radius:.8cqi; background:#18181d; color:#a1a1a6; font:500 1.35cqi/2.7cqi -apple-system,system-ui,sans-serif; text-align:center; white-space:nowrap; overflow:hidden; }
+  .device-row--tablet{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .device-row--desktop{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  @media (max-width:900px){ .device-row.device-row--desktop{ grid-template-columns:1fr; } }
+  @media (max-width:560px){ .device-row.device-row--tablet{ grid-template-columns:1fr; } }
+
+
+  /* ============ DESIGN SYSTEM STORY ============ */
+  .ds-steps{ list-style:none; margin:var(--sp-6) 0 0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); counter-reset:dsstep; }
+  .ds-steps li{ counter-increment:dsstep; border-top:2px solid var(--ink); padding-top:var(--sp-3); display:grid; gap:6px; align-content:start; }
+  .ds-steps li::before{ content:"0" counter(dsstep); font-family:var(--f-mono); font-size:12px; letter-spacing:.1em; color:var(--blue); }
+  .ds-steps h5{ margin:0; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .ds-steps p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+  .ds-trace{ margin-top:var(--sp-7); }
+  .ds-trace .artifact-frame{ background:#16161a; }
+  .ds-notes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-5); margin-top:var(--sp-7); }
+  .ds-note{ border:1px solid var(--line); border-radius:var(--r-m); padding:20px 22px; background:var(--panel); display:grid; gap:8px; align-content:start; }
+  .ds-note .screen-tag{ margin:0; }
+  .ds-note h5{ margin:0; font-family:var(--f-display); font-size:17px; font-weight:700; }
+  .ds-note p{ margin:0; font-size:14px; color:var(--ink-soft); line-height:1.6; }
+  @media (max-width:900px){ .ds-steps{ grid-template-columns:repeat(2,minmax(0,1fr)); } .ds-notes{ grid-template-columns:1fr; } }
+  @media (max-width:560px){ .ds-steps{ grid-template-columns:1fr; } }
+
+  /* ============ DESIGN SYSTEM ============ */
+  .ds-facts{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--sp-4); margin-top:var(--sp-5); }
+  .ds-fact{ border:1px solid var(--line); border-radius:var(--r-m); padding:16px 18px; display:grid; gap:4px; background:var(--panel); }
+  .ds-fact b{ font-family:var(--f-display); font-size:26px; line-height:1; font-variant-numeric:tabular-nums; }
+  .ds-fact span{ font-size:13px; color:var(--ink-soft); line-height:1.4; }
+  .ds-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--sp-6) var(--sp-5); margin-top:var(--sp-6); }
+  .ds-grid .wide{ grid-column:1 / -1; }
+  .ds-grid .artifact-frame{ background:#16161a; }
+  @media (max-width:900px){
+    .device-row{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .platform-notes, .ds-facts{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .ds-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:560px){
+    .device-row, .platform-notes, .ds-facts{ grid-template-columns:1fr; }
+    .device-wrap{ width:min(100%, 280px); }
+  }
+  @media (prefers-reduced-motion:reduce){ .device-cell .artifact-frame:hover{ transform:none; } }
+  @media (max-width:900px){
+    .screen-grid{ grid-template-columns:1fr; }
+  }
+
+  .lightbox{
+    position:fixed; inset:0;
+    background:rgba(15,17,21,.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:var(--sp-6);
+  }
+  .lightbox.is-open{ display:flex; }
+  .lightbox img{ max-width:min(1100px,92vw); max-height:88vh; border-radius:var(--r-s); }
+  .lightbox-close{
+    position:absolute; top:var(--sp-5); right:var(--sp-6);
+    background:none; border:1px solid rgba(255,255,255,.3); color:#fff;
+    width:40px; height:40px; border-radius:50%;
+    font-size:20px; cursor:pointer; line-height:1;
+  }
+
+  .proj-nav{
+    width:min(1180px, calc(100% - 128px));
+    padding:var(--sp-7) 0 var(--sp-9);
+    border-top:1px solid var(--line);
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:stretch;
+    flex-wrap:wrap;
+    gap:var(--sp-4);
+  }
+  .proj-nav-link{
+    font-family:var(--f-mono);
+    font-size:12.5px;
+    line-height:1.45;
+    text-decoration:none;
+    color:var(--ink-soft);
+    padding:10px 16px;
+    border:1px solid var(--line);
+    border-radius:var(--r-m);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:44px;
+    flex:1 1 240px;
+    max-width:100%;
+    text-align:center;
+    white-space:normal;
+    transition:border-color .18s var(--ease), color .18s var(--ease);
+  }
+  .proj-nav-link:hover{ border-color:var(--ink); color:var(--ink); }
+  .proj-nav-link.prev{ justify-content:flex-start; text-align:left; }
+  .proj-nav-link.next{ justify-content:flex-end; text-align:right; }
+  .proj-nav-link.all{ color:var(--blue); border-color:var(--blue-dim); background:var(--blue-dim); flex:0 0 auto; }
+
+  /* loopwork concept mockups */
+  .mockset{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-4); margin-top:var(--sp-2); }
+  .mock-card{
+    border:1px solid var(--line); border-radius:var(--r-m); background:var(--panel); padding:var(--sp-4);
+  }
+  .mock-card h5{
+    font-family:var(--f-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); margin:0 0 var(--sp-3);
+  }
+  .feed-row{ display:flex; justify-content:space-between; gap:8px; padding:9px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+  .feed-row:last-child{ border-bottom:none; }
+  .feed-row .who{ font-weight:600; }
+  .feed-row .conf{ font-family:var(--f-mono); font-size:10.5px; padding:2px 7px; border-radius:4px; }
+  .conf--high{ background:var(--teal-dim); color:var(--teal); }
+  .conf--mid{ background:var(--amber-dim); color:#8a5d10; }
+  .queue-row{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+  .queue-row:last-child{ border-bottom:none; }
+  .queue-actions button{
+    font-family:var(--f-mono); font-size:10.5px; border-radius:5px; padding:5px 9px; border:1px solid var(--line-strong);
+    background:var(--panel); cursor:pointer; margin-left:6px;
+  }
+  .queue-actions button.approve:hover{ border-color:var(--teal); color:var(--teal); }
+  .queue-actions button.escalate:hover{ border-color:var(--amber); color:#8a5d10; }
+  .queue-row.is-done{ opacity:.45; }
+  .queue-row.is-done .queue-actions{ display:none; }
+  .queue-row .status-note{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); display:none; }
+  .queue-row.is-done .status-note{ display:inline; }
+
+  /* ============ PROCESS-DRIVEN CASE BODY ============ */
+  .case-brief{ font-size:17px; line-height:1.7; color:var(--ink); margin:0 0 var(--sp-7); max-width:66ch; }
+  .case-brief b{ font-weight:600; }
+  .case-process{ display:flex; flex-direction:column; }
+  .process-row{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:var(--sp-5);
+    padding:var(--sp-6) 0;
+    border-top:1px solid var(--line);
+  }
+  .case-process .process-row:first-child{ border-top:1px solid var(--line); }
+  .process-num{
+    font-family:var(--f-mono);
+    font-size:11px;
+    color:var(--bg);
+    background:var(--ink);
+    width:30px; height:30px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .process-copy h5{
+    font-family:var(--f-display);
+    font-size:15.5px;
+    margin:0 0 8px;
+    letter-spacing:.01em;
+  }
+  .process-copy p{ margin:0; font-size:15px; line-height:1.68; color:var(--ink-soft); max-width:64ch; }
+  .case-outcome{
+    margin-top:var(--sp-6);
+    padding-top:var(--sp-6);
+    border-top:1px solid var(--line);
+  }
+  .case-outcome .eyebrow{ margin-bottom:var(--sp-3); }
+  .case-outcome p{ margin:0; font-size:15.5px; line-height:1.68; color:var(--ink-soft); max-width:64ch; }
+
+  /* ============ EXAMPLE-USE-CASE SCENARIOS (Loopwork) ============ */
+  .proj-scenarios{ width:min(1180px, calc(100% - 128px)); padding:0 0 var(--sp-9); margin:0 auto; }
+  .proj-scenarios h3{ font-size:30px; margin-top:var(--sp-3); max-width:36ch; }
+  .scenarios-note{
+    margin-top:var(--sp-3); margin-bottom:var(--sp-5);
+    font-size:13.5px; color:var(--ink-faint); max-width:62ch;
+  }
+  .scenario-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:var(--sp-5);
+  }
+  .scenario-card{
+    border:1px solid var(--line);
+    border-radius:var(--r-l);
+    background:var(--panel);
+    padding:var(--sp-5);
+  }
+  .scenario-card h5{
+    font-family:var(--f-display);
+    font-size:16px;
+    margin:0 0 var(--sp-3);
+  }
+  .scenario-card p{ margin:0 0 var(--sp-4); font-size:14px; color:var(--ink-soft); }
+  .scenario-card ul{ margin:0; padding:0; list-style:none; display:grid; gap:9px; }
+  .scenario-card li{
+    font-size:12.5px; color:var(--ink-soft); padding-left:16px; position:relative;
+  }
+  .scenario-card li::before{
+    content:''; position:absolute; left:0; top:6px; width:6px; height:6px; background:var(--amber);
+  }
+
+  /* ============ LEAD CAPTURE FORM ============ */
+  .lead-form-wrap{
+    width:min(1180px, calc(100% - 128px));
+    padding:0 0 var(--sp-9);
+    margin:0 auto;
+  }
+  .lead-form-inner{
+    background:var(--rail-bg);
+    color:var(--rail-ink);
+    border-radius:var(--r-l);
+    padding:var(--sp-7);
+    box-shadow:0 30px 70px -46px rgba(0,0,0,.55);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:var(--sp-7);
+    align-items:start;
+  }
+  .lead-head h3{
+    font-family:var(--f-display);
+    font-size:34px;
+    color:#fff;
+    margin-top:var(--sp-3);
+  }
+  .lead-head p{
+    margin-top:var(--sp-3);
+    font-size:15px;
+    color:var(--rail-muted);
+    max-width:36ch;
+  }
+  .lead-form{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-3);
+  }
+  .lead-form input,
+  .lead-form textarea{
+    font-family:var(--f-body);
+    font-size:15px;
+    padding:14px 16px;
+    border-radius:var(--r-s);
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    outline:none;
+    transition:border-color .18s;
+    resize:vertical;
+  }
+  .lead-form input::placeholder,
+  .lead-form textarea::placeholder{
+    color:rgba(255,255,255,.35);
+  }
+  .lead-form input:focus,
+  .lead-form textarea:focus{
+    border-color:var(--blue);
+  }
+  .lead-btn{
+    font-family:var(--f-body);
+    font-size:15px;
+    font-weight:600;
+    line-height:1.25;
+    padding:14px 24px;
+    border-radius:var(--r-s);
+    border:none;
+    background:var(--blue);
+    color:#fff;
+    cursor:pointer;
+    text-align:center;
+    white-space:normal;
+    transition:background .18s, transform .18s;
+    align-self:flex-start;
+  }
+  .lead-btn:hover{
+    background:#005bb5;
+    transform:translateY(-1px);
+  }
+  .lead-btn:active{
+    transform:scale(.97);
+  }
+
+  @media (max-width:640px){
+    .process-row{ grid-template-columns:1fr; }
+    .process-num{ margin-bottom:4px; }
+  }
+
+  @media (max-width:980px){
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 48px); padding-left:0; padding-right:0; }
+    .proj-head{ padding-top:56px; }
+    .proj-head h1{ font-size:40px; line-height:1.08; }
+    .proj-hero-visual{ margin:40px auto 0; }
+    .proj-body{ padding-top:56px; padding-bottom:56px; gap:40px; }
+    .gallery-item:not(.artifact-frame) img{ height:220px; }
+    .proj-body{ grid-template-columns:1fr; }
+    .proj-meta{ position:static; }
+    .mockset{ grid-template-columns:1fr; }
+    .lead-form-inner{ grid-template-columns:1fr; padding:32px; }
+    .lead-head h3{ font-size:30px; line-height:1.14; }
+  }
+  @media (max-width:640px){
+    .proj-head, .proj-hero-visual, .proj-body, .proj-gallery, .proj-nav, .proj-scenarios, .dash-section, .artifact-section, .lead-form-wrap{ width:calc(100% - 40px); }
+    .proj-head h1{ font-size:34px; }
+    .proj-nav{ display:grid; grid-template-columns:1fr; gap:var(--sp-3); }
+    .proj-nav-link, .proj-nav-link.next{ justify-content:flex-start; text-align:left; }
+    .proj-nav-link.all{ width:fit-content; }
+    .lead-form-inner{ padding:24px; }
+  }
+
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P0R1QSTBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-0P0R1QSTBK");
+</script>
+</head>
+<body>
+
+
+<nav class="rail">
+  <div class="brand">
+    <div class="brand-mark">Jonathan <span>Lu</span></div>
+    <div class="brand-sub">Senior Product Designer</div>
+  </div>
+  <div class="rail-status">
+    <span class="dot" aria-hidden="true"></span>
+    OPEN TO NEW ROLES
+  </div>
+  <ul class="rail-nav">
+    <li><a class="rail-link is-active" href="../index.html#work"><span class="n">01</span>Work</a></li>
+    <li><a class="rail-link" href="../index.html#process"><span class="n">02</span>Process</a></li>
+    <li><a class="rail-link" href="../index.html#stack"><span class="n">03</span>Stack</a></li>
+    <li><a class="rail-link" href="../index.html#contact"><span class="n">04</span>Contact</a></li>
+  </ul>
+  <div class="rail-foot">
+    REMOTE · HYBRID · ONSITE<br>
+    &copy; 2026
+  </div>
+</nav>
+
+<main class="canvas">
+
+  <div class="proj-head">
+    <a class="back-link" href="../index.html#work">← All work</a>
+    <div class="eyebrow"><span class="num">Consumer &middot; Dating</span> · PRE-LAUNCH</div>
+    <h1>Taveli</h1>
+    <p class="proj-lede">Dating with direction. An iOS and Android app I designed end to end: it explains why two people might click, keeps sensitive preferences private, and gives people a real reason to meet.</p>
+    <div class="tagrow">
+
+    </div>
+  </div>
+
+  <div class="proj-hero-visual">
+    <img src="taveli-img/taveli-banner.jpg" alt="Five Taveli screens on a cream ground: the welcome screen, a match card for Maya, the Why you might click sheet at 94% aligned, Gatherings for you, and a conversation with Maya">
+  </div>
+
+  <div class="proj-body">
+    <div class="proj-main">
+
+      <p class="case-brief">Most dating apps are built to hold attention: a stack of faces, a swipe, and a score you never see. People are left guessing why someone was shown to them, and the things that matter most (what they want, how they live, what they would rather keep private) are either ignored or put on display. Taveli starts from a different brief: show people why a match might work, protect what they tell the app, and move the conversation off the screen.</p>
+      <div class="case-process">
+      <div class="process-row"><div class="process-num">01</div><div class="process-copy"><h5>Discover</h5><p>I looked at where dating apps lose trust. People can't tell why a profile was chosen for them. The preferences that matter most are either missing or shown on a public profile. And a match too often ends in a chat that goes nowhere. Those three became the problems to design for.</p></div></div>
+      <div class="process-row"><div class="process-num">02</div><div class="process-copy"><h5>Define</h5><p>Four rules came out of it and every screen answers to them. Explain, don't rank: a match shows its reasons, never a score of the person. What you tell the app about attraction, money and lifestyle stays private and never appears on a profile. Protected traits are never ranked. And the app should end in a plan to meet, not a longer chat.</p></div></div>
+      <div class="process-row"><div class="process-num">03</div><div class="process-copy"><h5>Design</h5><p>I designed the system first (the match card, the explanation sheet, the note that carries every privacy promise, the gathering card) and then the five tabs around it. One codebase runs on both phones, so I designed and built together and checked every screen at iPhone and Pixel sizes the day it changed.</p></div></div>
+      </div>
+      <div class="case-outcome">
+        <div class="eyebrow"><span class="num">OUTCOME</span></div>
+        <p>Built for iOS and Android from one codebase, with sign-up, matching, explanations, gatherings with RSVPs, messaging, privacy controls, reporting and a Plus membership through Apple and Google billing. The site is live at taveli.app; the apps are preparing for the App Store and Google Play.</p>
+      </div>
+
+    </div>
+    <aside class="proj-meta">
+      <div class="meta-row"><span>Status</span><b>PRE-LAUNCH</b></div>
+      <div class="meta-row"><span>Category</span><b>Consumer &middot; Dating</b></div>
+      <div class="meta-row"><span>Role</span><b>Product Designer: Product Strategy, UX/UI, Brand, Design System, Front-end</b></div>
+      <div class="meta-row"><span>Platforms</span><b>Native iOS and Android apps from one codebase</b></div>
+      <div class="meta-row"><span>Site</span><b><a href="https://taveli.app" target="_blank" rel="noopener">taveli.app</a></b></div>
+    </aside>
+  </div>
+
+
+  <div class="artifact-section" id="mobile">
+    <div class="eyebrow"><span class="num">ON BOTH PHONES</span></div>
+    <h3>From the first screen to a plan to meet</h3>
+    <p class="artifact-cap">Six screens from the app itself, captured at iPhone 16 Pro and Pixel 7 sizes using the app's preview mode, which fills it with sample members. Taveli is a native app on both platforms, built once and fitted to each phone's safe areas, tab bar and back gesture.</p>
+
+    <div class="platform-head"><h4>iOS</h4><span>iPhone 16 Pro &middot; 402 &times; 874 pt</span></div>
+    <div class="device-row">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ios-welcome.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#fffdf8;color:#1f2622"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="taveli-img/tv-ios-welcome.jpg" alt="Taveli welcome screen: the orbit logo, Dating with direction, the headline Meet someone. Know the why., three portraits on an orbit, and a Find your people button" loading="lazy" width="720" height="1565"></div><span class="home-ind" aria-hidden="true" style="background:#1f2622;opacity:.75"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE &middot; WELCOME</span>
+        <h5>Say what's different before asking for anything</h5>
+        <p>The first screen makes one promise, <em>know the why</em>, and shows it: three people on an orbit, not a stack to swipe. One ink button starts sign-up. The line under it says who the app is for (18 and over) and who runs it, because trust starts before the account does.</p>
+      </div>
+
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ios-people.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#fffdf8;color:#1f2622"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="taveli-img/tv-ios-people.jpg" alt="A match card for Maya, 29, Architect, Columbia: a 94% aligned badge on the photo, three interest tags, a quote about tiny restaurants and dumplings, and round pass and like buttons" loading="lazy" width="720" height="1565"></div><span class="home-ind" aria-hidden="true" style="background:#1f2622;opacity:.75"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE &middot; PEOPLE</span>
+        <h5>One person at a time, with a reason attached</h5>
+        <p>Each introduction is a single card: the photo, a few words about the person in their own voice, and a <em>94% aligned</em> badge on the photo. Pass and like are large round targets under the card, with like in coral. The name is set in the app's sans, so it reads as a person rather than a headline.</p>
+      </div>
+
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ios-why.jpg">
+          <div class="device-wrap"><div class="device device--ios"><span class="island" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#fffdf8;color:#1f2622"><span>9:41</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .5 10.4 10.4 0 0 0 .7 3.5L2 4.8a8.6 8.6 0 0 1 6-2.4Zm0 3.7c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.2c-1.8 0-3.5.7-4.7 1.9l1.3 1.3A4.8 4.8 0 0 1 8 6.1Zm0 3.7c-.4 0-.8.2-1.1.4L8 11.5l1.1-1.3c-.3-.2-.7-.4-1.1-.4Z"/></svg><svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.2" y="2.2" width="17" height="7.6" rx="1.8"/><path d="M24.4 4v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2Z" fill-opacity=".45"/></svg></span></div><img src="taveli-img/tv-ios-why.jpg" alt="The Why you might click sheet: 94% aligned, A conversation starter, not a verdict, an offer to see the full factor breakdown with Plus, and a note that private selections never appear in the score and protected traits are never ranked" loading="lazy" width="720" height="1565"></div><span class="home-ind" aria-hidden="true" style="background:#1f2622;opacity:.75"></span></div></div>
+        </button>
+        <span class="screen-tag">IPHONE &middot; WHY YOU MIGHT CLICK</span>
+        <h5>The number opens into its reasons</h5>
+        <p>Tapping the badge opens a sheet that says what the number is: <em>a conversation starter, not a verdict</em>, built from public goals and practical distance. It ends with a green note that private lifestyle, attraction and habit choices never feed the score, and that protected traits are never ranked.</p>
+      </div>
+
+    </div>
+
+    <div class="platform-head"><h4>Android</h4><span>Pixel 7 &middot; 412 &times; 915 dp</span></div>
+    <div class="device-row">
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-and-today.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#fffdf8;color:#1f2622"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="taveli-img/tv-and-today.jpg" alt="Today's introductions on Android: a Your Invitations banner saying 2 people have chosen you, then photo cards for Maya, 29, Theo, 31 and Nia, 28 with neighbourhood and distance" loading="lazy" width="720" height="1599"></div><span class="gesture" aria-hidden="true" style="background:#1f2622;opacity:.6"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL &middot; TODAY</span>
+        <h5>A short list, not an endless one</h5>
+        <p>Today shows a handful of introductions as a grid, with their neighbourhood and distance. Above them, a warm banner says how many people have already chosen you. A small daily number is the point: it asks people to look properly rather than keep scrolling.</p>
+      </div>
+
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-and-gather.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#fffdf8;color:#1f2622"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="taveli-img/tv-and-gather.jpg" alt="Gatherings for you on Android: date pills for Today, Tomorrow, This week and Weekend, and three gatherings near you with fit scores: Dinner, no small talk at 93%, Rooftop cinema club at 89% and Sunday pottery social at 86%" loading="lazy" width="720" height="1599"></div><span class="gesture" aria-hidden="true" style="background:#1f2622;opacity:.6"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL &middot; GATHERINGS</span>
+        <h5>Somewhere to meet that isn't a first date</h5>
+        <p>Gatherings are small local events (a dinner, a rooftop film, a pottery morning) each with how well it fits you, when, where and how many are going. A round button joins. Meeting in a group takes the pressure off a first meeting and gives two people something to talk about.</p>
+      </div>
+
+      <div class="screen-card device-cell">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-and-chat.jpg">
+          <div class="device-wrap"><div class="device device--android"><span class="punch" aria-hidden="true"></span><div class="device-screen"><div class="statusbar" aria-hidden="true" style="background:#fffdf8;color:#1f2622"><span>12:00</span><span class="icons" aria-hidden="true"><svg viewBox="0 0 16 12"><path d="M8 11.6 15.6 3A11.4 11.4 0 0 0 8 .2 11.4 11.4 0 0 0 .4 3Z"/></svg><svg viewBox="0 0 12 12"><path d="M11.6 11.6V.4L.4 11.6Z"/></svg><svg viewBox="0 0 7 12"><rect x="2" y="0" width="3" height="1.4" rx=".4"/><rect x="0" y="1.2" width="7" height="10.8" rx="1.2"/></svg></span></div><img src="taveli-img/tv-and-chat.jpg" alt="A conversation with Maya on Android: a note that you both saved Dinner, no small talk, two messages about dumplings, suggested prompts Ask about a shared interest and Suggest an event, and a message field with a coral send button" loading="lazy" width="720" height="1599"></div><span class="gesture" aria-hidden="true" style="background:#1f2622;opacity:.6"></span></div></div>
+        </button>
+        <span class="screen-tag">PIXEL &middot; CONVERSATION</span>
+        <h5>A chat that points at a plan</h5>
+        <p>The thread opens with what two people share: here, that both saved the same dinner. Prompts above the keyboard suggest asking about a shared interest or suggesting an event, so the obvious next step is meeting rather than another week of messages.</p>
+      </div>
+
+    </div>
+
+    <div class="platform-notes">
+      <div><h5>Native on both</h5><p>One codebase builds the iOS and Android apps. Each respects its platform: safe areas around the Dynamic Island and punch-hole camera, the Android back gesture, and each store's own billing.</p></div>
+      <div><h5>Private by structure</h5><p>Attraction, money and lifestyle preferences are kept in a separate private table that other members can't read, so the promise on screen is enforced by the database, not by a setting.</p></div>
+      <div><h5>Leaving is built in</h5><p>An account can be deleted from the app&rsquo;s own settings or from a page on taveli.app, as both stores require, and members can report or block anyone from a profile or a chat.</p></div>
+    </div>
+  </div>
+
+  <div class="artifact-section" id="screens">
+    <div class="eyebrow"><span class="num">TRUST, IN THE DETAILS</span></div>
+    <h3>Privacy and pricing said out loud</h3>
+    <p class="artifact-cap">Three more screens where trust is won or lost: signing up, controlling what others can see, and paying.</p>
+    <div class="screen-grid screen-grid--phones">
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ios-create.jpg">
+          <img src="taveli-img/tv-ios-create.jpg" alt="Create your Taveli: first name, email and password fields, a confirmation that you are 18 or older with links to the Terms of Use and Privacy Policy, and a Create account button" loading="lazy" width="720" height="1565">
+        </button>
+        <span class="screen-tag">SIGN-UP</span>
+        <h5>Three fields and a plain promise</h5>
+        <p>Sign-up asks for a first name, an email and a password, nothing more. The line under the headline sets the terms before the form does: <em>private by default, your sensitive matching preferences stay under your control.</em> The age and terms checkbox is required and links to both documents.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ios-profile.jpg">
+          <img src="taveli-img/tv-ios-profile.jpg" alt="Profile and privacy: Alex, 30, Brooklyn, profile 82% complete, radius, connections and events counts, an upgrade row, matching settings for preferences, compatibility weights and astrology, and Safety and privacy with incognito mode" loading="lazy" width="720" height="1565">
+        </button>
+        <span class="screen-tag">PROFILE &amp; PRIVACY</span>
+        <h5>The controls live on the profile</h5>
+        <p>Your own profile is also where you decide how matching works: preferences, how much each factor weighs, whether astrology counts at all. Safety and privacy sit on the same screen, with incognito mode (only people you like can see you) a single switch away.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ios-plus.jpg">
+          <img src="taveli-img/tv-ios-plus.jpg" alt="Choose your connection toolkit: a monthly and yearly switch, Taveli Free with core introductions and conversations, and Taveli Plus with invitations, more daily introductions and the full factor breakdown" loading="lazy" width="720" height="1565">
+        </button>
+        <span class="screen-tag">TAVELI PLUS</span>
+        <h5>Pay for tools, never for rank</h5>
+        <p>The membership page says what money can't buy before it says what it can: <em>upgrade your controls, not your rank. Membership never changes who sees you first.</em> Free keeps the core score and its explanation; Plus adds invitations, more introductions and the full breakdown.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="artifact-section" id="design-system">
+    <div class="eyebrow"><span class="num">DESIGN SYSTEM</span></div>
+    <h3>How I built Taveli from its design system</h3>
+    <p class="artifact-cap">Taveli's look is warm and editorial: a cream ground, an ink button, green for what is calm and private, coral for warmth and intent, a display serif for places and moments, and Manrope for people and controls. I wrote the system down from the app's own stylesheets, with a script reading every colour, size and radius out of the CSS, and it stops if a value it names ever leaves the code.</p>
+
+    <ol class="ds-steps">
+      <li><h5>Explain, don't rank</h5><p>The one number in the app is a compatibility percentage, and it always opens into its reasons. It is styled as a calm green chip on the photo, never as a badge of worth.</p></li>
+      <li><h5>Give colour a job</h5><p>Green marks privacy promises and chosen things; coral marks liking, sending and progress; red is kept for errors. One ink button per screen carries the main action.</p></li>
+      <li><h5>One note, four tones</h5><p>The same rounded note carries privacy promises, plain facts, invitations and warnings. In Figma each tone is a mode, so a note changes mood without being redrawn.</p></li>
+      <li><h5>Hand it over</h5><p>The tokens became Figma variables and styles, the screens became editable layers, and the same system went into Claude Design, so the next designer starts from what ships.</p></li>
+    </ol>
+
+    <div class="screen-card ds-trace">
+      <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ds-trace.jpg">
+        <img src="taveli-img/tv-ds-trace.jpg" alt="One decision traced from token to screen: action-selected green, a hand-typed 92% cream fill, the pill radius, Manrope and a sparkles icon make the CompatibilityBadge, shown outlined on Maya's photo on the People screen beside the Why you might click sheet it opens" loading="lazy" width="2400" height="1521">
+      </button>
+      <span class="screen-tag">ONE DECISION, TOKEN TO SCREEN</span>
+      <h5>The badge that opens into reasons</h5>
+      <p>The compatibility badge is the product's argument in one component: the green that means calm and chosen, a pill shape, a sparkle and a percentage. Tapping it opens the sheet that explains it. Tracing it back also showed that its cream fill is typed by hand in the CSS rather than drawn from a token, so it went on the list.</p>
+    </div>
+
+    <div class="ds-facts">
+      <div class="ds-fact"><b>28</b><span>colour primitives, read from the app's stylesheets</span></div>
+      <div class="ds-fact"><b>23</b><span>colours named by role, each pointing to a primitive</span></div>
+      <div class="ds-fact"><b>4</b><span>tones as modes of one variable collection</span></div>
+      <div class="ds-fact"><b>10</b><span>screens rebuilt as editable Figma layers, on iPhone and Pixel</span></div>
+    </div>
+
+    <div class="ds-grid">
+      <div class="screen-card wide">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ds-02-colour-by-role.jpg">
+          <img src="taveli-img/tv-ds-02-colour-by-role.jpg" alt="Colour by role as swatches: backgrounds, surfaces, borders, three text levels, the ink, like and selected actions, progress, the online dot, three gathering tile colours and overlays, each with the primitive it points to" loading="lazy" width="1600" height="1016">
+        </button>
+        <span class="screen-tag">COLOUR &middot; BY ROLE</span>
+        <h5>Named for the job they do</h5>
+        <p>Role colours point to primitives named by hue. A designer picks <em>action-selected</em>, not a green, and a change to the green reaches every chosen chip, joined event and sent message.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ds-03-tones.jpg">
+          <img src="taveli-img/tv-ds-03-tones.jpg" alt="Four tones of one rounded note: Calm, private by design; Neutral, distance; Warm, two people have chosen you; Alert, that email is already in use, each with its text on fill contrast" loading="lazy" width="1600" height="639">
+        </button>
+        <span class="screen-tag">TONES &middot; ONE MODE EACH</span>
+        <h5>One note in four moods</h5>
+        <p>Calm carries privacy promises, neutral carries plain facts, warm carries an invitation and alert carries an error. Every tone's text passes 4.5:1 on its own fill.</p>
+      </div>
+
+      <div class="screen-card">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ds-05-type.jpg">
+          <img src="taveli-img/tv-ds-05-type.jpg" alt="Type scale from the 55px DM Serif Display headline down to the 9px caption, each row with its family, weight, size and where it is used, with the 9px caption marked to retire" loading="lazy" width="1600" height="2316">
+        </button>
+        <span class="screen-tag">TYPE &middot; SERIF AND SANS</span>
+        <h5>Serif for places, sans for people</h5>
+        <p>DM Serif Display sets page titles, gathering names and quotes; Manrope sets names of people and every control. The 9px caption is in the file because the app uses it, and marked to retire.</p>
+      </div>
+
+      <div class="screen-card wide">
+        <button type="button" class="gallery-item artifact-frame" data-src="taveli-img/tv-ds-06-shape-space-and-components.jpg">
+          <img src="taveli-img/tv-ds-06-shape-space-and-components.jpg" alt="Corner radii from the 3px meter to the round pill, the spacing scale, the intro, featured gathering and photo gradients, three soft shadows, and the components they draw: the ink button, chips, the compatibility badge, pass and like, a gathering card and a meter" loading="lazy" width="1600" height="1368">
+        </button>
+        <span class="screen-tag">SHAPE, SPACE, DEPTH</span>
+        <h5>Round, soft and warm</h5>
+        <p>Eight named radii, from the meter bar to the fully round chip, soft warm shadows under the ink button and round actions, and the components the tokens draw.</p>
+      </div>
+
+    </div>
+
+    <div class="ds-notes">
+      <div class="ds-note"><span class="screen-tag">WHAT THE AUDIT FOUND</span><h5>The heading font never loads</h5><p>Every heading asks for DM Serif Display, but the app doesn't ship it, so iPhone draws headings in Times and Android in its default sans. The two platforms looked different by accident. The fix is one import, and it is first on the list. The audit also found coral text at 2.83:1 and grey captions at 4.24:1, under the 4.5:1 small text needs, and text down to 9px.</p></div>
+      <div class="ds-note"><span class="screen-tag">HANDED OVER</span><h5>In Figma and in Claude Design</h5><p>Two Figma plugins: one creates the variables, tones as modes, text styles and effects; the other rebuilds ten screens at iPhone and Pixel sizes as editable layers. A drag-in SVG kit for files without plugins, and the same system set up in Claude Design, so an agent building for Taveli starts from the real rules.</p></div>
+    </div>
+  </div>
+
+  <div class="proj-nav">
+    <a href="campaignfleet.html" class="proj-nav-link prev">← Campaign Fleet</a>
+    <a href="../index.html#work" class="proj-nav-link all">All work</a>
+    <a href="fastdar.html" class="proj-nav-link next">FastDAR →</a>
+  </div>
+
+  <div class="lead-form-wrap">
+    <div class="lead-form-inner">
+      <div class="lead-head">
+        <div class="eyebrow"><span class="num">GET IN TOUCH</span></div>
+        <h3>Open to senior product design roles</h3>
+        <p>Remote (US hours), hybrid or onsite — full-time or contract. Happy to walk through the decisions behind any case study here.</p>
+      </div>
+      <a class="lead-btn" href="mailto:betayards@gmail.com?subject=Senior%20Product%20Designer%20role">Email betayards@gmail.com →</a>
+    </div>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close">×</button>
+  <img src="" alt="">
+</div>
+
+<script>
+  // lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = lightbox.querySelector('img');
+  document.querySelectorAll('.gallery-item').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      lbImg.src = btn.dataset.src;
+      lbImg.alt = btn.querySelector('img').alt;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden','false');
+    });
+  });
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden','true');
+    lbImg.src = '';
+  }
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+
+  // queue mock interactivity (loopwork only — harmless if absent)
+  document.querySelectorAll('.queue-row .approve').forEach(function(b){
+    b.addEventListener('click', function(){
+      var row = b.closest('.queue-row');
+      row.classList.add('is-done');
+      row.querySelector('.status-note').textContent = 'Approved ✓';
+    });
+  });
+  document.querySelectorAll('.queue-row .escalate').forEach(function(b){
+    b.addEventListener('click', function(){
+      var row = b.closest('.queue-row');
+      row.classList.add('is-done');
+      row.querySelector('.status-note').textContent = 'Escalated ↑';
+    });
+  });
+</script>
+<script src="../assets/gallery.js" defer></script>
+</body>
+</html>
