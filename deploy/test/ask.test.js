@@ -7,6 +7,7 @@ import {
   shapeForChar,
   timelineFromAlignment,
 } from "../../assets/ask/visemes.js";
+import { pickMaleVoice } from "../../assets/ask/voices.js";
 
 test("validateAsk keeps the last turns and requires the visitor to speak last", () => {
   const many = Array.from({ length: 15 }, (_, i) => ({
@@ -97,4 +98,17 @@ test("only same-origin pages may ask", () => {
   assert.equal(isSameOrigin("http://jonludesign.com", "https://jonludesign.com/api/ask"), false);
   assert.equal(isSameOrigin(null, "https://jonludesign.com/api/ask"), false);
   assert.equal(isSameOrigin("not a url", "https://jonludesign.com/api/ask"), false);
+});
+
+test("the browser voice is a male English one when the engine has it", () => {
+  const v = (name, lang) => ({ name, lang });
+  const mac = [v("Samantha", "en-US"), v("Daniel", "en-GB"), v("Alex", "en-US"), v("Thomas", "fr-FR")];
+  assert.equal(pickMaleVoice(mac).name, "Alex");
+  const novelty = [v("Fred", "en-US"), v("Ralph", "en-US"), v("Reed (English (United States))", "en-US"), v("Daniel", "en-GB")];
+  assert.equal(pickMaleVoice(novelty).name, "Daniel", "a natural voice beats a novelty one");
+  const chrome = [v("Google US English", "en-US"), v("Google UK English Female", "en-GB"), v("Google UK English Male", "en-GB")];
+  assert.equal(pickMaleVoice(chrome).name, "Google UK English Male");
+  const edge = [v("Microsoft Aria Online (Natural) - English (United States)", "en-US"), v("Microsoft Guy Online (Natural) - English (United States)", "en-US")];
+  assert.match(pickMaleVoice(edge).name, /Guy/);
+  assert.equal(pickMaleVoice([v("Samantha", "en-US"), v("Karen", "en-AU")]), null);
 });

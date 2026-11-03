@@ -2,6 +2,7 @@
 // Answers come from /api/ask (the jl-portfolio Worker); speech comes back with
 // per-character timings, and the mouth follows them.
 import { SHAPES, estimateAlignment, shapeAt, timelineFromAlignment } from "./visemes.js";
+import { pickMaleVoice } from "./voices.js";
 
 const EMAIL = "betayards@gmail.com";
 const VOICE_KEY = "askjon.voice";
@@ -225,8 +226,9 @@ class Voice {
     const timeline = timelineFromAlignment(alignment);
     const u = new SpeechSynthesisUtterance(text);
     u.rate = 1.02;
-    const english = speechSynthesis.getVoices().find((v) => /^en(-|_)US/i.test(v.lang));
-    if (english) u.voice = english;
+    const male = pickMaleVoice(speechSynthesis.getVoices());
+    if (male) u.voice = male;
+    else u.pitch = 0.8; // no male voice installed: lower whatever the default is
     let origin = performance.now();
     return new Promise((resolve) => {
       const done = () => {
@@ -327,6 +329,7 @@ function init() {
   let greeted = false;
 
   launchFace.start();
+  if ("speechSynthesis" in window) speechSynthesis.getVoices();
 
   const renderVoice = () => {
     ui.voiceBtn.innerHTML = voiceOn ? SPEAKER_ON : SPEAKER_OFF;

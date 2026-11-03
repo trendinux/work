@@ -6,7 +6,7 @@ import { CONTACT_EMAIL, isSameOrigin, caseStudyLinks, demoReply, systemPrompt, v
 const MAX_BODY_BYTES = 16_000;
 const DEFAULT_DAILY_CAP = 400;
 const DEFAULT_MODEL = "claude-opus-5-5";
-const DEFAULT_VOICE_ID = "JBFqnCBsd6RMkjVDRZzb";
+const DEFAULT_VOICE_ID = "pNInz6obpgDQGcFmaJgB"; // Adam, an ElevenLabs stock male voice
 const SYSTEM = systemPrompt();
 
 export default {
