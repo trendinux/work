@@ -4,7 +4,7 @@
 const MALE_NAMES = [
   "microsoft andrew", "microsoft brian", "microsoft guy", "microsoft christopher", "microsoft eric",
   "microsoft roger", "microsoft steffan", "microsoft davis", "microsoft tony",
-  "google us english male", "aaron", "evan", "nathan", "tom", "alex", "daniel", "arthur", "oliver",
+  "google us english male", "aaron", "evan", "nathan", "alex", "tom", "daniel", "oliver", "arthur",
   "google uk english male", "microsoft david", "microsoft mark", "reed", "eddy", "rocko", "gordon", "rishi",
 ];
 const FEMALE_HINT = /female|samantha|victoria|karen|moira|tessa|zira|aria|jenny|susan|allison|ava|fiona|serena|kathy/i;

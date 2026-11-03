@@ -225,10 +225,15 @@ class Voice {
     const alignment = estimateAlignment(text);
     const timeline = timelineFromAlignment(alignment);
     const u = new SpeechSynthesisUtterance(text);
-    u.rate = 1.02;
+    // A touch quicker and brighter so system voices sound younger.
+    u.rate = 1.06;
     const male = pickMaleVoice(speechSynthesis.getVoices());
-    if (male) u.voice = male;
-    else u.pitch = 0.8; // no male voice installed: lower whatever the default is
+    if (male) {
+      u.voice = male;
+      u.pitch = 1.08;
+    } else {
+      u.pitch = 0.85; // no male voice installed: lower whatever the default is
+    }
     let origin = performance.now();
     return new Promise((resolve) => {
       const done = () => {
