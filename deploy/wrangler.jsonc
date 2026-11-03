@@ -1,0 +1,33 @@
+// The Worker that serves jonludesign.com. Deploy with `npm run deploy` from this
+// folder: it copies the site into ./public first. Never deploy without this file,
+// or wrangler invents a new Worker named after the folder.
+{
+  "name": "jl-portfolio",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "routes": [
+    { "pattern": "jonludesign.com", "custom_domain": true },
+    { "pattern": "www.jonludesign.com", "custom_domain": true }
+  ],
+  // Per-visitor limit; the daily cap lives in the DailyBudget Durable Object.
+  "ratelimits": [
+    { "name": "ASK_LIMIT", "namespace_id": "4401", "simple": { "limit": 6, "period": 60 } }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "BUDGET", "class_name": "DailyBudget" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DailyBudget"] }],
+  "vars": {
+    "MODEL": "claude-opus-5-5",
+    "DAILY_CAP": "400"
+  }
+  // Secrets, set with `npx wrangler@4 secret put NAME` (or .dev.vars locally):
+  // ANTHROPIC_API_KEY (required for real answers; without it the assistant runs in demo mode)
+  // ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (optional; without them the browser's voice is used)
+}

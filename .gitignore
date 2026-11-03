@@ -1,3 +1,10 @@
 
 # gstack browse daemon runtime state (contains local auth token)
 .gstack/
+
+# Worker build output and local secrets
+deploy/node_modules/
+deploy/public/
+deploy/.wrangler/
+deploy/.dev.vars
+deploy/src/knowledge.js

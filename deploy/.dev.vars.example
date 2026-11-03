@@ -1,0 +1,5 @@
+# Copy to .dev.vars for `npm run dev`. Leave a key out to test its fallback:
+# no ANTHROPIC_API_KEY -> demo mode; no ELEVENLABS_API_KEY -> the browser's voice.
+ANTHROPIC_API_KEY=
+ELEVENLABS_API_KEY=
+ELEVENLABS_VOICE_ID=

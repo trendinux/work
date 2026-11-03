@@ -1,0 +1,15 @@
+{
+  "name": "jl-portfolio-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "knowledge": "node build-knowledge.mjs",
+    "sync": "rsync -a --delete --exclude .git --exclude .gstack --exclude .gitignore --exclude deploy ../ public/",
+    "dev": "npm run knowledge && npm run sync && npx wrangler@4 dev",
+    "deploy": "npm run knowledge && npm run sync && CI=1 npx wrangler@4 deploy",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.4.0"
+  }
+}
