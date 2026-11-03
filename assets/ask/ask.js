@@ -303,13 +303,6 @@ function build() {
     log,
     chips,
     form,
-    el("p", {
-      class: "aj-fine",
-      text:
-        `An AI, not me live, and it can be wrong. Your question goes to Anthropic to answer it, and to ElevenLabs for the voice; nothing is stored here.` +
-        (SpeechRecognition ? " Asking out loud uses your browser's speech recognition." : "") +
-        ` For anything that matters, email ${EMAIL}.`,
-    }),
   ]);
 
   document.body.append(launcher, panel);

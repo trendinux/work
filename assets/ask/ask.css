@@ -83,14 +83,13 @@
   transition:border-color .15s var(--aj-ease),transform .15s var(--aj-ease)}
 .aj-chip:hover{border-color:var(--aj-ink);transform:translateY(-1px)}
 
-.aj-form{display:flex;gap:6px;align-items:center;padding:10px 12px 8px 16px;border-top:1px solid var(--aj-warm-line)}
+.aj-form{display:flex;gap:6px;align-items:center;padding:10px 12px 12px 16px;border-top:1px solid var(--aj-warm-line)}
 .aj-input{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 14px;border:1px solid var(--aj-warm-line);border-radius:12px;outline:none;color:var(--aj-ink);background:rgba(255,255,255,.75)}
 .aj-input:focus{border-color:var(--aj-blue);box-shadow:0 0 0 3px rgba(0,113,227,.14)}
 .aj-mic.is-on{background:rgba(0,122,110,.14);color:var(--aj-teal)}
 .aj-send{font:inherit;font-weight:600;font-size:15px;border:0;border-radius:12px;padding:11px 18px;background:var(--aj-ink);color:#fff;cursor:pointer;transition:background .15s var(--aj-ease)}
 .aj-send:hover{background:var(--aj-blue)}
 .aj-send:disabled{opacity:.5;cursor:default;background:var(--aj-ink)}
-.aj-fine{margin:0;padding:0 20px 14px;font-size:12px;line-height:1.45;color:var(--aj-faint)}
 
 @media (max-width:600px){
   .aj-launch{right:16px;bottom:16px}
