@@ -34,11 +34,11 @@ test("validateAsk truncates long messages", () => {
 
 test("caseStudyLinks finds case studies named in an answer, in order, capped at three", () => {
   const links = caseStudyLinks(
-    "At Norton I redesigned the VPN app, and at Fabletics I worked on checkout. Lorewheel and Campaign Fleet are newer.",
+    "At Norton I redesigned the VPN app, and at Fabletics I worked on checkout. Campaign Fleet and FastDAR are newer.",
   );
   assert.deepEqual(
     links.map((l) => l.path),
-    ["/projects/norton.html", "/projects/fabletics.html", "/projects/lorewheel.html"],
+    ["/projects/norton.html", "/projects/fabletics.html", "/projects/campaignfleet.html"],
   );
   assert.deepEqual(caseStudyLinks("I like design."), []);
 });
@@ -50,7 +50,8 @@ test("caseStudyLinks does not match a name inside another word", () => {
 test("the system prompt carries the résumé, the case studies and the contact rule", () => {
   const s = systemPrompt();
   assert.match(s, /NortonLifeLock/);
-  assert.match(s, /### Lorewheel/);
+  assert.match(s, /### Campaign Fleet/);
+  assert.doesNotMatch(s, /Lorewheel/);
   assert.match(s, /betayards@gmail\.com/);
   assert.doesNotMatch(s, /250-6208/, "the phone number must not reach the model");
 });
